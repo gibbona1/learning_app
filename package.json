@@ -1,0 +1,26 @@
+{
+  "name": "learning_app",
+  "version": "1.0.0",
+  "description": "App for leanring bird calls using SRS method",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gibbona1/learning_app.git"
+  },
+  "keywords": [
+    "bird",
+    "calls",
+    "srs",
+    "learning",
+    "e-learning"
+  ],
+  "author": "Anthony Gibbons <gibbona1@tcd.ie>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gibbona1/learning_app/issues"
+  },
+  "homepage": "https://github.com/gibbona1/learning_app#readme"
+}
