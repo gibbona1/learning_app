@@ -9,3 +9,5 @@ const birdCallSchema = new mongoose.Schema({
   });
   
 const BirdCall = mongoose.model('BirdCall', birdCallSchema);
+
+module.exports = BirdCall;

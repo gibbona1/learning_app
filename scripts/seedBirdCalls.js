@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const BirdCall = require('./models/birdCall'); // Update the path to where your BirdCall model is located
+const BirdCall = require('../models/birdCall'); // Update the path to where your BirdCall model is located
 
 // MongoDB connection string
 const dbUrl = 'mongodb://localhost:27017/yourDatabaseName'; // Update with your database name
