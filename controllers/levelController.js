@@ -11,12 +11,13 @@ exports.getAllLevels = async (req, res) => {
   }
 };
 
-exports.getLevelById = async (req, res) => {
+exports.getLevel = async (req, res) => {
   try {
-    const level = await Level.findById(req.params.id);
-    if (!level) {
-      return res.status(404).json({ message: 'Level not found' });
+    let query = {};
+    if (req.query.levelNumber) {
+      query.levelNumber = req.query.levelNumber; // Filter by level if level query param is provided
     }
+    const level = await Level.find(query);
     res.status(200).json(level);
   } catch (error) {
     res.status(500).json({ message: 'Error fetching level', error: error.message });

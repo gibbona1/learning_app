@@ -5,6 +5,6 @@ const router = express.Router();
 const levelController = require('../controllers/levelController');
 
 router.get('/levels', levelController.getAllLevels);
-router.get('/levels/:id', levelController.getLevelById);
+router.get('/levels/:levelNumber', levelController.getLevel);
 
 module.exports = router;
