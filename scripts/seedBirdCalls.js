@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const BirdCall = require('../models/birdCall'); // Update the path to where your BirdCall model is located
 
 // MongoDB connection string
-const dbUrl = 'mongodb://localhost:27017/yourDatabaseName'; // Update with your database name
+const dbUrl = 'mongodb://localhost:27017/myDB'; // Update with your database name
 const BASE_URL = 'https://my-audio-bucket-2024.s3.amazonaws.com/';
 
 mongoose.connect(dbUrl, { useNewUrlParser: true, useUnifiedTopology: true })
