@@ -11,8 +11,6 @@ app.listen(port, () => {
   console.log(`Server is running on port http://localhost:${port}`);
 });
 
-mongoose.connect('mongodb://localhost:27017/myDB', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-}).then(() => console.log('MongoDB connected…'))
+mongoose.connect('mongodb://localhost:27017/myDB')
+  .then(() => console.log('MongoDB connected…'))
   .catch(err => console.log(err));
