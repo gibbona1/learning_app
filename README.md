@@ -2,14 +2,14 @@
 
 TODOs:
 - [ ] All CRUD and api endpoints
-    - [ ] birdCalls 
-        - [ ] get all
-        - [ ] search by id
-        - [ ] get specific (level, class)
-    - [ ] users 
-        - [ ] get all
-        - [ ] search by id
-        - [ ] get specific (username, email)
+    - [x] birdCalls 
+        - [x] get all
+        - [x] search by id
+        - [x] get specific (level, class)
+    - [x] users 
+        - [x] get all
+        - [x] search by id
+        - [x] get specific (username, email)
     - [ ] level 
         - [ ] get all
         - [ ] get specific (level number)
