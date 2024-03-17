@@ -5,7 +5,6 @@ TODOs:
     - [ ] reviewSession (combines all reviews ready for review)
     - [ ] review (created date, review date, birdCallId)
         - [ ] create new review whether correct or incorrect with associated times etc.
-    - [ ] itemLevel (e.g. 1-10, names (e.g. apprentice1 up to burned), time to next when on this level)
 - [ ] All CRUD and api endpoints
     - [x] birdCalls 
         - [x] get all
@@ -15,13 +14,24 @@ TODOs:
         - [x] get all
         - [x] search by id
         - [x] get specific (username, email)
+        - [x] update (e.g. level)
+        - [x] delete 
     - [x] userLevel 
         - [x] get all
         - [x] search by id
         - [x] get specific (level number)
-    - [ ] progress (maybe should just be item)
+    - [ ] item
         - [ ] get all
+        - [ ] search by id
         - [ ] get specific (userId, birdCallId, level)
+        - [ ] create (all items for new level for user)
+        - [ ] update (level, reviewdate etc if review done)
+        - [ ] delete
+    - [x] itemLevel
+        - [x] get all
+        - [x] get by id
+        - [x] get specific (num, name)
+
 - [ ] Testing scripts
 - [ ] Connect to AWS to load sounds
 - [ ] lesson unlock

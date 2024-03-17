@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const userRoutes = require('./routes/userRoutes');
-const progressRoutes = require('./routes/progressRoutes');
+const itemRoutes = require('./routes/itemRoutes');
 const birdCallRoutes = require('./routes/birdCallRoutes');
 const userLevelRoutes = require('./routes/userLevelRoutes');
 const itemLevelRoutes = require('./routes/itemLevelRoutes');
@@ -21,7 +21,7 @@ app.get('/', function (req, res) {
   });
 
 app.use('/api', userRoutes);
-app.use('/api', progressRoutes);
+app.use('/api', itemRoutes);
 app.use('/api', birdCallRoutes);
 app.use('/api', userLevelRoutes);
 app.use('/api', itemLevelRoutes);
