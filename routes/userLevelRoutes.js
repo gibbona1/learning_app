@@ -4,7 +4,7 @@ const express = require('express');
 const router = express.Router();
 const userLevelController = require('../controllers/userLevelController');
 
-router.get('/levels', userLevelController.getAllLevels);
-router.get('/levels/:levelNumber', userLevelController.getLevel);
+router.get('/userlevels', userLevelController.getAllUserLevels);
+router.get('/userlevels/:id', userLevelController.getUserLevelById);
 
 module.exports = router;
