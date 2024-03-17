@@ -15,10 +15,11 @@ TODOs:
         - [x] get all
         - [x] search by id
         - [x] get specific (username, email)
-    - [ ] userLevel 
-        - [ ] get all
-        - [ ] get specific (level number)
-    - [ ] progress
+    - [x] userLevel 
+        - [x] get all
+        - [x] search by id
+        - [x] get specific (level number)
+    - [ ] progress (maybe should just be item)
         - [ ] get all
         - [ ] get specific (userId, birdCallId, level)
 - [ ] Testing scripts

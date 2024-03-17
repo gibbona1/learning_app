@@ -3,7 +3,9 @@ const mongoose = require('mongoose');
 const userRoutes = require('./routes/userRoutes');
 const progressRoutes = require('./routes/progressRoutes');
 const birdCallRoutes = require('./routes/birdCallRoutes');
-const levelRoutes = require('./routes/userLevelRoutes');
+const userLevelRoutes = require('./routes/userLevelRoutes');
+const itemLevelRoutes = require('./routes/itemLevelRoutes');
+
 // Import other routes as needed
 
 const app = express();
@@ -21,7 +23,8 @@ app.get('/', function (req, res) {
 app.use('/api', userRoutes);
 app.use('/api', progressRoutes);
 app.use('/api', birdCallRoutes);
-app.use('/api', levelRoutes);
+app.use('/api', userLevelRoutes);
+app.use('/api', itemLevelRoutes);
 // Use other routes as needed
 
 const PORT = process.env.PORT || 3000;

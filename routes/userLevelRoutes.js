@@ -1,5 +1,3 @@
-// routes/levelRoutes.js
-
 const express = require('express');
 const router = express.Router();
 const userLevelController = require('../controllers/userLevelController');
