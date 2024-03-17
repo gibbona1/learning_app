@@ -10,7 +10,7 @@ TODOs:
         - [x] get all
         - [x] search by id
         - [x] get specific (username, email)
-    - [ ] level 
+    - [ ] userLevel 
         - [ ] get all
         - [ ] get specific (level number)
     - [ ] progress
