@@ -42,7 +42,7 @@ const birdCalls = [{
     class: 'Dunnock',
     description: '',
     audioUrl: BASE_URL + 'RICHFIELDM1_20230716_075400.wav',
-    level: 1
+    level: 2
 },
 {
     name: 'RAHORA_20230330_165400',
@@ -91,7 +91,7 @@ const birdCalls = [{
     class: 'European Goldfinch',
     description: '',
     audioUrl: BASE_URL + 'CARNSOREMET_20220707_080200.wav',
-    level: 1
+    level: 2
 },
 {
     name: 'TEEVURCHER_20220610_182700',
@@ -154,7 +154,7 @@ const birdCalls = [{
     class: 'Redwing',
     description: '',
     audioUrl: BASE_URL + 'RAHORA_20230131_125700.wav',
-    level: 1
+    level: 3
 },
 {
     name: 'RICHFIELDM1_20230724_135000',
@@ -182,7 +182,7 @@ const birdCalls = [{
     class: 'White Wagtail',
     description: '',
     audioUrl: BASE_URL + 'CARNSOREMET_20220710_205900.wav',
-    level: 1
+    level: 3
 },
 {
     name: 'RICHFIELDM1_20230721_110100',
