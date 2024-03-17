@@ -1,6 +1,11 @@
 # learning_app
 
 TODOs:
+- [ ] remaining models
+    - [ ] reviewSession (combines all reviews ready for review)
+    - [ ] review (created date, review date, birdCallId)
+        - [ ] create new review whether correct or incorrect with associated times etc.
+    - [ ] itemLevel (e.g. 1-10, names (e.g. apprentice1 up to burned), time to next when on this level)
 - [ ] All CRUD and api endpoints
     - [x] birdCalls 
         - [x] get all
