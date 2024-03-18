@@ -19,7 +19,7 @@ exports.createItem = async (req, res) => {
 // Get all Item records
 exports.getAllItems = async (req, res) => {
   try {
-    const item = await Item.find();
+    const item = await Item.find(req.query);
     res.status(200).json(item);
   } catch (error) {
     res.status(500).json({ message: 'Error fetching Item records', error: error.message });

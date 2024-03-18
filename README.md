@@ -21,9 +21,9 @@ TODOs:
         - [x] search by id
         - [x] get specific (level number)
     - [ ] item
-        - [ ] get all
-        - [ ] search by id
-        - [ ] get specific (userId, birdCallId, level)
+        - [x] get all
+        - [x] search by id
+        - [x] get specific (userId, birdCallId, level)
         - [ ] create (all items for new level for user)
         - [ ] update (level, reviewdate etc if review done)
         - [ ] delete

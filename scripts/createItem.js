@@ -25,5 +25,5 @@ async function createItem(userId, birdCallId) {
 
 // Usage
 createItem('65f6129443744d5e0adf1236', '65f76f0ce06595e27e28da46');
-createItem('65f6129443744d5e0adf1236', '65f76f0ce06595e27e28da46');
+createItem('65f6129443744d5e0adf1236', '65f76f0ce06595e27e28da47');
 
