@@ -2,9 +2,13 @@
 
 TODOs:
 - [ ] remaining models
+    - [ ] item should naheve no next review date until lesson complete
+    - [ ] lesson [display audio, spectrogram, metadata](moves item from level 0 to 1 when done)
     - [ ] reviewSession (combines all reviews ready for review)
+    - [ ] ungradedSession (select some items to review)
     - [ ] review (created date, review date, birdCallId)
         - [ ] create new review whether correct or incorrect with associated times etc.
+    - [ ] projections
 - [ ] All CRUD and api endpoints
     - [x] birdCalls 
         - [x] get all
@@ -25,7 +29,7 @@ TODOs:
         - [x] search by id
         - [x] get specific (userId, birdCallId, level)
         - [ ] create (all items for new level for user)
-        - [ ] update (level, reviewdate etc if review done)
+        - [ ] update (level, reviewdate etc if lesson/review done)
         - [ ] delete
     - [x] itemLevel
         - [x] get all
