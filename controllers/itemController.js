@@ -39,7 +39,7 @@ exports.getItem = async (req, res) => {
 // Update a Item record
 exports.updateItem = async (req, res) => {
   try {
-    const item = await Item.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const item = await Item.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
     if (!item) {
       return res.status(404).json({ message: 'Item not found' });
     }
