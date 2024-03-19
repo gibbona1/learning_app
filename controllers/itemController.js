@@ -5,10 +5,7 @@ const Item = require('../models/item');
 // Create new Item
 exports.createItem = async (req, res) => {
   try {
-    body = req.body;
-    //nextReviewDate should be calculated based on the level, for now set it as date.now + 1 hour
-    body.nextReviewDate = new Date(Date.now() + 60 * 60 * 1000);
-    const item = new Item(body);
+    const item = new Item(req.body);
     await item.save();
     res.status(201).json({ message: 'Item created successfully', item });
   } catch (error) {
