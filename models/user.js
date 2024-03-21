@@ -6,7 +6,7 @@ const userSchema = new mongoose.Schema({
     passwordHash: { type: String, required: true }, // Store hashed passwords, never plaintext
     role: { type: String, enum: ['user', 'teacher', 'learner', 'admin'], required: true },
     registrationDate: { type: Date, default: Date.now },
-    level: { type: Number, default: 1 }, //user level
+    level: { type: Number, default: 0 }, //user level
   });
   
 const User = mongoose.model('User', userSchema);

@@ -86,7 +86,7 @@ exports.levelUpUser = async (req, res) => {
     const items = await Promise.all(itemsPromises);
 
     const lessonsPromises = items.map(item =>
-      new Lesson({ itemId: item._id }).save() // Assuming Lesson schema has itemId
+      new Lesson({ userId, itemId: item._id }).save() // Assuming Lesson schema has itemId
     );
     await Promise.all(lessonsPromises);
 

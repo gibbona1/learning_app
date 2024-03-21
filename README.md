@@ -19,6 +19,7 @@ TODOs:
         - [x] get specific (username, email)
         - [x] update (e.g. level)
         - [x] delete 
+        - [x] level up
     - [x] userLevel 
         - [x] get all
         - [x] search by id
@@ -37,7 +38,7 @@ TODOs:
         - [x] get specific (num, name)
     - [ ] lesson 
         - [ ] in UI, [display audio, spectrogram, metadata]
-        - [ ] make for all level zero items
+        - [x] make for all current level items when levelup
         - [ ] move item from level 0 to 1 when done
         - [x] create, get all, get by id, delete
     
