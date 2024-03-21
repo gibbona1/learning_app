@@ -37,7 +37,7 @@ exports.getLesson = async (req, res) => {
 };
 
 // Delete a Item record
-exports.deleteItem = async (req, res) => {
+exports.deleteLesson = async (req, res) => {
   try {
     const lesson = await Lesson.findByIdAndDelete(req.params.id);
     if (!lesson) {

@@ -1,7 +1,7 @@
 // controllers/userController.js
 
 const User = require('../models/user');
-const BirdCall = require('../models/birdcall');
+const BirdCall = require('../models/birdCall');
 const Item = require('../models/item');
 const Lesson = require('../models/lesson');
 const bcrypt = require('bcrypt');
