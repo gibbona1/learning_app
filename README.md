@@ -3,7 +3,6 @@
 TODOs:
 - [ ] remaining models
     - [ ] item should have no next review date until lesson complete
-    - [ ] lesson [display audio, spectrogram, metadata](moves item from level 0 to 1 when done)
     - [ ] reviewSession (combines all reviews ready for review)
     - [ ] ungradedSession (select some items to review)
     - [ ] review (created date, review date, birdCallId)
@@ -36,6 +35,12 @@ TODOs:
         - [x] get all
         - [x] get by id
         - [x] get specific (num, name)
+    - [ ] lesson 
+        - [ ] in UI, [display audio, spectrogram, metadata]
+        - [ ] make for all level zero items
+        - [ ] move item from level 0 to 1 when done
+        - [x] create, get all, get by id, delete
+    
 
 - [ ] Testing scripts
 - [ ] Connect to AWS to load sounds
