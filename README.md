@@ -3,7 +3,7 @@
 TODOs:
 - [ ] remaining models
     - [ ] item should have no next review date until lesson complete
-    - [ ] count how many items due for review now, in next hour, next 24 hours.
+    - [x] count how many items due for review now, in next hour, next 24 hours.
     - [ ] reviewSession (combines all reviews ready for review)
     - [ ] ungradedSession (select some items to review)
     - [ ] review (created date, review date, birdCallId)
@@ -30,6 +30,7 @@ TODOs:
         - [x] search by id
         - [x] get specific (userId, birdCallId, level)
         - [x] create (all items for new level for user)
+        - [x] level up
         - [x] update (level, reviewdate etc) 
             - [ ] do if if lesson/review complete
         - [x] delete

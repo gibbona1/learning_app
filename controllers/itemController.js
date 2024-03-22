@@ -62,6 +62,8 @@ exports.deleteItem = async (req, res) => {
     res.status(500).json({ message: 'Error deleting Item', error: error.message });
   }
 };
+
+// level up item if right
 exports.levelUpItem = async (req, res) => {
   const { id: itemId } = req.params; // Extract the user ID from the request parameters
 
@@ -73,6 +75,7 @@ exports.levelUpItem = async (req, res) => {
     }
 
     item.level += 1; // Increment the level
+    //decrement with extra param
 
     const itemLevel = await ItemLevel.findOne({ num: item.level });
     item.nextReviewDate = new Date(Date.now() + (60 * 60 * 1000 * itemLevel.timeToNext)); //this many hours
@@ -83,4 +86,28 @@ exports.levelUpItem = async (req, res) => {
   catch (error) {
     res.status(500).json({ message: 'Error updating Item level', error: error.message });
   }
-}
+};
+
+exports.countReviews = async (req, res) => {
+  const { userId, hours } = req.params;
+  const numHours = parseInt(hours, 10);
+
+  if (isNaN(numHours)) {
+    return res.status(400).json({ message: 'Invalid hours parameter' });
+  }
+
+  const now = new Date();
+  const targetTime = new Date(now.getTime() + numHours * 60 * 60 * 1000);
+
+  try {
+    const count = await Item.countDocuments({
+      userId: userId,
+      nextReviewDate: { $lte: targetTime }
+    });
+
+    res.json({ count });
+  } catch (error) {
+    console.error('Error counting review items:', error);
+    res.status(500).json({ message: 'Error processing request', error: error.message });
+  }
+};

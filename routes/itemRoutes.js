@@ -11,5 +11,7 @@ router.get('/items/:id', itemController.getItem);
 router.put('/items/:id', itemController.updateItem);
 router.delete('/items/:id', itemController.deleteItem);
 router.put('/items/:id/levelup', itemController.levelUpItem);
+router.get('/items/:userId/:hours', itemController.countReviews);
+
 
 module.exports = router;
