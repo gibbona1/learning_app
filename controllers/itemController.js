@@ -1,6 +1,7 @@
 // controllers/itemController.js
 
 const Item = require('../models/item');
+const ItemLevel = require('../models/itemLevel');
 
 // Create new Item
 exports.createItem = async (req, res) => {
@@ -61,3 +62,25 @@ exports.deleteItem = async (req, res) => {
     res.status(500).json({ message: 'Error deleting Item', error: error.message });
   }
 };
+exports.levelUpItem = async (req, res) => {
+  const { id: itemId } = req.params; // Extract the user ID from the request parameters
+
+  try {
+    // Step 1: Update the user to the next level
+    const item = await Item.findById(itemId);
+    if (!item) {
+      return res.status(404).json({ message: 'Item not found' });
+    }
+
+    item.level += 1; // Increment the level
+
+    const itemLevel = await ItemLevel.findOne({ num: item.level });
+    item.nextReviewDate = new Date(Date.now() + (60 * 60 * 1000 * itemLevel.timeToNext)); //this many hours
+    await item.save();
+
+    res.status(200).json({ message: 'Item level updated successfully', item });
+  }
+  catch (error) {
+    res.status(500).json({ message: 'Error updating Item level', error: error.message });
+  }
+}
