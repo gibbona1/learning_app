@@ -66,6 +66,7 @@ exports.deleteItem = async (req, res) => {
 // level up item if right
 exports.levelUpItem = async (req, res) => {
   const { id: itemId } = req.params; // Extract the user ID from the request parameters
+  const action = req.query.action || 'increment'; // Default to 'increment' if not specified
 
   try {
     // Step 1: Update the user to the next level
@@ -74,8 +75,11 @@ exports.levelUpItem = async (req, res) => {
       return res.status(404).json({ message: 'Item not found' });
     }
 
-    item.level += 1; // Increment the level
-    //decrement with extra param
+    if (action === 'increment') {
+      item.level += 1;
+    } else if (action === 'decrement' && item.level > 1) { // Assuming level cannot go below 1
+      item.level -= 1;
+    }
 
     const itemLevel = await ItemLevel.findOne({ num: item.level });
     item.nextReviewDate = new Date(Date.now() + (60 * 60 * 1000 * itemLevel.timeToNext)); //this many hours
