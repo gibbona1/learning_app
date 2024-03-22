@@ -3,6 +3,7 @@
 TODOs:
 - [ ] remaining models
     - [ ] item should have no next review date until lesson complete
+    - [ ] count how many items due for review now, in next hour, next 24 hours.
     - [ ] reviewSession (combines all reviews ready for review)
     - [ ] ungradedSession (select some items to review)
     - [ ] review (created date, review date, birdCallId)
@@ -39,13 +40,13 @@ TODOs:
     - [ ] lesson 
         - [ ] in UI, [display audio, spectrogram, metadata]
         - [x] make for all current level items when levelup
-        - [ ] move item from level 0 to 1 when done
+        - [x] move item from level 0 to 1 when done and delete lesson
         - [x] create, get all, get by id, delete
     
 
 - [ ] Testing scripts
 - [ ] Connect to AWS to load sounds
-- [ ] lesson unlock
+- [x] lesson unlock
 - [ ] Review scheduler
 - [ ] Level progression timing
 - [ ] lesson creator (teacher, admin)
