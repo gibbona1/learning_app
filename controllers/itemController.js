@@ -2,6 +2,7 @@
 
 const Item = require('../models/item');
 const ItemLevel = require('../models/itemLevel');
+const Lesson = require('../models/lesson');
 
 // Create new Item
 exports.createItem = async (req, res) => {
@@ -104,12 +105,20 @@ exports.countReviews = async (req, res) => {
   const targetTime = new Date(now.getTime() + numHours * 60 * 60 * 1000);
 
   try {
-    const count = await Item.countDocuments({
+    const dueItemCount = await Item.countDocuments({
       userId: userId,
       nextReviewDate: { $lte: targetTime }
     });
 
-    res.json({ count });
+    // Count lessons for the user's items
+    const lessonCount = await Lesson.countDocuments({
+      userId: userId
+    });
+
+    // Subtract the number of lessons from the number of due items
+    const adjustedCount = dueItemCount - lessonCount;
+
+    res.json({ adjustedCount });
   } catch (error) {
     console.error('Error counting review items:', error);
     res.status(500).json({ message: 'Error processing request', error: error.message });

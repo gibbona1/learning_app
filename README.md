@@ -2,7 +2,6 @@
 
 TODOs:
 - [ ] remaining models
-    - [ ] item should have no next review date until lesson complete
     - [x] count how many items due for review now, in next hour, next 24 hours.
     - [ ] reviewSession (combines all reviews ready for review)
     - [ ] ungradedSession (select some items to review)
