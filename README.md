@@ -49,5 +49,5 @@ TODOs:
 - [x] lesson unlock
 - [ ] Review scheduler
 - [ ] Level progression timing
-- [ ] lesson creator (teacher, admin)
-- [ ] Assign students to teacher
+- [ ] lesson creator (teacher, admin) probably just permissions based
+- [ ] Assign students to teacher (classroom model perhaps)
