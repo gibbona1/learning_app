@@ -8,10 +8,10 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" exact component={HomePage} />
-        <Route path="/users/:id" component={UserPage} />
-        <Route path="/birdcalls" component={BirdCallsPage} />
-        <Route path="/levels" component={UserLevelsPage} />
+        <Route path="/"  element={<HomePage/>} />
+        <Route path="/users" element={<UserPage/>} />
+        <Route path="/birdcalls" element={<BirdCallsPage/>} />
+        <Route path="/userLevels" element={<UserLevelsPage/>} />
       </Routes>
     </Router>
   );
