@@ -3,6 +3,7 @@ import HomePage from './components/HomePage';
 import UserPage from './components/UserPage';
 import BirdCallsPage from './components/BirdCallsPage';
 import UserLevelsPage from './components/UserLevelsPage';
+import NotFoundPage from './components/NotFoundPage';
 
 export default function App() {
   return (
@@ -12,6 +13,7 @@ export default function App() {
         <Route path="/users" element={<UserPage />} />
         <Route path="/birdcalls" element={<BirdCallsPage />} />
         <Route path="/userlevels" element={<UserLevelsPage />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </Router>
   );
