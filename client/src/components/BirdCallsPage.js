@@ -13,7 +13,7 @@ function BirdCallsPage() {
       })
       .then(data => {
         // Use JSON.stringify to convert the JSON object to a string for the alert.
-        alert(JSON.stringify(data, null, 2)); // null, 2 for pretty-printing
+        //alert(JSON.stringify(data, null, 2)); // null, 2 for pretty-printing
   
         // Then set your state as normal (assuming you add setBirdCalls back in)
         setBirdCalls(data);
