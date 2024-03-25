@@ -93,6 +93,45 @@ exports.levelUpItem = async (req, res) => {
   }
 };
 
+exports.dueReviews = async (req, res) => {
+  const { userId, hours } = req.params;
+  const numHours = parseInt(hours, 10);
+
+  if (isNaN(numHours)) {
+    return res.status(400).json({ message: 'Invalid hours parameter' });
+  }
+
+  const now = new Date();
+  const targetTime = new Date(now.getTime() + numHours * 60 * 60 * 1000);
+
+  try {
+    const dueItems = await Item.find({
+      userId: userId,
+      nextReviewDate: { $lte: targetTime }
+    }).exec();
+
+    //console.log('dueItems: ' + dueItems);
+
+    // Fetch IDs of items that already have lessons
+    const itemsWithLessons = await Lesson.find({
+      userId: userId
+    }, 'itemId').exec(); // Assuming 'itemId' is how lessons reference items
+
+    //console.log('itemsWithLessons: ' + itemsWithLessons);
+    const itemsWithLessonsIds = itemsWithLessons.map(lesson => lesson.itemId.toString());
+    //console.log('itemsWithLessonsIds: ' + itemsWithLessonsIds);
+
+    // Filter out items that have lessons
+    const itemsDueWithoutLessons = dueItems.filter(item => !itemsWithLessonsIds.includes(item._id.toString()));
+
+    //console.log('itemsDueWithoutLessons: ' + itemsDueWithoutLessons);
+    res.json({ itemsDueWithoutLessons });
+  } catch (error) {
+    console.error('Error counting review items:', error);
+    res.status(500).json({ message: 'Error processing request', error: error.message });
+  }
+};
+
 exports.countReviews = async (req, res) => {
   const { userId, hours } = req.params;
   const numHours = parseInt(hours, 10);
