@@ -4,6 +4,7 @@ import UserPage from './components/UserPage';
 import BirdCallsPage from './components/BirdCallsPage';
 import UserLevelsPage from './components/UserLevelsPage';
 import ReviewPage from './components/ReviewsPage';
+import ReviewSessionPage from './components/ReviewSessionPage';
 import NotFoundPage from './components/NotFoundPage';
 
 export default function App() {
@@ -15,6 +16,7 @@ export default function App() {
         <Route path="/birdcalls" element={<BirdCallsPage />} />
         <Route path="/userlevels" element={<UserLevelsPage />} />
         <Route path="/reviews" element={<ReviewPage />} />
+        <Route path="/reviewSession" element={<ReviewSessionPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </Router>

@@ -1,8 +1,14 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function ReviewsPage() {
-  // State to store counts
   const userId = '65fcc504b999225e008c71c5';
+  
+  let navigate = useNavigate();
+  function startReviewSession() {
+    navigate('/reviewSession' , { state: {userId: userId} }); // Navigate to ReviewSession page
+  }
+  // State to store counts
   const [reviewsNowCount, setReviewsNowCount] = useState(0);
   const [reviews1HourCount, setReviews1HourCount] = useState(0);
   const [reviews24HoursCount, setReviews24HoursCount] = useState(0);
@@ -37,7 +43,7 @@ function ReviewsPage() {
     }, [userId]); // Re-run when userId changes
 
   useEffect(() => {
-    fetch(`/api/items/${userId}/${0}`)
+    fetch(`/api/items/${userId}/0`)
     .then(response => {
       if (!response.ok) {
         throw new Error('Network response was not ok');
@@ -60,6 +66,7 @@ function ReviewsPage() {
       <p>Due now: {reviewsNowCount}</p>
       <p>Due in the next hour: {reviews1HourCount}</p>
       <p>Due in the next 24 hours: {reviews24HoursCount}</p>
+      <button onClick={startReviewSession}>Start Reviews</button>
       <h2>Reviews due now</h2>
       <table>
         <thead>
