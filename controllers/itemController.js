@@ -83,7 +83,7 @@ exports.levelUpItem = async (req, res) => {
     }
 
     const itemLevel = await ItemLevel.findOne({ num: item.level });
-    item.nextReviewDate = new Date(Date.now() + (60 * 60 * 1000 * itemLevel.timeToNext)); //this many hours
+    item.nextReviewDate = new Date(Date.now() + (60 * 60 * 1000 * itemLevel.timeToNext)).setMinutes(0, 0, 0); // Set the next review date to 1 hour from now
     await item.save();
 
     res.status(200).json({ message: 'Item level updated successfully', item });

@@ -62,7 +62,7 @@ exports.lessonCompleted = async (req, res) => {
 
     const item = await Item.findById(lesson.itemId);
     item.level += 1; // Increment the level
-    item.nextReviewDate = new Date(Date.now() + 60 * 60 * 1000); // Set the next review date to 1 hour from now
+    item.nextReviewDate =  new Date(Date.now() + (60 * 60 * 1000)).setMinutes(0, 0, 0); // Set the next review date to 1 hour from now
     await item.save();
 
     // Step 2: delete lesson
