@@ -41,7 +41,7 @@ function ReviewSession() {
 
   function mergeData(reviews, birdCalls) {
     const merged = reviews.map(review => {
-      const birdCallData = birdCalls.find(birdCall => birdCall.id === review.birdCallId);
+      const birdCallData = birdCalls.find(birdCall => birdCall._id === review.birdCallId);
       return { ...review, birdCallData }; // Combine review with corresponding bird call data
     });
     setMergedData(merged);
@@ -57,10 +57,10 @@ function ReviewSession() {
     <div>
       {currentReview ? (
         <>
-          <h3>{currentReview.name}</h3>
-          <p>Class: {currentReview.class}</p>
-          <p>Level: {currentReview.level}</p>
-          <audio controls src={currentReview.audioUrl}>
+          <h3>{currentReview.birdCallData.name}</h3>
+          <p>Class: {currentReview.birdCallData.class}</p>
+          <p>Level: {currentReview.birdCallData.level}</p>
+          <audio controls src={currentReview.birdCallData.audioUrl}>
             Your browser does not support the audio element.
           </audio>
           <button onClick={goToNextReview}>Next Review</button>
