@@ -4,6 +4,9 @@
   "description": "App for leanring bird calls using SRS method",
   "main": "index.js",
   "scripts": {
+    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "node app.js",
+    "client": "node start-client.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -27,5 +30,8 @@
     "bcrypt": "^5.1.1",
     "express": "^4.18.3",
     "mongoose": "^8.2.1"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
   }
 }

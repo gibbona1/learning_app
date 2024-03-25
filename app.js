@@ -29,5 +29,6 @@ app.use('/api', itemLevelRoutes);
 app.use('/api', lessonRoutes);
 // Use other routes as needed
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
+app.set('port', PORT);
 app.listen(PORT, () => console.log(`Server running on port http://localhost:${PORT}`));
