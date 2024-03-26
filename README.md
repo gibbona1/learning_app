@@ -43,8 +43,14 @@ TODOs:
         - [x] move item from level 0 to 1 when done and delete lesson
         - [x] create, get all, get by id, delete
     
-
+- [ ] modularize common scripts
+- [ ] get Birdcall mnemonics
+- [ ] open database of bird images (possible hint)
+- [ ] navigation tabs/buttons
+- [ ] modern stylling
 - [ ] Testing scripts
+        - [ ] each api call
+        - [ ] aws connect
 - [ ] Connect to AWS to load sounds
 - [x] lesson unlock
 - [ ] Review scheduler
