@@ -68,21 +68,16 @@ export default function ReviewSession() {
               Key: objectKey,
           });
           const signedUrl = await getSignedUrl(client, command, { expiresIn: 3600 });
-          alert("Signed URL:", JSON.stringify(signedUrl));
           setSignedUrl(signedUrl);
       } catch (err) {
-          alert("Error downloading file:", err);
+          alert("Error downloading file from S3 Bucket:", err);
           return '';
       }
     }
-    makeSignedUrl("my-audio-bucket-2024", "CARNSOREMET_20220707_080200_93_96.wav");
+    if (currentReview){
+      makeSignedUrl("my-audio-bucket-2024", currentReview.birdCallData.name);
+    }
   }, [currentReview]);
-
-  if(currentReview) {
-    //let signed_url = 
-  } else {
-    console.log("No current review");
-  }
   
   return (
     <div>
