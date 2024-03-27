@@ -5,7 +5,7 @@ const itemSchema = new mongoose.Schema({
     birdCallId: { type: mongoose.Schema.Types.ObjectId, ref: 'BirdCall', required: true },
     level: { type: Number, default: 0 }, //this will be apprentice 1-4, guru etc like WaniKani
     lastReviewed: { type: Date, default: Date.now },
-    nextReviewDate: { type: Date, default: () => Date.now() + 60 * 60 * 1000 }
+    nextReviewDate: { type: Date, default: Date.now()}
   });
   
 const Item = mongoose.model('Item', itemSchema);
