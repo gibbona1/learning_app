@@ -14,8 +14,6 @@ function ReviewsPage() {
   const [reviews24HoursCount, setReviews24HoursCount] = useState(0);
 
   const [reviewsNow, setReviewsNow] = useState([]);
-  //const [reviews1Hour, setReviews1Hour] = useState([]);
-  //const [reviews24Hours, setReviews24Hours] = useState([]);
 
   async function fetchReviewCounts(userId, hours, setFn) {
     try {
