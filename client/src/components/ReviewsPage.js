@@ -61,7 +61,7 @@ function ReviewsPage() {
   return (
     <div>
       <h2>Review Counts for User {userId}</h2>
-      <p>Due now: {reviewsNowCount}</p>
+      <p>Due now: {reviewsNowCount} (minus lessons)</p>
       <p>Due in the next hour: {reviews1HourCount}</p>
       <p>Due in the next 24 hours: {reviews24HoursCount}</p>
       <button onClick={startReviewSession}>Start Reviews</button>

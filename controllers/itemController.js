@@ -102,7 +102,7 @@ exports.dueReviews = async (req, res) => {
   }
 
   const now = new Date();
-  const targetTime = new Date(now.getTime() + numHours * 60 * 60 * 1000);
+  const targetTime = new Date(now.getTime() + (numHours * 60 * 60 * 1000));
 
   try {
     const dueItems = await Item.find({
@@ -141,7 +141,7 @@ exports.countReviews = async (req, res) => {
   }
 
   const now = new Date();
-  const targetTime = new Date(now.getTime() + numHours * 60 * 60 * 1000);
+  const targetTime = new Date(now.getTime() + (numHours * 60 * 60 * 1000));
 
   try {
     const dueItemCount = await Item.countDocuments({
