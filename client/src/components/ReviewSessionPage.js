@@ -7,7 +7,8 @@ export default function ReviewSession() {
   const location = useLocation();
   const currentUserId = location.state.userId;
   const [mergedData, setMergedData] = useState([]);
-  const [signedUrl, setSignedUrl] = useState("");
+  const [audioUrl, setAudioUrl] = useState("");
+  const [specUrl, setSpecUrl] = useState("");
 
   const [currentReviewIndex, setCurrentReviewIndex] = useState(0);
   useEffect(() => {
@@ -57,7 +58,7 @@ export default function ReviewSession() {
   const currentReview = mergedData[currentReviewIndex];
 
   useEffect(() => {
-    async function makeSignedUrl(bucketName, objectKey) {
+    async function makeSignedUrl(bucketName, objectKey, setFn) {
       try {
           const client = new S3Client({region: process.env.REACT_APP_AWS_DEFAULT_REGION,
             credentials: {accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
@@ -68,14 +69,15 @@ export default function ReviewSession() {
               Key: objectKey,
           });
           const signedUrl = await getSignedUrl(client, command, { expiresIn: 3600 });
-          setSignedUrl(signedUrl);
+          setFn(signedUrl);
       } catch (err) {
           alert("Error downloading file from S3 Bucket:", err);
           return '';
       }
     }
     if (currentReview){
-      makeSignedUrl("my-audio-bucket-2024", currentReview.birdCallData.name);
+      makeSignedUrl("my-audio-bucket-2024", currentReview.birdCallData.name, setAudioUrl);
+      makeSignedUrl("my-audio-bucket-2024", `spectrograms/${currentReview.birdCallData.name.slice(0, -4)}.png`, setSpecUrl);
     }
   }, [currentReview]);
   
@@ -86,7 +88,8 @@ export default function ReviewSession() {
           <h3>{currentReview.birdCallData.name}</h3>
           <p>Class: {currentReview.birdCallData.class}</p>
           <p>Level: {currentReview.birdCallData.level}</p>
-          <audio controls src={signedUrl}>
+          <img src={specUrl} alt="Spectrogram"/>
+          <audio controls src={audioUrl}>
             Your browser does not support the audio element.
           </audio>
           <button onClick={goToNextReview}>Next Review</button>

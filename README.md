@@ -47,11 +47,11 @@ TODOs:
 - [ ] get Birdcall mnemonics
 - [ ] open database of bird images (possible hint)
 - [ ] navigation tabs/buttons
-- [ ] modern stylling
+- [ ] modern styling
 - [ ] Testing scripts
         - [ ] each api call
         - [ ] aws connect
-- [ ] Connect to AWS to load sounds
+- [x] Connect to AWS to load sounds
 - [x] lesson unlock
 - [ ] Review scheduler
 - [ ] Level progression timing
