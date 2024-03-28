@@ -7,7 +7,7 @@ TODOs:
         - [x] UI [display audio, spectrogram, metadata]
         - [ ] text box for answer
         - [ ] disable next review button until answered
-        - [ ] prev review, disable if first etc
+        - [x] prev review, disable if first etc
         - [ ] multiple choice
         - [ ] create new review whether correct or incorrect with associated times etc.
     - [ ] ungradedSession (select some items to review, no change to items)

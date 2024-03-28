@@ -113,11 +113,11 @@ export default function LessonSession() {
           <p>Class: {currentLesson.birdCallData.class}</p>
           <p>Level: {currentLesson.birdCallData.level}</p>
           <img src={specUrl} alt="Spectrogram"/><br/>
-          <button onClick={goToPreviousLesson}>Previous Lesson</button>
+          <button onClick={goToPreviousLesson} disabled={currentIndex === 0}>Previous Lesson</button>
           <audio controls src={audioUrl}>
             Your browser does not support the audio element.
           </audio>
-          <button onClick={goToNextLesson}>Next Lesson</button>
+          <button onClick={goToNextLesson} disabled={currentIndex === mergedData.length - 1}>Next Lesson</button>
         </>
       ) : (
         <p>No more lessons.</p>

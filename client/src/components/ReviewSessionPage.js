@@ -10,7 +10,7 @@ export default function ReviewSession() {
   const [audioUrl, setAudioUrl] = useState("");
   const [specUrl, setSpecUrl] = useState("");
 
-  const [currentReviewIndex, setCurrentReviewIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(0);
   useEffect(() => {
     const fetchReviews = fetch(`/api/items/${currentUserId}/0`)
     .then(response => {
@@ -52,14 +52,14 @@ export default function ReviewSession() {
   }
 
   function goToNextReview() {
-    setCurrentReviewIndex(prevIndex => prevIndex + 1);
+    setCurrentIndex(prevIndex => prevIndex + 1);
   }
 
   function goToPreviousReview() {
-    setCurrentReviewIndex(prevIndex => prevIndex - 1);
+    setCurrentIndex(prevIndex => prevIndex - 1);
   }
 
-  const currentReview = mergedData[currentReviewIndex];
+  const currentReview = mergedData[currentIndex];
 
   useEffect(() => {
     async function makeSignedUrl(bucketName, objectKey, setFn) {
@@ -93,11 +93,11 @@ export default function ReviewSession() {
           <p>Class: {currentReview.birdCallData.class}</p>
           <p>Level: {currentReview.birdCallData.level}</p>
           <img src={specUrl} alt="Spectrogram"/><br/>
-          <button onClick={goToPreviousReview}>Previous Review</button>
+          <button onClick={goToPreviousReview} disabled={currentIndex === 0}>Previous Review</button>
           <audio controls src={audioUrl}>
             Your browser does not support the audio element.
           </audio>
-          <button onClick={goToNextReview}>Next Review</button>
+          <button onClick={goToNextReview} disabled={currentIndex === mergedData.length - 1}>Next Review</button>
         </>
       ) : (
         <p>No more reviews.</p>
