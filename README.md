@@ -11,20 +11,21 @@ TODOs:
         - [ ] multiple choice (hint)
         - [x] create new review whether correct or incorrect with associated times etc.
     - [ ] ungradedSession (select some items to review, no change to items)
-    - [ ] projections
     - [ ] make sure user can't go over max level, same with item
 - [ ] All CRUD and api endpoints
-    - [x] birdCalls 
+    - [ ] birdCalls 
         - [x] get all
         - [x] search by id
         - [x] get specific (level, class)
-    - [x] users 
+        - [ ] mnemonic, scientific name, other metadata and info fields
+    - [ ] users 
         - [x] get all
         - [x] search by id
         - [x] get specific (username, email)
         - [x] update (e.g. level)
         - [x] delete 
         - [x] level up
+        - [ ] levelData field to append level started dates
     - [x] userLevel 
         - [x] get all
         - [x] search by id
@@ -38,6 +39,8 @@ TODOs:
         - [x] update (level, reviewdate etc) 
             - [x] do if lesson/review complete
         - [x] delete
+            - [ ] remake lesson if deleted/reset
+        - [ ] activity history, update at points
     - [x] itemLevel
         - [x] get all
         - [x] get by id
@@ -48,6 +51,7 @@ TODOs:
         - [x] move item from level 0 to 1 when done and delete lesson
         - [x] create, get all, get by id, delete
         - [x] make lesson page
+        - [ ] recreate if item reset
 - [ ] Modularize common scripts
 - [ ] Get Birdcall mnemonics
 - [ ] Open database of bird images (possible hint)
@@ -62,3 +66,7 @@ TODOs:
 - [ ] Level progression timing
 - [ ] Lesson creator (teacher, admin) probably just permissions based
 - [ ] Assign students to teacher (classroom model perhaps)
+- [ ] Stats:
+    - [ ] upcoming reviews by hour next 24 hours
+    - [ ] show activity (last 24 hours, average per hour in lifetime)
+    - [ ] projections for finishing level
