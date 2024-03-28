@@ -10,6 +10,23 @@ export default function ReviewSession() {
   const [mergedData, setMergedData] = useState([]);
   const [audioUrl, setAudioUrl] = useState("");
   const [specUrl, setSpecUrl] = useState("");
+  const [inputValue, setInputValue] = useState('');
+  const [validationState, setValidationState] = useState(''); // 'correct', 'incorrect', or ''
+
+  const handleInputChange = (event) => {
+    setInputValue(event.target.value);
+    setValidationState(''); // Reset validation state on input change
+  };
+
+  const handleCheck = () => {
+    // Implement your "close enough" logic here if needed
+    //alert(inputValue.trim().toLowerCase() + "-" + currentReview.birdCallData.class.toLowerCase());
+    if (inputValue.trim().toLowerCase() === currentReview.birdCallData.class.toLowerCase()) {
+      setValidationState('correct');
+    } else {
+      setValidationState('incorrect');
+    }
+  };
 
   const [currentIndex, setCurrentIndex] = useState(0);
   useEffect(() => {
@@ -100,6 +117,14 @@ export default function ReviewSession() {
             Your browser does not support the audio element.
           </audio>
           <button onClick={goToNextReview} disabled={currentIndex === mergedData.length - 1}>Next Review</button>
+          <br/>
+          <input
+            type="text"
+            value={inputValue}
+            onChange={handleInputChange}
+            style={{ borderColor: validationState === 'correct' ? 'green' : validationState === 'incorrect' ? 'red' : '' }}
+          />
+          <button onClick={handleCheck}>Enter</button>
         </>
       ) : (
         <p>No more reviews.</p>
