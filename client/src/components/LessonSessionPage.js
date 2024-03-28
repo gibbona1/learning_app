@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import NavBar from './NavBar';
 const { S3Client, GetObjectCommand } = require("@aws-sdk/client-s3");
 const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
 
@@ -138,6 +139,7 @@ export default function LessonSession() {
     <div>
       {currentLesson ? (
         <>
+          <NavBar />
           <h3>{currentLesson.birdCallData.name} ({currentIndex+1}/{mergedData.length})</h3>
           <p>ID: {currentLesson._id}</p>
           <p>Class: {currentLesson.birdCallData.class}</p>

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import NavBar from './NavBar';
 
 function ReviewsPage() {
   const userId = '65fcc504b999225e008c71c5';
@@ -38,6 +39,7 @@ function ReviewsPage() {
   // Render the review counts
   return (
     <div>
+      <NavBar />
       <h2>Lesson Counts for User {userId}</h2>
         <p>Lessons: {LessonsCount}</p>
       <button onClick={startLessonSession}>Start Lessons</button>

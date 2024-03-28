@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import NavBar from './NavBar';
 
 function ReviewsPage() {
   const userId = '65fcc504b999225e008c71c5';
@@ -60,6 +61,7 @@ function ReviewsPage() {
   // Render the review counts
   return (
     <div>
+      <NavBar />
       <h2>Review Counts for User {userId}</h2>
       <p>Due now: {reviewsNowCount} (minus lessons)</p>
       <p>Due in the next hour: {reviews1HourCount}</p>

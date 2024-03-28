@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import NavBar from './NavBar';
 
 function UserPage() {
   const [users, setUsers] = useState([]);
@@ -27,6 +28,7 @@ function UserPage() {
 
   return (
     <div>
+      <NavBar />
       <h2>User Page</h2>
       <table>
         <thead>

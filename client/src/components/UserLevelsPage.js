@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import NavBar from './NavBar';
 
 function UserLevelsPage() {
   const [userLevels, setUserLevels] = useState([]);
@@ -28,6 +29,7 @@ function UserLevelsPage() {
 
   return (
     <div>
+      <NavBar />
       <h2>User Page</h2>
       <table>
         <thead>

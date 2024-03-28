@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import NavBar from './NavBar';
 
 function BirdCallsPage() {
   const [birdCalls, setBirdCalls] = useState([]);
@@ -28,6 +29,7 @@ function BirdCallsPage() {
 
   return (
     <div>
+      <NavBar />
       <h2>Bird Calls</h2>
       <table>
         <thead>
