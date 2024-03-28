@@ -4,6 +4,7 @@ import UserPage from './components/UserPage';
 import BirdCallsPage from './components/BirdCallsPage';
 import UserLevelsPage from './components/UserLevelsPage';
 import LessonsPage from './components/LessonsPage';
+import LessonSessionPage from './components/LessonSessionPage';
 import ReviewPage from './components/ReviewsPage';
 import ReviewSessionPage from './components/ReviewSessionPage';
 import NotFoundPage from './components/NotFoundPage';
@@ -17,6 +18,7 @@ export default function App() {
         <Route path="/birdcalls" element={<BirdCallsPage />} />
         <Route path="/userlevels" element={<UserLevelsPage />} />
         <Route path="/lessons" element={<LessonsPage />} />
+        <Route path="/lessonSession" element={<LessonSessionPage />} />
         <Route path="/reviews" element={<ReviewPage />} />
         <Route path="/reviewSession" element={<ReviewSessionPage />} />
         <Route path="*" element={<NotFoundPage />} />
