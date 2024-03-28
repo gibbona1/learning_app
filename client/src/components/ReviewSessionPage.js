@@ -12,6 +12,7 @@ export default function ReviewSession() {
   const [specUrl, setSpecUrl] = useState("");
   const [inputValue, setInputValue] = useState('');
   const [validationState, setValidationState] = useState(''); // 'correct', 'incorrect', or ''
+  const [submitState, setSubmitState] = useState(''); // 'submitted' or ''
 
   const handleInputChange = (event) => {
     setInputValue(event.target.value);
@@ -27,6 +28,10 @@ export default function ReviewSession() {
       setValidationState('incorrect');
     }
   };
+
+  const handleSubmit = () => {
+    setSubmitState('submitted');
+  }
 
   const [currentIndex, setCurrentIndex] = useState(0);
   useEffect(() => {
@@ -104,6 +109,9 @@ export default function ReviewSession() {
   }, [currentReview]);
 
   useEffect(() => {
+    if(submitState === ''){
+      return;
+    }
     if(validationState === 'correct'){
       fetch(`/api/items/${currentReview._id}/levelup`, {
         method: 'PUT',
@@ -145,7 +153,7 @@ export default function ReviewSession() {
         console.log('Error updating item:', error);
       });
     }
-  }, [currentReview, validationState]);
+  }, [currentReview, validationState, submitState]);
   
   return (
     <div>
@@ -156,19 +164,20 @@ export default function ReviewSession() {
           <p>Class: {currentReview.birdCallData.class}</p>
           <p>Level: {currentReview.birdCallData.level}</p>
           <img src={specUrl} alt="Spectrogram"/><br/>
-          <button onClick={goToPreviousReview} disabled={currentIndex === 0 || validationState === ''}>Previous Review</button>
+          <button onClick={goToPreviousReview} disabled={currentIndex === 0 || submitState === ''}>Previous Review</button>
           <audio controls src={audioUrl}>
             Your browser does not support the audio element.
           </audio>
-          <button onClick={goToNextReview} disabled={currentIndex === mergedData.length - 1 || validationState === ''}>Next Review</button>
+          <button onClick={goToNextReview} disabled={currentIndex === mergedData.length - 1 || submitState === ''}>Next Review</button>
           <br/>
           <input
             type="text"
             value={inputValue}
             onChange={handleInputChange}
+            onKeyDown={(e) => {if (e.key === 'Enter') handleCheck();}}
             style={{ borderColor: validationState === 'correct' ? 'green' : validationState === 'incorrect' ? 'red' : '' }}
           />
-          <button onClick={handleCheck}>Enter</button>
+          <button onClick={handleSubmit} disabled={validationState === ''}>Submit</button>
         </>
       ) : (
         <p>No more reviews.</p>
