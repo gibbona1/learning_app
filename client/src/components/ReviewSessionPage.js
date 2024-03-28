@@ -179,7 +179,7 @@ export default function ReviewSession() {
             value={inputValue}
             onChange={handleInputChange}
             onKeyDown={(e) => {if (e.key === 'Enter') handleCheck();}}
-            style={{ borderColor: validationState === 'correct' ? 'green' : validationState === 'incorrect' ? 'red' : '' }}
+            style={{ backgroundColor: validationState === 'correct' ? 'rgba(0, 255, 0, .2)' : validationState === 'incorrect' ? 'rgba(255, 0, 0, .2)' : '' }}
           />
           <button onClick={handleSubmit} disabled={validationState === ''}>Submit</button>
         </>
