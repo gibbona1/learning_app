@@ -1,17 +1,18 @@
 # learning_app
 
 TODOs:
-- [ ] remaining models
+- [ ] Remaining models
     - [x] count how many items due for review now, in next hour, next 24 hours.
     - [ ] reviewSession (combines all reviews ready for review)
         - [x] UI [display audio, spectrogram, metadata]
         - [x] text box for answer
         - [x] disable next review button until answered
         - [x] prev review, disable if first etc
-        - [ ] multiple choice
-        - [ ] create new review whether correct or incorrect with associated times etc.
+        - [ ] multiple choice (hint)
+        - [x] create new review whether correct or incorrect with associated times etc.
     - [ ] ungradedSession (select some items to review, no change to items)
     - [ ] projections
+    - [ ] make sure user can't go over max level, same with item
 - [ ] All CRUD and api endpoints
     - [x] birdCalls 
         - [x] get all
@@ -47,17 +48,17 @@ TODOs:
         - [x] move item from level 0 to 1 when done and delete lesson
         - [x] create, get all, get by id, delete
         - [x] make lesson page
-- [ ] modularize common scripts
-- [ ] get Birdcall mnemonics
-- [ ] open database of bird images (possible hint)
-- [x] navigation tabs/buttons
-- [ ] modern styling
+- [ ] Modularize common scripts
+- [ ] Get Birdcall mnemonics
+- [ ] Open database of bird images (possible hint)
+- [x] Navigation tabs/buttons
+- [ ] Modern styling
 - [ ] Testing scripts
     - [ ] each api call
     - [ ] aws connect
 - [x] Connect to AWS to load sounds
-- [x] lesson unlock
+- [x] Lesson unlock
 - [ ] Review scheduler
 - [ ] Level progression timing
-- [ ] lesson creator (teacher, admin) probably just permissions based
+- [ ] Lesson creator (teacher, admin) probably just permissions based
 - [ ] Assign students to teacher (classroom model perhaps)
