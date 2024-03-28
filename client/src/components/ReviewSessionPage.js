@@ -102,6 +102,50 @@ export default function ReviewSession() {
       makeSignedUrl("my-audio-bucket-2024", `spectrograms/${currentReview.birdCallData.name.slice(0, -4)}.png`, setSpecUrl);
     }
   }, [currentReview]);
+
+  useEffect(() => {
+    if(validationState === 'correct'){
+      fetch(`/api/items/${currentReview._id}/levelup`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        params: {'action': 'increment'}
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log('Successfully decremented item:', data);
+      })
+      .catch(error => {
+        console.log('Error updating item:', error);
+      });
+    } else if(validationState === 'incorrect'){
+      fetch(`/api/items/${currentReview._id}/levelup`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        params: {'action': 'decrement'}
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log('Successfully decremented item:', data);
+      })
+      .catch(error => {
+        console.log('Error updating item:', error);
+      });
+    }
+  }, [currentReview, validationState]);
   
   return (
     <div>
@@ -112,11 +156,11 @@ export default function ReviewSession() {
           <p>Class: {currentReview.birdCallData.class}</p>
           <p>Level: {currentReview.birdCallData.level}</p>
           <img src={specUrl} alt="Spectrogram"/><br/>
-          <button onClick={goToPreviousReview} disabled={currentIndex === 0}>Previous Review</button>
+          <button onClick={goToPreviousReview} disabled={currentIndex === 0 || validationState === ''}>Previous Review</button>
           <audio controls src={audioUrl}>
             Your browser does not support the audio element.
           </audio>
-          <button onClick={goToNextReview} disabled={currentIndex === mergedData.length - 1}>Next Review</button>
+          <button onClick={goToNextReview} disabled={currentIndex === mergedData.length - 1 || validationState === ''}>Next Review</button>
           <br/>
           <input
             type="text"

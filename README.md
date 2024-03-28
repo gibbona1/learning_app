@@ -5,8 +5,8 @@ TODOs:
     - [x] count how many items due for review now, in next hour, next 24 hours.
     - [ ] reviewSession (combines all reviews ready for review)
         - [x] UI [display audio, spectrogram, metadata]
-        - [ ] text box for answer
-        - [ ] disable next review button until answered
+        - [x] text box for answer
+        - [x] disable next review button until answered
         - [x] prev review, disable if first etc
         - [ ] multiple choice
         - [ ] create new review whether correct or incorrect with associated times etc.
@@ -35,7 +35,7 @@ TODOs:
         - [x] create (all items for new level for user)
         - [x] level up
         - [x] update (level, reviewdate etc) 
-            - [x] do if if lesson/review complete
+            - [x] do if lesson/review complete
         - [x] delete
     - [x] itemLevel
         - [x] get all
