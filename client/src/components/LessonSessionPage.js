@@ -15,41 +15,57 @@ export default function LessonSession() {
     const fetchLessons = fetch(`/api/lessons`)
     .then(response => {
         if (!response.ok) {
-          throw new Error('Network response was not ok');
+            throw new Error('Network response was not ok');
         }
         return response.json();
     })
-    //.then(data => {
-    //    const dsub = data.filter(item => item.userId === currentUserId);
-    //    return dsub;
-    //})
-    .catch (error => {
-        console.error('Error fetching lessons:', error);
-    });
-
-    const fetchBirdCalls = fetch(`/api/birdcalls`)
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      return response.json();
+    .then(data => {
+        const dsub = data.filter(lesson => lesson.userId === currentUserId);
+        return dsub; // Ensure this is an array
     })
     .catch (error => {
-    alert('Error fetching birdcalls:', error);
+        console.error('Error fetching reviews:', error);
+    });
+
+    const fetchItems = fetch(`/api/items`)
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        const dsub = data.filter(item => item.userId === currentUserId);
+        return dsub; // Ensure this is an array
+    })
+    .catch (error => {
+        console.error('Error fetching birdcalls:', error);
   });
 
-  alert("fetchLessons: " + JSON.stringify(fetchLessons) + " fetchBirdCalls: " + JSON.stringify(fetchBirdCalls));
+  const fetchBirdCalls = fetch(`/api/birdcalls`)
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .catch (error => {
+        console.error('Error fetching birdcalls:', error);
+  });
 
-  Promise.all([fetchLessons, fetchBirdCalls]).then(values => {
-    const [lessons, birdCalls] = values;
-    mergeData(lessons, birdCalls);
+  //alert("fetchReviews: " + JSON.stringify(fetchReviews) + " fetchItems: " + JSON.stringify(fetchItems) + " fetchBirdCalls: " + JSON.stringify(fetchBirdCalls));
+
+  Promise.all([fetchLessons, fetchItems, fetchBirdCalls]).then(values => {
+    const [lessons, fetchItems, birdCalls] = values;
+    mergeData(lessons, fetchItems, birdCalls);
   });
   }, [currentUserId]);
 
-  function mergeData(lessons, birdCalls) {
+  function mergeData(lessons, items, birdCalls) {
     const merged = lessons.map(lesson => {
-      const birdCallData = birdCalls.find(birdCall => birdCall._id === lesson.birdCallId);
-      return { ...lesson, birdCallData }; // Combine review with corresponding bird call data
+      const itemData = items.find(item => item._id === lesson.itemId);
+      const birdCallData = birdCalls.find(birdCall => birdCall._id === itemData.birdCallId);
+      return { ...lesson, itemData, birdCallData }; // Combine review with corresponding bird call data
     });
     setMergedData(merged);
   }
@@ -58,6 +74,7 @@ export default function LessonSession() {
     setCurrentIndex(prevIndex => prevIndex + 1);
   }
 
+  //alert(JSON.stringify(mergedData[currentIndex]));
   const currentLesson = mergedData[currentIndex];
 
   useEffect(() => {
@@ -79,7 +96,6 @@ export default function LessonSession() {
       }
     }
     if (currentLesson){
-      alert("currentLesson: " + JSON.stringify(currentLesson));
       makeSignedUrl("my-audio-bucket-2024", currentLesson.birdCallData.name, setAudioUrl);
       makeSignedUrl("my-audio-bucket-2024", `spectrograms/${currentLesson.birdCallData.name.slice(0, -4)}.png`, setSpecUrl);
     }
