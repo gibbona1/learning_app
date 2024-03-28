@@ -78,6 +78,35 @@ export default function LessonSession() {
     setCurrentIndex(prevIndex => prevIndex - 1);
   }
 
+  function finishedLesson() {
+    if (!currentLesson._id) {
+        alert('Lesson ID is not available.');
+        return;
+    }
+    //alert(JSON.stringify(currentLesson));
+    fetch(`api/lessons/${currentLesson._id}/lessonCompleted`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        alert('Lesson completed successfully:', data);
+        // Perform any additional actions on successful deletion, e.g., update UI
+        // reload page
+        window.location.reload();
+    })
+    .catch(error => {
+        alert('Error deleting lesson:', error);
+    });
+  }
+
   //alert(JSON.stringify(mergedData[currentIndex]));
   const currentLesson = mergedData[currentIndex];
 
@@ -109,7 +138,8 @@ export default function LessonSession() {
     <div>
       {currentLesson ? (
         <>
-          <h3>{currentLesson.birdCallData.name}</h3>
+          <h3>{currentLesson.birdCallData.name} ({currentIndex+1}/{mergedData.length})</h3>
+          <p>ID: {currentLesson._id}</p>
           <p>Class: {currentLesson.birdCallData.class}</p>
           <p>Level: {currentLesson.birdCallData.level}</p>
           <img src={specUrl} alt="Spectrogram"/><br/>
@@ -118,6 +148,8 @@ export default function LessonSession() {
             Your browser does not support the audio element.
           </audio>
           <button onClick={goToNextLesson} disabled={currentIndex === mergedData.length - 1}>Next Lesson</button>
+          <br/>
+          <button onClick={finishedLesson}>Mark Done</button>
         </>
       ) : (
         <p>No more lessons.</p>
