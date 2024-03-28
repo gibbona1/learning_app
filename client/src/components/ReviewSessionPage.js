@@ -127,7 +127,9 @@ export default function ReviewSession() {
         return response.json();
       })
       .then(data => {
-        console.log('Successfully decremented item:', data);
+        console.log('Successfully incremented item:', data);
+        setSubmitState('');
+        window.location.reload();
       })
       .catch(error => {
         console.log('Error updating item:', error);
@@ -148,6 +150,8 @@ export default function ReviewSession() {
       })
       .then(data => {
         console.log('Successfully decremented item:', data);
+        setSubmitState('');
+        window.location.reload();
       })
       .catch(error => {
         console.log('Error updating item:', error);
@@ -160,7 +164,7 @@ export default function ReviewSession() {
       {currentReview ? (
         <>
           <NavBar />
-          <h3>{currentReview.birdCallData.name}</h3>
+          <h3>{currentReview.birdCallData.name}  ({currentIndex+1}/{mergedData.length})</h3>
           <p>Class: {currentReview.birdCallData.class}</p>
           <p>Level: {currentReview.birdCallData.level}</p>
           <img src={specUrl} alt="Spectrogram"/><br/>
