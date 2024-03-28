@@ -50,7 +50,7 @@ TODOs:
 - [ ] modularize common scripts
 - [ ] get Birdcall mnemonics
 - [ ] open database of bird images (possible hint)
-- [ ] navigation tabs/buttons
+- [x] navigation tabs/buttons
 - [ ] modern styling
 - [ ] Testing scripts
     - [ ] each api call
