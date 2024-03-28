@@ -41,12 +41,12 @@ TODOs:
         - [x] get all
         - [x] get by id
         - [x] get specific (num, name)
-    - [ ] lesson 
-        - [ ] in UI, [display audio, spectrogram, metadata]
+    - [x] lesson 
+        - [x] in UI, [display audio, spectrogram, metadata]
         - [x] make for all current level items when levelup
         - [x] move item from level 0 to 1 when done and delete lesson
         - [x] create, get all, get by id, delete
-        - [ ] make lesson page
+        - [x] make lesson page
 - [ ] modularize common scripts
 - [ ] get Birdcall mnemonics
 - [ ] open database of bird images (possible hint)
