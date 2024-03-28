@@ -13,6 +13,7 @@ router.delete('/items/:id', itemController.deleteItem);
 router.put('/items/:id/levelup', itemController.levelUpItem);
 router.get('/items/:userId/:hours', itemController.dueReviews);
 router.get('/items/:userId/:hours/count', itemController.countReviews);
+router.get('/itemsgetbyhour/:userId', itemController.upcomingReviewsByHour)
 
 
 module.exports = router;

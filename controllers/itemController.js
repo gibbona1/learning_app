@@ -163,3 +163,41 @@ exports.countReviews = async (req, res) => {
     res.status(500).json({ message: 'Error processing request', error: error.message });
   }
 };
+
+exports.upcomingReviewsByHour = async (req, res) => {
+  const { userId } = req.params;
+
+  try {
+    let countsByHour = [];
+    const now = new Date();
+
+    for (let hour = 0; hour <= 24; hour++) {
+      const startTime = new Date(now.getTime() + ((hour - 1) * 60 * 60 * 1000));
+      const endTime = new Date(now.getTime() + ((hour) * 60 * 60 * 1000));
+
+      // Assuming Lesson counts are not time-specific and just an example. Adjust as necessary.
+      const lessonCount = await Lesson.countDocuments({
+        userId: userId
+      });
+
+      if(hour === 0) {
+        dueItemCount = await Item.countDocuments({
+          userId: userId,
+          nextReviewDate: { $lt: endTime }
+        }) - lessonCount;
+      } else {
+        dueItemCount = await Item.countDocuments({
+          userId: userId,
+          nextReviewDate: { $gte: startTime, $lt: endTime }
+        });
+      }
+
+      countsByHour.push({ hour: hour, count: dueItemCount });
+    }
+
+    res.json(countsByHour);
+  } catch (error) {
+    console.error('Error counting review items by hour:', error);
+    res.status(500).json({ message: 'Error processing request', error: error.message });
+  }
+};
