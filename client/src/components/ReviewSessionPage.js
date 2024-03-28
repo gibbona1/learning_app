@@ -55,6 +55,10 @@ export default function ReviewSession() {
     setCurrentReviewIndex(prevIndex => prevIndex + 1);
   }
 
+  function goToPreviousReview() {
+    setCurrentReviewIndex(prevIndex => prevIndex - 1);
+  }
+
   const currentReview = mergedData[currentReviewIndex];
 
   useEffect(() => {
@@ -88,7 +92,8 @@ export default function ReviewSession() {
           <h3>{currentReview.birdCallData.name}</h3>
           <p>Class: {currentReview.birdCallData.class}</p>
           <p>Level: {currentReview.birdCallData.level}</p>
-          <img src={specUrl} alt="Spectrogram"/>
+          <img src={specUrl} alt="Spectrogram"/><br/>
+          <button onClick={goToPreviousReview}>Previous Review</button>
           <audio controls src={audioUrl}>
             Your browser does not support the audio element.
           </audio>

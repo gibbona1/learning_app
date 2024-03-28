@@ -74,6 +74,10 @@ export default function LessonSession() {
     setCurrentIndex(prevIndex => prevIndex + 1);
   }
 
+  function goToPreviousLesson() {
+    setCurrentIndex(prevIndex => prevIndex - 1);
+  }
+
   //alert(JSON.stringify(mergedData[currentIndex]));
   const currentLesson = mergedData[currentIndex];
 
@@ -108,7 +112,8 @@ export default function LessonSession() {
           <h3>{currentLesson.birdCallData.name}</h3>
           <p>Class: {currentLesson.birdCallData.class}</p>
           <p>Level: {currentLesson.birdCallData.level}</p>
-          <img src={specUrl} alt="Spectrogram"/>
+          <img src={specUrl} alt="Spectrogram"/><br/>
+          <button onClick={goToPreviousLesson}>Previous Lesson</button>
           <audio controls src={audioUrl}>
             Your browser does not support the audio element.
           </audio>
