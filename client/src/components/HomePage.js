@@ -24,19 +24,27 @@ export const options = {
   responsive: true,
   plugins: {
     legend: {
-      position: 'top',
+      display: false,
     },
     title: {
       display: true,
-      text: 'Chart.js Bar Chart',
+      text: 'Review Counts by Hour',
     },
   },
+  scales: {
+    y: {
+      beginAtZero: true,
+      ticks: {
+        precision: 0, // Ensure y-axis values are integers
+      },
+    }
+  }
 };
 
 export default function HomePage() {
   const currentUserId = '65fcc504b999225e008c71c5';
-  const [countData, setCountData] = useState("");
-  const [chartData, setChartData] = useState({});
+  const [countData, setCountData] = useState([]);
+  const [chartData, setChartData] = useState([]);
 
   useEffect(() => {
     fetch(`/api/itemsgetbyhour/${currentUserId}`)
@@ -55,29 +63,25 @@ export default function HomePage() {
     });
   }, [currentUserId]);
 
+  console.log(JSON.stringify(countData));
+
   useEffect(() => {
-    if(!countData) {
-      setChartData({});
-    } else {
       const currentHour = new Date().getHours(); // Note: This gets the current hour in local time
-
-      const labels = countData.map((item) => (item.hour + currentHour) % 24);
-      const data   = countData.map((item) => item.count);
-
+      const labels = countData? countData.map((item) => (item.hour + currentHour) % 24): [];
+      const data = countData? countData.map((item) => item.count): [];
       const d = {
         labels: labels,
         datasets: [
           {
             label: 'Item Count',
             data: data,
-            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+            backgroundColor: 'rgba(255, 99, 132, 0.5)',
             borderColor: 'rgba(255, 99, 132, 1)',
             borderWidth: 1,
           },
         ],
       }
       setChartData(d);
-    }
   }, [countData]);
 
   return (
@@ -85,7 +89,7 @@ export default function HomePage() {
     <NavBar />
     <h1>Home Page</h1>
     <p>Welcome to our application!</p>
-    {countData ? (<Bar options={options} data={chartData} />) : (<p>Loading...</p>)}
+    {countData.length === 0 ? (<p>Loading...</p>) : (<Bar options={options} data={chartData} />)}
   </div>
   );
 }

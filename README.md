@@ -67,6 +67,6 @@ TODOs:
 - [ ] Lesson creator (teacher, admin) probably just permissions based
 - [ ] Assign students to teacher (classroom model perhaps)
 - [ ] Stats:
-    - [ ] upcoming reviews by hour next 24 hours
+    - [x] upcoming reviews by hour next 24 hours
     - [ ] show activity (last 24 hours, average per hour in lifetime)
     - [ ] projections for finishing level
