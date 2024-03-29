@@ -1,22 +1,13 @@
 # learning_app
 
 TODOs:
-- [ ] Remaining models
-    - [x] count how many items due for review now, in next hour, next 24 hours.
-    - [ ] reviewSession (combines all reviews ready for review)
-        - [x] UI [display audio, spectrogram, metadata]
-        - [x] text box for answer
-        - [x] disable next review button until answered
-        - [x] prev review, disable if first etc
-        - [ ] multiple choice (hint)
-        - [x] create new review whether correct or incorrect with associated times etc.
-    - [ ] ungradedSession (select some items to review, no change to items)
-    - [ ] make sure user can't go over max level, same with item
-- [ ] All CRUD and api endpoints
+- [ ] CRUD, API endpoints and React Components
     - [ ] birdCalls 
         - [x] get all
         - [x] search by id
         - [x] get specific (level, class)
+        - [ ] Get mnemonics, work on formating and how best to display
+        - [ ] Open database of bird images (possible hint)
         - [ ] mnemonic, scientific name, other metadata and info fields
     - [ ] users 
         - [x] get all
@@ -40,6 +31,7 @@ TODOs:
             - [x] do if lesson/review complete
         - [x] delete
             - [ ] remake lesson if deleted/reset
+        - [x] count how many due for review now, in next hour, next 24 hours.
         - [ ] activity history, update at points
         - [ ] item page (locked/unlocked level etc, link to lesson)
     - [x] itemLevel
@@ -52,53 +44,62 @@ TODOs:
         - [x] move item from level 0 to 1 when done and delete lesson
         - [x] create, get all, get by id, delete
         - [x] make lesson page
+        - [x] lesson unlock
         - [ ] recreate if item reset
-- [ ] Modularize common scripts
-- [ ] Get Birdcall mnemonics
-- [ ] Open database of bird images (possible hint)
-- [x] Navigation tabs/buttons
-- [ ] Modern styling
-- [ ] Testing
-        - [ ] Backend (Node.js/Express API)
-            - [ ] Unit Tests:
-                - [ ] Use Jest for testing individual functions and logic.
-                - [ ] Create mocks and stubs for external services and databases to isolate unit tests.
-            - [ ] Route/Integration Tests:
-                - [ ] Use Supertest with Jest to test your Express routes.
-                - [ ] Write tests to make HTTP requests to your API endpoints and assert the responses.
-            - [ ] Database Seed Scripts:
-                - [ ] Create scripts to seed your database with dummy data before tests.
-                - [ ] Write cleanup scripts to remove test data after testing.
-            - [ ] Mocking and Stubs:
-                - [ ] Utilize Jest to mock external modules and services.
-                - [ ] Create stubs for database interactions to avoid hitting the actual database in tests.
-            - [ ] Code Coverage:
-                - [ ] Use Istanbul (nyc) with Jest to generate code coverage reports.
-                - [ ] Aim for high code coverage while ensuring tests are meaningful.
-        - [ ] Frontend Testing (React Components)
-            - [ ] Unit and Component Tests:
-                - [ ] Use Jest and React Testing Library to test individual components.
-                - [ ] Test component rendering and user interactions.
-            - [ ] Mocking Hooks and Contexts:
-                - [ ] Mock custom hooks and context providers if necessary to isolate components for testing.
-            - [ ] Snapshot Testing:
-                - [ ] Optionally use Jest's snapshot testing to ensure UI does not change unexpectedly.
-        - [ ] End-to-End Testing
-            - [ ] Cypress or Puppeteer:
-                - [ ] Set up Cypress or Puppeteer for end-to-end testing.
-                - [ ] Write tests that simulate real user interactions from the frontend through to the backend.
-        - [ ] Continuous Integration and Continuous Deployment (CI/CD)
-            - [ ] Setup CI/CD Pipeline:
-                - [ ] Use tools like GitHub Actions, GitLab CI/CD, or CircleCI.
-                - [ ] Configure the pipeline to run tests on every push or pull request.
-                - [ ] Automate deployment on successful builds/tests to staging or production environments.
-- [x] Connect to AWS to load sounds
-- [x] Lesson unlock
-- [ ] Review scheduler
-- [ ] Level progression timing
-- [ ] Lesson creator (teacher, admin) probably just permissions based
-- [ ] Assign students to teacher (classroom model perhaps)
+    - [ ] reviewSession (combines all reviews ready for review)
+        - [x] UI [display audio, spectrogram, metadata]
+        - [x] text box for answer
+        - [x] disable next review button until answered
+        - [x] prev review, disable if first etc
+        - [ ] multiple choice (hint)
+        - [x] create new review whether correct or incorrect with associated times etc.
+    - [ ] ungradedSession (select some items to review, no change to items)
+    - [ ] Review scheduler
+    - [ ] Lesson creator (teacher, admin) probably just permissions based
+    - [ ] Assign students to teacher (classroom model perhaps)
+    - [ ] general components
+        - [x] Navigation tabs/buttons
+        - [x] Connect to AWS to load sounds
+        - [ ] make sure user can't go over max level, same with item. need to have way to make date blank
+        - [ ] Modularize common scripts
+        - [ ] Modern styling
+
 - [ ] Stats:
     - [x] upcoming reviews by hour next 24 hours
     - [ ] show activity (last 24 hours, average per hour in lifetime)
-    - [ ] projections for finishing level
+    - [ ] Level progression timing, projections for finishing level
+
+- [ ] Testing
+    - [ ] Backend (Node.js/Express API)
+        - [ ] Unit Tests:
+            - [ ] Use Jest for testing individual functions and logic.
+            - [ ] Create mocks and stubs for external services and databases to isolate unit tests.
+        - [ ] Route/Integration Tests:
+            - [ ] Use Supertest with Jest to test your Express routes.
+            - [ ] Write tests to make HTTP requests to your API endpoints and assert the responses.
+        - [ ] Database Seed Scripts:
+            - [ ] Create scripts to seed your database with dummy data before tests.
+            - [ ] Write cleanup scripts to remove test data after testing.
+        - [ ] Mocking and Stubs:
+            - [ ] Utilize Jest to mock external modules and services.
+            - [ ] Create stubs for database interactions to avoid hitting the actual database in tests.
+        - [ ] Code Coverage:
+            - [ ] Use Istanbul (nyc) with Jest to generate code coverage reports.
+            - [ ] Aim for high code coverage while ensuring tests are meaningful.
+    - [ ] Frontend Testing (React Components)
+        - [ ] Unit and Component Tests:
+            - [ ] Use Jest and React Testing Library to test individual components.
+            - [ ] Test component rendering and user interactions.
+        - [ ] Mocking Hooks and Contexts:
+            - [ ] Mock custom hooks and context providers if necessary to isolate components for testing.
+        - [ ] Snapshot Testing:
+            - [ ] Optionally use Jest's snapshot testing to ensure UI does not change unexpectedly.
+    - [ ] End-to-End Testing
+        - [ ] Cypress or Puppeteer:
+            - [ ] Set up Cypress or Puppeteer for end-to-end testing.
+            - [ ] Write tests that simulate real user interactions from the frontend through to the backend.
+    - [ ] Continuous Integration and Continuous Deployment (CI/CD)
+        - [ ] Setup CI/CD Pipeline:
+            - [ ] Use tools like GitHub Actions, GitLab CI/CD, or CircleCI.
+            - [ ] Configure the pipeline to run tests on every push or pull request.
+            - [ ] Automate deployment on successful builds/tests to staging or production environments.
