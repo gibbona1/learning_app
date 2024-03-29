@@ -41,6 +41,7 @@ TODOs:
         - [x] delete
             - [ ] remake lesson if deleted/reset
         - [ ] activity history, update at points
+        - [ ] item page (locked/unlocked level etc, link to lesson)
     - [x] itemLevel
         - [x] get all
         - [x] get by id
@@ -57,9 +58,40 @@ TODOs:
 - [ ] Open database of bird images (possible hint)
 - [x] Navigation tabs/buttons
 - [ ] Modern styling
-- [ ] Testing scripts
-    - [ ] each api call
-    - [ ] aws connect
+- [ ] Testing
+        - [ ] Backend (Node.js/Express API)
+            - [ ] Unit Tests:
+                - [ ] Use Jest for testing individual functions and logic.
+                - [ ] Create mocks and stubs for external services and databases to isolate unit tests.
+            - [ ] Route/Integration Tests:
+                - [ ] Use Supertest with Jest to test your Express routes.
+                - [ ] Write tests to make HTTP requests to your API endpoints and assert the responses.
+            - [ ] Database Seed Scripts:
+                - [ ] Create scripts to seed your database with dummy data before tests.
+                - [ ] Write cleanup scripts to remove test data after testing.
+            - [ ] Mocking and Stubs:
+                - [ ] Utilize Jest to mock external modules and services.
+                - [ ] Create stubs for database interactions to avoid hitting the actual database in tests.
+            - [ ] Code Coverage:
+                - [ ] Use Istanbul (nyc) with Jest to generate code coverage reports.
+                - [ ] Aim for high code coverage while ensuring tests are meaningful.
+        - [ ] Frontend Testing (React Components)
+            - [ ] Unit and Component Tests:
+                - [ ] Use Jest and React Testing Library to test individual components.
+                - [ ] Test component rendering and user interactions.
+            - [ ] Mocking Hooks and Contexts:
+                - [ ] Mock custom hooks and context providers if necessary to isolate components for testing.
+            - [ ] Snapshot Testing:
+                - [ ] Optionally use Jest's snapshot testing to ensure UI does not change unexpectedly.
+        - [ ] End-to-End Testing
+            - [ ] Cypress or Puppeteer:
+                - [ ] Set up Cypress or Puppeteer for end-to-end testing.
+                - [ ] Write tests that simulate real user interactions from the frontend through to the backend.
+        - [ ] Continuous Integration and Continuous Deployment (CI/CD)
+            - [ ] Setup CI/CD Pipeline:
+                - [ ] Use tools like GitHub Actions, GitLab CI/CD, or CircleCI.
+                - [ ] Configure the pipeline to run tests on every push or pull request.
+                - [ ] Automate deployment on successful builds/tests to staging or production environments.
 - [x] Connect to AWS to load sounds
 - [x] Lesson unlock
 - [ ] Review scheduler
