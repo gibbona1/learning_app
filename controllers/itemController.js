@@ -76,7 +76,14 @@ exports.levelUpItem = async (req, res) => {
       return res.status(404).json({ message: 'Item not found' });
     }
 
+    const maxItemLevel = await ItemLevel.find().sort({ num: -1 }).limit(1);
+    const maxLevel = maxItemLevel[0].num; // Extracting the num field from the max item level document
+
     if (action === 'increment') {
+      if (item.level >= maxLevel) {
+        // Item is already at or above the maximum level, can't increment
+        return res.status(400).json({ message: "Can't level up item, already at max level" });
+      }
       item.level += 1;
     } else if (action === 'decrement' && item.level > 1) { // Assuming level cannot go below 1
       item.level -= 1;
