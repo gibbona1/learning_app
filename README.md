@@ -60,7 +60,7 @@ TODOs:
     - [ ] general components
         - [x] Navigation tabs/buttons
         - [x] Connect to AWS to load sounds
-        - [ ] make sure user can't go over max level, same with item. need to have way to make date blank
+        - [x] make sure user can't go over max level, same with item. need to have way to make date blank
         - [ ] Modularize common scripts
         - [ ] Modern styling
 

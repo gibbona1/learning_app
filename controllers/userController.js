@@ -4,6 +4,7 @@ const User = require('../models/user');
 const BirdCall = require('../models/birdCall');
 const Item = require('../models/item');
 const Lesson = require('../models/lesson');
+const UserLevel = require('../models/userLevel');
 const bcrypt = require('bcrypt');
 
 exports.createUser = async (req, res) => {
@@ -72,6 +73,14 @@ exports.levelUpUser = async (req, res) => {
     const user = await User.findById(userId);
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
+    }
+
+    const maxUserLevel = await UserLevel.find().sort({ levelNumber: -1 }).limit(1);
+    const maxLevel = maxUserLevel[0].levelNumber; // Extracting the num field from the max item level document
+
+    if (user.level >= maxLevel) {
+      // Item is already at or above the maximum level, can't increment
+      return res.status(400).json({ message: "Can't level up user, already at max level" });
     }
     user.level += 1; // Increment the level
     await user.save();
