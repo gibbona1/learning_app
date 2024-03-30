@@ -58,16 +58,11 @@ export const levelOptions = {
     tooltip: {
       callbacks: {
         label: function(context) {
-          const durationInDays = context.raw; // Assuming the raw value is the duration in days
-          const days = Math.floor(durationInDays);
-          const hours = Math.floor((durationInDays - days) * 24);
-          const minutes = Math.round(((durationInDays - days) * 24 - hours) * 60);
-
           let label = context.dataset.label || '';
           if (label) {
             label += ': ';
           }
-          label += `${days} days, ${hours} hours, ${minutes} mins`;
+          label +=  calc_dhm(context.raw);
           return label;
         }
       }
