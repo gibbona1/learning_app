@@ -32,7 +32,7 @@ TODOs:
         - [x] delete
             - [ ] remake lesson if deleted/reset
         - [x] count how many due for review now, in next hour, next 24 hours.
-        - [ ] activity history, update at points
+        - [ ] activity history, update at points, calculate % accuracy
         - [ ] item page (locked/unlocked level etc, link to lesson)
     - [x] itemLevel
         - [x] get all

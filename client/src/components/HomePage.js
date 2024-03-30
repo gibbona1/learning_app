@@ -5,16 +5,20 @@ import {
   CategoryScale,
   LinearScale,
   BarElement,
+  PointElement,
+  LineElement,
   Title,
   Tooltip,
   Legend,
 } from 'chart.js';
-import { Bar } from 'react-chartjs-2';
+import { Bar, Line } from 'react-chartjs-2';
 
 ChartJS.register(
   CategoryScale,
   LinearScale,
   BarElement,
+  PointElement,
+  LineElement,
   Title,
   Tooltip,
   Legend
@@ -152,14 +156,25 @@ export default function HomePage() {
   useEffect(() => {
     const data   = levelData? levelData.map((item) => (item.duration)): [];
     const labels = levelData? levelData.map((item) => (`Level ${item.level}`)): [];
+    const averageDuration = levelData? Array(data.length).fill(data.reduce((sum, current) => sum + current, 0) / data.length): [];
+
     const d = {
       labels: labels,
       datasets: [
         {
+          type: 'bar',
           label: 'Item Count',
           data: data,
           backgroundColor: 'rgba(255, 99, 132, 0.5)',
           borderColor: 'rgba(255, 99, 132, 1)',
+          borderWidth: 1,
+        },
+        {
+          type: 'line',
+          label: 'Average Duration',
+          data: averageDuration,
+          backgroundColor: 'rgba(54, 162, 235, 0.5)',
+          borderColor: 'rgba(54, 162, 235, 1)',
           borderWidth: 1,
         },
       ],
@@ -174,7 +189,7 @@ export default function HomePage() {
     <p>Welcome to our application!</p>
     {countData.length === 0 ? (<p>Loading...</p>) : (<Bar options={countOptions} data={countChartData} />)}
     <hr />
-    {levelData.length === 0 ? (<p>Loading...</p>) : (<Bar options={levelOptions} data={LevelChartData} />)}
+    {levelData.length === 0 ? (<p>Loading...</p>) : (<Line options={levelOptions} data={LevelChartData} />)}
   </div>
   );
 }
