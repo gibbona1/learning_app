@@ -12,6 +12,7 @@ exports.createUser = async (req, res) => {
     const { username, email, password, role } = req.body;
     const passwordHash = await bcrypt.hash(password, 10);
     const user = new User({ username, email, passwordHash, role });
+    user.levelData.push({level: 0, startDate: user.registrationDate});
     await user.save();
     res.status(201).json({ message: 'User created successfully', user });
   } catch (error) {
