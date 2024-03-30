@@ -75,6 +75,7 @@ exports.levelUpItem = async (req, res) => {
     if (!item) {
       return res.status(404).json({ message: 'Item not found' });
     }
+    const now = new Date();
 
     const maxItemLevel = await ItemLevel.find().sort({ num: -1 }).limit(1);
     const maxLevel = maxItemLevel[0].num; // Extracting the num field from the max item level document
@@ -91,10 +92,32 @@ exports.levelUpItem = async (req, res) => {
         return res.status(400).json({ message: "Can't level down item, already at min level" });
       }
       item.level -= 1;
+    } else if (action === 'reset') {
+      //do reset
+      item.level = 1;
+    } else {
+      return res.status(400).json({ message: 'Invalid action' });
+    }
+
+    let activity;
+    if (action === 'increment' && item.level === maxLevel) {
+      activity = 'complete';
+    } else if (action === 'increment') {
+      activity = 'level-up';
+    } else if (action === 'decrement') {
+      activity = 'level-down';
+    } else if (action === 'reset') {
+      activity = 'reset';
     }
 
     const itemLevel = await ItemLevel.findOne({ num: item.level });
-    item.nextReviewDate = new Date(Date.now() + (60 * 60 * 1000 * itemLevel.timeToNext)).setMinutes(0, 0, 0); // Set the next review date to 1 hour from now
+    item.nextReviewDate = new Date(now + (60 * 60 * 1000 * itemLevel.timeToNext)).setMinutes(0, 0, 0); // Set the next review date to 1 hour from now
+
+    item.activity.push({
+      type: activity,
+      date: now // Current date/time
+    });
+
     await item.save();
 
     res.status(200).json({ message: 'Item level updated successfully', item });

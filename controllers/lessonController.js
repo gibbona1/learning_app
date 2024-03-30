@@ -59,10 +59,15 @@ exports.lessonCompleted = async (req, res) => {
     if (!lesson) {
       return res.status(404).json({ message: 'Lesson not found' });
     }
-
+    const now = new Date();
     const item = await Item.findById(lesson.itemId);
     item.level += 1; // Increment the level
-    item.nextReviewDate =  new Date(Date.now() + (60 * 60 * 1000)).setMinutes(0, 0, 0); // Set the next review date to 1 hour from now
+    item.nextReviewDate =  new Date(now + (60 * 60 * 1000)).setMinutes(0, 0, 0); // Set the next review date to 1 hour from now
+
+    item.activity.push({
+      type: 'lesson-complete',
+      date: now // Current date/time
+    });
     await item.save();
 
     // Step 2: delete lesson

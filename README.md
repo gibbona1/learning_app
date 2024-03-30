@@ -32,7 +32,6 @@ TODOs:
         - [x] delete
             - [ ] remake lesson if deleted/reset
         - [x] count how many due for review now, in next hour, next 24 hours.
-        - [ ] activity history, update at points, calculate % accuracy
         - [ ] item page (locked/unlocked level etc, link to lesson)
     - [x] itemLevel
         - [x] get all
@@ -63,8 +62,8 @@ TODOs:
         - [x] make sure user can't go over max level, same with item. need to have way to make date blank
         - [ ] Modularize common scripts
         - [ ] Modern styling
-    - [ ] Activity field of Item
-        - [ ] started/lesson-complete (date), levelup/correct (to/from, date), leveldown/incorrect (to/from, date), complete
+    - [ ] Activity/history field of Item
+        - [ ] name: [started/lesson-complete, level-up/correct level-down/incorrect, complete, reset], date.
         - [ ] calculate stats
         - [ ] plot levelups/downs, lesson
 
