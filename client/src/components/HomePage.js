@@ -87,12 +87,21 @@ export const levelOptions = {
   }
 };
 
+export function calc_dhm(durationInDays){
+  const days = Math.floor(durationInDays);
+  const hours = Math.floor((durationInDays - days) * 24);
+  const minutes = Math.round(((durationInDays - days) * 24 - hours) * 60);
+
+  return `${days} days, ${hours} hours, ${minutes} mins`;
+}
+
 export default function HomePage() {
   const currentUserId = '66080d78dd6882236da18623';
   const [countData, setCountData] = useState([]);
   const [countChartData, setCountChartData] = useState([]);
   const [levelData, setLevelData] = useState([]);
   const [LevelChartData, setLevelChartData] = useState([]);
+  const [averageDuration, setAverageDuration] = useState([]);
 
   useEffect(() => {
     fetch(`/api/itemsgetbyhour/${currentUserId}`)
@@ -121,13 +130,14 @@ export default function HomePage() {
     })
     .then(user => {
       const now = new Date(); // Current date/time
-      const levelDurations = user.levelData.map(level => ({
+      const data = user.levelData.map(level => ({
         level: level.level,
         // Use endDate if it exists; otherwise, use current date/time
         duration: (new Date(level.endDate || now) - new Date(level.startDate)) / (1000 * 60 * 60 * 24) // Convert to days
       }));
-  
-      setLevelData(levelDurations);
+      const avg = Array(data.length).fill(data.reduce((sum, current) => sum + current.duration, 0) / data.length);
+      setLevelData(data);
+      setAverageDuration(avg);
     })
     .catch (error => {
     console.error('Error fetching user:', error);
@@ -156,7 +166,6 @@ export default function HomePage() {
   useEffect(() => {
     const data   = levelData? levelData.map((item) => (item.duration)): [];
     const labels = levelData? levelData.map((item) => (`Level ${item.level}`)): [];
-    const averageDuration = levelData? Array(data.length).fill(data.reduce((sum, current) => sum + current, 0) / data.length): [];
 
     const d = {
       labels: labels,
@@ -180,7 +189,7 @@ export default function HomePage() {
       ],
     }
     setLevelChartData(d);
-  }, [levelData]);
+  }, [levelData, averageDuration]);
 
   return (
   <div>
@@ -190,6 +199,8 @@ export default function HomePage() {
     {countData.length === 0 ? (<p>Loading...</p>) : (<Bar options={countOptions} data={countChartData} />)}
     <hr />
     {levelData.length === 0 ? (<p>Loading...</p>) : (<Line options={levelOptions} data={LevelChartData} />)}
+    <hr />
+    {averageDuration.length === 0 ? (<p>Loading...</p>) : (`Average duration: ${calc_dhm(averageDuration[0])}`)}
   </div>
   );
 }
