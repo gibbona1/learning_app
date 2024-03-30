@@ -16,7 +16,7 @@ TODOs:
         - [x] update (e.g. level)
         - [x] delete 
         - [x] level up
-        - [ ] levelData field to append level started dates
+        - [x] levelData field to append level started dates
     - [x] userLevel 
         - [x] get all
         - [x] search by id
@@ -67,7 +67,8 @@ TODOs:
 - [ ] Stats:
     - [x] upcoming reviews by hour next 24 hours
     - [ ] show activity (last 24 hours, average per hour in lifetime)
-    - [ ] Level progression timing, projections for finishing level
+    - [x] Level progression timing
+    - [ ] projections for finishing level
 
 - [ ] Testing
     - [ ] Backend (Node.js/Express API)

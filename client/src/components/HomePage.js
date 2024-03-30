@@ -51,6 +51,23 @@ export const levelOptions = {
       display: true,
       text: 'Levelup Times',
     },
+    tooltip: {
+      callbacks: {
+        label: function(context) {
+          const durationInDays = context.raw; // Assuming the raw value is the duration in days
+          const days = Math.floor(durationInDays);
+          const hours = Math.floor((durationInDays - days) * 24);
+          const minutes = Math.round(((durationInDays - days) * 24 - hours) * 60);
+
+          let label = context.dataset.label || '';
+          if (label) {
+            label += ': ';
+          }
+          label += `${days} days, ${hours} hours, ${minutes} mins`;
+          return label;
+        }
+      }
+    }
   },
   scales: {
     y: {
@@ -63,12 +80,6 @@ export const levelOptions = {
         text: 'Days',
       },
     },
-    x: { // Setting title for X-axis
-      title: {
-        display: true,
-        text: 'Level', // X-axis title
-      },
-    }
   }
 };
 
@@ -121,7 +132,7 @@ export default function HomePage() {
 
   useEffect(() => {
     const currentHour = new Date().getHours(); // Note: This gets the current hour in local time
-    const labels = countData? countData.map((item) => (item.hour + currentHour) % 24): [];
+    const labels = countData? countData.map((item) => `${(item.hour + currentHour) % 24}:00`): [];
     const data = countData? countData.map((item) => item.count): [];
     const d = {
       labels: labels,
@@ -140,7 +151,7 @@ export default function HomePage() {
 
   useEffect(() => {
     const data   = levelData? levelData.map((item) => (item.duration)): [];
-    const labels = levelData? levelData.map((item) => (item.level)): [];
+    const labels = levelData? levelData.map((item) => (`Level ${item.level}`)): [];
     const d = {
       labels: labels,
       datasets: [
@@ -162,6 +173,7 @@ export default function HomePage() {
     <h1>Home Page</h1>
     <p>Welcome to our application!</p>
     {countData.length === 0 ? (<p>Loading...</p>) : (<Bar options={countOptions} data={countChartData} />)}
+    <hr />
     {levelData.length === 0 ? (<p>Loading...</p>) : (<Bar options={levelOptions} data={LevelChartData} />)}
   </div>
   );
