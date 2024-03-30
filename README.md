@@ -68,7 +68,7 @@ TODOs:
     - [x] upcoming reviews by hour next 24 hours
     - [ ] show activity (last 24 hours, average per hour in lifetime)
     - [x] Level progression timing
-    - [ ] projections for finishing level
+    - [x] projections for finishing level
 
 - [ ] Testing
     - [ ] Backend (Node.js/Express API)

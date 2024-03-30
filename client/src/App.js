@@ -7,6 +7,7 @@ import LessonsPage from './components/LessonsPage';
 import LessonSessionPage from './components/LessonSessionPage';
 import ReviewPage from './components/ReviewsPage';
 import ReviewSessionPage from './components/ReviewSessionPage';
+import StatsPage from './components/StatsPage';
 import NotFoundPage from './components/NotFoundPage';
 
 export default function App() {
@@ -21,6 +22,7 @@ export default function App() {
         <Route path="/lessonSession" element={<LessonSessionPage />} />
         <Route path="/reviews" element={<ReviewPage />} />
         <Route path="/reviewSession" element={<ReviewSessionPage />} />
+        <Route path="/stats" element={<StatsPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </Router>
