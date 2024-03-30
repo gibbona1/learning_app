@@ -130,3 +130,45 @@ exports.levelUpUser = async (req, res) => {
     res.status(500).json({ message: 'Error leveling up user', error: error.message });
   }
 };
+
+exports.projectLevelUp = async (req, res) => {
+  const { id: userId } = req.params; // Extract the user ID from the request parameters
+
+  try {
+    // Step 1: Update the user to the next level
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    now = new Date();
+    
+    // check if last user levelData is completed
+    if(typeof(user.levelData[user.level].endDate) !== 'undefined'){
+      return res.status(201).json({ message: "Last level data is completed"});
+    } 
+
+    //get all leveldata except last
+    let levelData = user.levelData.slice(0, -1);
+
+    const durationData = levelData.map(level => ({
+      level: level.level,
+      // Use endDate if it exists; otherwise, use current date/time
+      duration: (new Date(level.endDate || now) - new Date(level.startDate)) / (1000 * 60 * 60 * 24) // Convert to days
+    }));
+
+    //get average of all levelData durations except the last
+    let avg = durationData.reduce((sum, current) => sum + current.duration, 0) / durationData.length;
+    
+    //now get time from last item's startdate and now
+    let duration = (now - user.levelData[user.level].startDate) / (1000 * 60 * 60 * 24); // Convert to days
+
+    // if duration is more than average, set proj to 0, else set to average - duration
+    let proj = duration > avg ? 0 : avg - duration;
+
+    res.status(200).json({ projection: proj });
+
+  } catch (error) {
+    res.status(500).json({ message: 'Error projecting levelup for user', error: error.message });
+  }
+}

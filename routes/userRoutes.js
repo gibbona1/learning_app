@@ -10,5 +10,6 @@ router.get('/users/:id', userController.getUser);
 router.put('/users/:id', userController.updateUser);
 router.delete('/users/:id', userController.deleteUser);
 router.put('/users/:id/levelUp', userController.levelUpUser);
+router.put('/users/:id/projectLevelUp', userController.projectLevelUp);
 
 module.exports = router;
