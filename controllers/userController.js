@@ -79,18 +79,36 @@ exports.levelUpUser = async (req, res) => {
     const maxUserLevel = await UserLevel.find().sort({ levelNumber: -1 }).limit(1);
     const maxLevel = maxUserLevel[0].levelNumber; // Extracting the num field from the max item level document
 
-    if (user.level >= maxLevel) {
-      // Item is already at or above the maximum level, can't increment
-      return res.status(400).json({ message: "Can't level up user, already at max level" });
-    }
+    now = new Date();
+    // Check if the levelData array is long enough and the specific entry exists
+    
+    if (user.levelData[user.level]) {
+      //if endDate exists, then the level is already completed
+      if(typeof(user.levelData[user.level].endDate) !== 'undefined'){
+        if (user.level >= maxLevel) {
+          // Item is already at or above the maximum level, can't increment
+          return res.status(400).json({ message: "Can't level up user, already completed max level" });
+        }
+      }
+      user.levelData[user.level].endDate = now; // Safely set endDate
+      if (user.level == maxLevel) {
+        // Item is already at or above the maximum level, can't increment
+        await user.save();
+        return res.status(200).json({ message: "Finished max level", user });
+      }
+    } else {
+      // The levelData array does not have an entry for the current level
+      return res.status(500).json('Level data array doesn\'t exist');
+    }    
+
     user.level += 1; // Increment the level
 
     // Append new level data
     user.levelData.push({
       level: user.level,
-      startDate: new Date() // Current date/time
+      startDate: now // Current date/time
     });
-    
+
     await user.save();
 
     // Step 2: Find all birdCalls with the new level
