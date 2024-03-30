@@ -7,6 +7,7 @@ const userSchema = new mongoose.Schema({
     role: { type: String, enum: ['user', 'teacher', 'learner', 'admin'], required: true },
     registrationDate: { type: Date, default: Date.now },
     level: { type: Number, default: 0 }, //user level
+    levelData: { type: Array, default: [] }, //user level data
   });
   
 const User = mongoose.model('User', userSchema);

@@ -83,6 +83,13 @@ exports.levelUpUser = async (req, res) => {
       return res.status(400).json({ message: "Can't level up user, already at max level" });
     }
     user.level += 1; // Increment the level
+
+    // Append new level data
+    user.levelData.push({
+      level: user.level,
+      startDate: new Date() // Current date/time
+    });
+    
     await user.save();
 
     // Step 2: Find all birdCalls with the new level
