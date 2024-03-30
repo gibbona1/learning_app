@@ -97,6 +97,7 @@ export default function HomePage() {
   const [levelData, setLevelData] = useState([]);
   const [LevelChartData, setLevelChartData] = useState([]);
   const [averageDuration, setAverageDuration] = useState([]);
+  const [projectNextLevel, setProjectNextLevel] = useState("Calculating projection...");
 
   useEffect(() => {
     fetch(`/api/itemsgetbyhour/${currentUserId}`)
@@ -136,6 +137,28 @@ export default function HomePage() {
     })
     .catch (error => {
     console.error('Error fetching user:', error);
+    });
+  }, [currentUserId]);
+
+  useEffect(() => {
+   fetch(`api/users/${currentUserId}/projectlevelup`)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
+    .then(data => {
+      if(data.projection){
+        setProjectNextLevel(`Next levelup in: ${calc_dhm(data.projection)}`);
+      } else if(data.message){
+        setProjectNextLevel(data.message);
+      } else {
+        setProjectNextLevel("");
+      }
+    })
+    .catch (error => {
+    console.log('Error fetching user:', error);
     });
   }, [currentUserId]);
 
@@ -196,6 +219,8 @@ export default function HomePage() {
     {levelData.length === 0 ? (<p>Loading...</p>) : (<Line options={levelOptions} data={LevelChartData} />)}
     <hr />
     {averageDuration.length === 0 ? (<p>Loading...</p>) : (`Average duration: ${calc_dhm(averageDuration[0])}`)}
+    <br />
+    {projectNextLevel}
   </div>
   );
 }

@@ -164,9 +164,9 @@ exports.projectLevelUp = async (req, res) => {
     let duration = (now - user.levelData[user.level].startDate) / (1000 * 60 * 60 * 24); // Convert to days
 
     // if duration is more than average, set proj to 0, else set to average - duration
-    let proj = duration > avg ? 0 : avg - duration;
+    let projection = duration > avg ? 0 : avg - duration;
 
-    res.status(200).json({ projection: proj });
+    res.status(200).json({ projection: projection });
 
   } catch (error) {
     res.status(500).json({ message: 'Error projecting levelup for user', error: error.message });
