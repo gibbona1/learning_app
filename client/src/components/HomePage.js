@@ -54,13 +54,19 @@ export const levelOptions = {
   },
   scales: {
     y: {
-      scaleLabel: {
-        display: true,
-        labelString: "Days",
-      },
       beginAtZero: true,
       ticks: {
         precision: 0, // Ensure y-axis values are integers
+      },
+      title: { // Correct way to set Y-axis title in Chart.js version 3+
+        display: true,
+        text: 'Days',
+      },
+    },
+    x: { // Setting title for X-axis
+      title: {
+        display: true,
+        text: 'Level', // X-axis title
       },
     }
   }
