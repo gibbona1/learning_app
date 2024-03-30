@@ -154,7 +154,7 @@ exports.projectLevelUp = async (req, res) => {
     const durationData = levelData.map(level => ({
       level: level.level,
       // Use endDate if it exists; otherwise, use current date/time
-      duration: (new Date(level.endDate || now) - new Date(level.startDate)) / (1000 * 60 * 60 * 24) // Convert to days
+      duration: (new Date(level.endDate) - new Date(level.startDate)) / (1000 * 60 * 60 * 24) // Convert to days
     }));
 
     //get average of all levelData durations except the last

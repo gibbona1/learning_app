@@ -126,12 +126,19 @@ export default function HomePage() {
     })
     .then(user => {
       const now = new Date(); // Current date/time
+      const n = user.levelData.length;
       const data = user.levelData.map(level => ({
         level: level.level,
         // Use endDate if it exists; otherwise, use current date/time
         duration: (new Date(level.endDate || now) - new Date(level.startDate)) / (1000 * 60 * 60 * 24) // Convert to days
       }));
-      const avg = Array(data.length).fill(data.reduce((sum, current) => sum + current.duration, 0) / data.length);
+
+      let avg;
+      if(typeof(user.levelData[user.level].endDate) !== 'undefined'){
+        avg = Array(n).fill(data.reduce((sum, current) => sum + current.duration, 0) / n);
+      } else {
+        avg = Array(n).fill(data.slice(0, -1).reduce((sum, current) => sum + current.duration, 0) / (n-1));
+      }
       setLevelData(data);
       setAverageDuration(avg);
     })
