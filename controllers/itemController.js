@@ -85,7 +85,11 @@ exports.levelUpItem = async (req, res) => {
         return res.status(400).json({ message: "Can't level up item, already at max level" });
       }
       item.level += 1;
-    } else if (action === 'decrement' && item.level > 1) { // Assuming level cannot go below 1
+    } else if (action === 'decrement') { // Assuming level cannot go below 1
+      if (item.level <= 1) {
+        // Item is already at or below the minimum level, can't decrement
+        return res.status(400).json({ message: "Can't level down item, already at min level" });
+      }
       item.level -= 1;
     }
 

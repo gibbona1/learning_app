@@ -63,6 +63,10 @@ TODOs:
         - [x] make sure user can't go over max level, same with item. need to have way to make date blank
         - [ ] Modularize common scripts
         - [ ] Modern styling
+    - [ ] Activity field of Item
+        - [ ] started/lesson-complete (date), levelup/correct (to/from, date), leveldown/incorrect (to/from, date), complete
+        - [ ] calculate stats
+        - [ ] plot levelups/downs, lesson
 
 - [ ] Stats:
     - [x] upcoming reviews by hour next 24 hours
