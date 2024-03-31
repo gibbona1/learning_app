@@ -94,7 +94,9 @@ exports.levelUpItem = async (req, res) => {
       item.level -= 1;
     } else if (action === 'reset') {
       //do reset
-      item.level = 1;
+      item.level = 0;
+      const lesson = new Lesson({userId: item.userId, itemId: itemId});
+      await lesson.save();
     } else {
       return res.status(400).json({ message: 'Invalid action' });
     }
@@ -110,9 +112,12 @@ exports.levelUpItem = async (req, res) => {
       activity = 'reset';
     }
 
-    const itemLevel = await ItemLevel.findOne({ num: item.level });
-    item.nextReviewDate = new Date(now + (60 * 60 * 1000 * itemLevel.timeToNext)).setMinutes(0, 0, 0); // Set the next review date to 1 hour from now
-
+    if (item.level === 0) {
+      item.nextReviewDate = now; // Set the next review date to now
+    } else {
+      const itemLevel = await ItemLevel.findOne({ num: item.level });
+      item.nextReviewDate = new Date(now + (60 * 60 * 1000 * itemLevel.timeToNext)).setMinutes(0, 0, 0); // Set the next review date to 1 hour from now
+    }
     item.activity.push({
       type: activity,
       date: now // Current date/time

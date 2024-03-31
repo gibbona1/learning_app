@@ -31,7 +31,7 @@ TODOs:
         - [x] update (level, reviewdate etc) 
             - [x] do if lesson/review complete
         - [x] delete
-            - [ ] remake lesson if deleted/reset
+            - [x] remake lesson if deleted/reset
         - [x] count how many due for review now, in next hour, next 24 hours.
     - [x] itemLevel
         - [x] get all
@@ -44,7 +44,7 @@ TODOs:
         - [x] create, get all, get by id, delete
         - [x] make lesson page
         - [x] lesson unlock
-        - [ ] recreate if item reset
+        - [x] recreate if item reset
     - [ ] reviewSession (combines all reviews ready for review)
         - [x] UI [display audio, spectrogram, metadata]
         - [x] text box for answer
