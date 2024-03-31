@@ -9,7 +9,8 @@ TODOs:
         - [ ] Get mnemonics, work on formating and how best to display
         - [ ] Open database of bird images (possible hint)
         - [ ] mnemonic, scientific name, other metadata and info fields
-    - [ ] users 
+        - [ ] birdCall page (locked/unlocked level etc, link to lesson, similar, search by metadata)
+    - [x] users 
         - [x] get all
         - [x] search by id
         - [x] get specific (username, email)
@@ -32,7 +33,6 @@ TODOs:
         - [x] delete
             - [ ] remake lesson if deleted/reset
         - [x] count how many due for review now, in next hour, next 24 hours.
-        - [ ] item page (locked/unlocked level etc, link to lesson)
     - [x] itemLevel
         - [x] get all
         - [x] get by id
@@ -63,7 +63,7 @@ TODOs:
         - [ ] Modularize common scripts
         - [ ] Modern styling
     - [ ] Activity/history field of Item
-        - [ ] name: [started/lesson-complete, level-up/correct level-down/incorrect, complete, reset], date.
+        - [x] name: [started/lesson-complete, level-up/correct level-down/incorrect, complete, reset], date.
         - [ ] calculate stats
         - [ ] plot levelups/downs, lesson
 
