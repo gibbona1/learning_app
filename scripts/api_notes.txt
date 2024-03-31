@@ -1,38 +1,53 @@
-http://localhost:3000/api/
+Base URL: http://localhost:3000/api/
 
-GET /birdcalls		get all birdCalls
-GET /birdcalls/:id	get birdCall by ID
+GET /birdcalls			get all birdCalls
+GET /birdcalls/:id		get birdCall by ID
 
-GET /itemlevels 	get all itemLevels
-GET /itemlevels/:id 	get itemLevel by ID
+===========================================
 
-POST /items 		create item
-GET /items  		getAllItems
-GET /items/:id 		getItem
-PUT /items/:id 		updateItem
-DELETE /items/:id 	deleteItem
-PUT /items/:id/levelup  levelUpItem
-GET /items/:userId/:hours 	dueReviews
-GET /items/:userId/:hours/count countReviews
-GET /itemsgetbyhour/:userId 	upcomingReviewsByHour
+GET /itemlevels 		get all itemLevels
+GET /itemlevels/:id 		get itemLevel by ID
+
+===========================================
+
+POST /items 			create item
+GET /items  			get All Items
+GET /items/:id 			get Item by ID
+PUT /items/:id 			update Item
+DELETE /items/:id 		delete Item
+PUT /items/:id/levelup		level up/down/reset Item 
+GET /items/:userId/:hours 	get items w/ reviews due <= x hours
+GET /items/:userId/:hours/count count items w/ reviews due <= x hours
+GET /itemsgetbyhour/:userId 	count reviews by hour, 0-24 inclusive
+
+============================================
 	
-POST /lessons 		createLesson
-GET /lessons 		getAllLessons
-GET /lessons/:id 	getLesson
-DELETE /lessons/:id 	deleteLesson
-DELETE /lessons/:id/lessonCompleted lessonCompleted
+POST /lessons 			create Lesson
+GET /lessons 			get All Lessons
+GET /lessons/:id 		get Lesson by ID
+DELETE /lessons/:id 		delete Lesson
+DELETE /lessons/:id/lessonCompleted lesson Completed
 
-GET /userlevels 	get all userLevels
-GET /userlevels/:id 	get userLevel by ID
+============================================
 
-POST /users	createUser
-GET /users	getAllUsers
-GET /users/:id	getUser
-PUT /users/:id	updateUser
-DELETE /users/:id		deleteUser
-PUT /users/:id/levelUp		levelUpUser
-GET /users/:id/projectLevelUp	projectLevelUp
+GET /userlevels 		get all userLevels
+GET /userlevels/:id 		get userLevel by ID
 
+===========================================
+
+POST /users			create User
+GET /users			get AllUsers
+GET /users/:id			get User by ID
+PUT /users/:id			update User
+DELETE /users/:id		delete User
+PUT /users/:id/levelUp		level Up User
+GET /users/:id/projectLevelUp	project time to next levelup
+
+=============================================================
+
+Examples
+
+=============================================================
 
 curl -X POST http://localhost:3000/api/users -H "Content-Type: application/json" -d '{"username":"aUser","email":"atest@email.com","password":"password123","role":"learner"}'
 
@@ -45,8 +60,6 @@ curl -X PUT http://localhost:3000/api/items/6604978f556e4987a2d44287/levelup
 curl -X PUT http://localhost:3000/api/users/66080d78dd6882236da18623/levelup
 
 curl -X POST http://localhost:3000/api/users -H "Content-Type: application/json" -d '{"username":"someNewUser","email":"somenewuser@email.com","password":"password123","role":"learner"}'
-
-
 
 curl -X DELETE http://localhost:3000/api/lessons/6608104d71cceb31755c3278/lessonCompleted
 
