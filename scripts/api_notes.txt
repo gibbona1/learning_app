@@ -1,0 +1,54 @@
+http://localhost:3000/api/
+
+GET /birdcalls		get all birdCalls
+GET /birdcalls/:id	get birdCall by ID
+
+GET /itemlevels 	get all itemLevels
+GET /itemlevels/:id 	get itemLevel by ID
+
+POST /items 		create item
+GET /items  		getAllItems
+GET /items/:id 		getItem
+PUT /items/:id 		updateItem
+DELETE /items/:id 	deleteItem
+PUT /items/:id/levelup  levelUpItem
+GET /items/:userId/:hours 	dueReviews
+GET /items/:userId/:hours/count countReviews
+GET /itemsgetbyhour/:userId 	upcomingReviewsByHour
+	
+POST /lessons 		createLesson
+GET /lessons 		getAllLessons
+GET /lessons/:id 	getLesson
+DELETE /lessons/:id 	deleteLesson
+DELETE /lessons/:id/lessonCompleted lessonCompleted
+
+GET /userlevels 	get all userLevels
+GET /userlevels/:id 	get userLevel by ID
+
+POST /users	createUser
+GET /users	getAllUsers
+GET /users/:id	getUser
+PUT /users/:id	updateUser
+DELETE /users/:id		deleteUser
+PUT /users/:id/levelUp		levelUpUser
+GET /users/:id/projectLevelUp	projectLevelUp
+
+
+curl -X POST http://localhost:3000/api/users -H "Content-Type: application/json" -d '{"username":"aUser","email":"atest@email.com","password":"password123","role":"learner"}'
+
+curl -X PUT http://localhost:3000/api/users/65fcc504b999225e008c71c5/levelup
+
+curl -X DELETE http://localhost:3000/api/lessons/6604978f556e4987a2d442b5/lessonCompleted
+
+curl -X PUT http://localhost:3000/api/items/6604978f556e4987a2d44287/levelup
+
+curl -X PUT http://localhost:3000/api/users/66080d78dd6882236da18623/levelup
+
+curl -X POST http://localhost:3000/api/users -H "Content-Type: application/json" -d '{"username":"someNewUser","email":"somenewuser@email.com","password":"password123","role":"learner"}'
+
+
+
+curl -X DELETE http://localhost:3000/api/lessons/6608104d71cceb31755c3278/lessonCompleted
+
+curl -X PUT http://localhost:3000/api/items/6604978f556e4987a2d44288/levelup/?action=reset
+
