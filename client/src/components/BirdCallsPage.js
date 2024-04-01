@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import NavBar from './NavBar';
-import { handleResponse } from './helpers';
+import { handleResponse, handleError } from './helpers';
 
 function BirdCallsPage() {
   const userId = '65fcc504b999225e008c71c5';
@@ -14,22 +14,14 @@ function BirdCallsPage() {
     fetch(`api/users/${userId}`)
     .then(handleResponse)
     .then(setUser)
-    //.then(data => setBirdCalls(data))
-    .catch(error => {
-      console.error('Error fetching bird calls:', error);
-      alert('Error fetching bird calls: ' + error.message); // Alerting the error message
-    });
+    .catch(e => handleError(e, 'user'));
   }, [userId]);
 
   useEffect(() => {
     fetch('api/birdcalls', {accept: "application/json"}) // Adjust URL as needed
       .then(handleResponse)
       .then(setBirdCalls)
-      //.then(data => setBirdCalls(data))
-      .catch(error => {
-        console.error('Error fetching bird calls:', error);
-        alert('Error fetching bird calls: ' + error.message); // Alerting the error message
-      });
+      .catch(e => handleError(e, 'bird calls'));
   }, []);
 
   useEffect(() => {
@@ -40,11 +32,7 @@ function BirdCallsPage() {
         // Then set your state as normal (assuming you add setItems back in)
         setItems(dsub);
       })
-      //.then(data => setItems(data))
-      .catch(error => {
-        console.error('Error fetching items:', error);
-        alert('Error fetching items: ' + error.message); // Alerting the error message
-      });
+      .catch(e => handleError(e, 'items'));
   }, [userId]);
 
   useEffect(() => {

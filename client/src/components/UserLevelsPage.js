@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import NavBar from './NavBar';
-import { handleResponse } from './helpers';
+import { handleResponse, handleError } from './helpers';
 
 function UserLevelsPage() {
   const [userLevels, setUserLevels] = useState([]);
@@ -9,10 +9,7 @@ function UserLevelsPage() {
     fetch('api/userlevels', {accept: "application/json"}) // Adjust URL as needed
       .then(handleResponse)
       .then(setUserLevels)
-      .catch(error => {
-        console.error('Error fetching users:', error);
-        alert('Error fetching users: ' + error.message); // Alerting the error message
-      });
+      .catch(e => handleError(e, 'user levels'));
   }, []);
 
 

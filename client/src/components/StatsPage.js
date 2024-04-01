@@ -12,7 +12,7 @@ import {
   Legend,
 } from 'chart.js';
 import { Bar, Line } from 'react-chartjs-2';
-import { handleResponse } from './helpers';
+import { handleResponse, handleError } from './helpers';
 
 ChartJS.register(
   CategoryScale,
@@ -104,9 +104,8 @@ export default function HomePage() {
     fetch(`/api/itemsgetbyhour/${currentUserId}`)
     .then(handleResponse)
     .then(setCountData)
-    .catch (error => {
-    console.error('Error fetching reviews:', error);
-    });
+    .catch(e => handleError(e, 'reviews'));
+
   }, [currentUserId]);
 
   useEffect(() => {
@@ -130,9 +129,7 @@ export default function HomePage() {
       setLevelData(data);
       setAverageDuration(avg);
     })
-    .catch (error => {
-    console.error('Error fetching user:', error);
-    });
+    .catch(e => handleError(e, 'user'));
   }, [currentUserId]);
 
   useEffect(() => {
@@ -147,9 +144,8 @@ export default function HomePage() {
         setProjectNextLevel("");
       }
     })
-    .catch (error => {
-    console.log('Error fetching user:', error);
-    });
+    .catch(e => handleError(e, 'levelup projection'));
+
   }, [currentUserId]);
 
   useEffect(() => {

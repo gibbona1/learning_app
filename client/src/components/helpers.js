@@ -4,3 +4,7 @@ export function handleResponse(response){
     }
     return response.json()
 }
+
+export function handleError(error, name){
+    alert(`Error fetching ${name}: ${error.message}`); // Alerting the error message
+}

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import NavBar from './NavBar';
-import { handleResponse } from './helpers';
+import { handleResponse, handleError } from './helpers';
 
 function ReviewsPage() {
   const userId = '65fcc504b999225e008c71c5';
@@ -43,10 +43,8 @@ function ReviewsPage() {
     .then(data => {
       setReviewsNow(data.itemsDueWithoutLessons); // Ensure this is an array
     })
-    .catch (error => {
-    console.error('Error fetching reviews:', error);
-    alert('Error fetching reviews: ' + error.message); // Displaying error message in alert
-  });
+    .catch(e => handleError(e, 'reviews'));
+
   }, [userId]); // Re-run when userId changes
 
   // Render the review counts

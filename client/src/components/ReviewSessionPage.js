@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import NavBar from './NavBar';
-import { handleResponse } from './helpers';
+import { handleResponse, handleError } from './helpers';
 const { S3Client, GetObjectCommand } = require("@aws-sdk/client-s3");
 const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
 
@@ -40,15 +40,13 @@ export default function ReviewSession() {
     .then(data => {
       return data.itemsDueWithoutLessons; // Ensure this is an array
     })
-    .catch (error => {
-    console.error('Error fetching reviews:', error);
-    });
+    .catch(e => handleError(e, 'reviews'));
+
 
     const fetchBirdCalls = fetch(`/api/birdcalls`)
     .then(handleResponse)
-    .catch (error => {
-    console.error('Error fetching birdcalls:', error);
-  });
+    .catch(e => handleError(e, 'bird calls'));
+
 
   Promise.all([fetchReviews, fetchBirdCalls]).then(values => {
     const [reviews, birdCalls] = values;
