@@ -103,10 +103,7 @@ export default function HomePage() {
   useEffect(() => {
     fetch(`/api/itemsgetbyhour/${currentUserId}`)
     .then(handleResponse)
-    .then(data => {
-      setCountData(data); // Ensure this is an array
-      return data; // Ensure this is an array
-    })
+    .then(setCountData)
     .catch (error => {
     console.error('Error fetching reviews:', error);
     });

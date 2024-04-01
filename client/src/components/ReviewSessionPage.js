@@ -21,8 +21,7 @@ export default function ReviewSession() {
   };
 
   const handleCheck = () => {
-    // Implement your "close enough" logic here if needed
-    //alert(inputValue.trim().toLowerCase() + "-" + currentReview.birdCallData.class.toLowerCase());
+    // TODO: Implement your "close enough" logic here if needed
     if (inputValue.trim().toLowerCase() === currentReview.birdCallData.class.toLowerCase()) {
       setValidationState('correct');
     } else {

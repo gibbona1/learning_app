@@ -13,9 +13,7 @@ function BirdCallsPage() {
   useEffect(() => {
     fetch(`api/users/${userId}`)
     .then(handleResponse)
-    .then(data => {
-      setUser(data);
-    })
+    .then(setUser)
     //.then(data => setBirdCalls(data))
     .catch(error => {
       console.error('Error fetching bird calls:', error);
@@ -26,9 +24,7 @@ function BirdCallsPage() {
   useEffect(() => {
     fetch('api/birdcalls', {accept: "application/json"}) // Adjust URL as needed
       .then(handleResponse)
-      .then(data => {
-        setBirdCalls(data);
-      })
+      .then(setBirdCalls)
       //.then(data => setBirdCalls(data))
       .catch(error => {
         console.error('Error fetching bird calls:', error);
@@ -40,8 +36,6 @@ function BirdCallsPage() {
     fetch('api/items') // Adjust URL as needed
       .then(handleResponse)
       .then(data => {
-        // Use JSON.stringify to convert the JSON object to a string for the alert.
-        //alert(JSON.stringify(data, null, 2)); // null, 2 for pretty-printing
         const dsub = data.filter(item => item.userId === userId);
         // Then set your state as normal (assuming you add setItems back in)
         setItems(dsub);
