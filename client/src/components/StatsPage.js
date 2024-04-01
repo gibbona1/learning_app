@@ -84,6 +84,12 @@ export const levelOptions = {
 };
 
 export const activityOptions = {
+  plugins: {
+    title: {
+      display: true,
+      text: 'Activity Counts in the Last 24 Hours',
+    },
+  },
   scales: {
     x: { stacked: true },
     y: { stacked: true }
