@@ -99,6 +99,7 @@ export default function HomePage() {
   const [LevelChartData, setLevelChartData] = useState([]);
   const [averageDuration, setAverageDuration] = useState([]);
   const [projectNextLevel, setProjectNextLevel] = useState("Calculating projection...");
+  const [activityData, setActivityData] = useState([]);
 
   useEffect(() => {
     fetch(`/api/itemsgetbyhour/${currentUserId}`)
@@ -149,6 +150,18 @@ export default function HomePage() {
   }, [currentUserId]);
 
   useEffect(() => {
+    fetch('api/items/')
+    .then(handleResponse)
+    .then(data => {
+      const dsub = data
+      .filter(item => item.userId === currentUserId)
+      .filter(item => item.activity.length > 0);
+      const activity = dsub.map((item) => ({id: item._id, ...item.activity}));
+      setActivityData(activity);
+    })
+  }, [currentUserId]);
+
+  useEffect(() => {
     const currentHour = new Date().getHours(); // Note: This gets the current hour in local time
     const labels = countData? countData.map((item) => `${(item.hour + currentHour) % 24}:00`): [];
     const data = countData? countData.map((item) => item.count): [];
@@ -194,6 +207,34 @@ export default function HomePage() {
     }
     setLevelChartData(d);
   }, [levelData, averageDuration]);
+
+  useEffect(() => {
+    const now = new Date();
+
+    // Calculate the time 24 hours ago
+    const yesterday = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+
+    // Initialize an object to store counts for each type
+    let typeCounts = {};
+
+    // Iterate through each item
+    activityData.forEach(item => {
+        // Iterate through each activity
+        Object.values(item)
+        .filter(obj => typeof obj === 'object')
+        .filter(obj => new Date(obj.date) >= yesterday)
+        .forEach(activityObj => {
+          // Check if the date is within the last 24 hours
+          
+          const type = activityObj.type;
+          if (typeCounts[type]) {
+              typeCounts[type]++;
+          } else {
+              typeCounts[type] = 1;
+          }
+        });
+    });
+  }, [activityData]);
 
   return (
   <div>
