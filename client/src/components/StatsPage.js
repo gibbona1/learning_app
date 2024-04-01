@@ -12,6 +12,7 @@ import {
   Legend,
 } from 'chart.js';
 import { Bar, Line } from 'react-chartjs-2';
+import { handleResponse } from './helpers';
 
 ChartJS.register(
   CategoryScale,
@@ -101,12 +102,7 @@ export default function HomePage() {
 
   useEffect(() => {
     fetch(`/api/itemsgetbyhour/${currentUserId}`)
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      return response.json();
-    })
+    .then(handleResponse)
     .then(data => {
       setCountData(data); // Ensure this is an array
       return data; // Ensure this is an array
@@ -118,12 +114,7 @@ export default function HomePage() {
 
   useEffect(() => {
     fetch(`api/users/${currentUserId}`)
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      return response.json();
-    })
+    .then(handleResponse)
     .then(user => {
       const now = new Date(); // Current date/time
       const n = user.levelData.length;
@@ -149,12 +140,7 @@ export default function HomePage() {
 
   useEffect(() => {
    fetch(`api/users/${currentUserId}/projectlevelup`)
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      return response.json();
-    })
+    .then(handleResponse)
     .then(data => {
       if(data.projection){
         setProjectNextLevel(`Next levelup in: ${calc_dhm(data.projection)}`);

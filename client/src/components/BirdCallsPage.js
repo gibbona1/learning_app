@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import NavBar from './NavBar';
+import { handleResponse } from './helpers';
 
 function BirdCallsPage() {
   const userId = '65fcc504b999225e008c71c5';
@@ -11,12 +12,7 @@ function BirdCallsPage() {
 
   useEffect(() => {
     fetch(`api/users/${userId}`)
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      return response.json()
-    })
+    .then(handleResponse)
     .then(data => {
       setUser(data);
     })
@@ -29,12 +25,7 @@ function BirdCallsPage() {
 
   useEffect(() => {
     fetch('api/birdcalls', {accept: "application/json"}) // Adjust URL as needed
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json()
-      })
+      .then(handleResponse)
       .then(data => {
         setBirdCalls(data);
       })
@@ -47,12 +38,7 @@ function BirdCallsPage() {
 
   useEffect(() => {
     fetch('api/items') // Adjust URL as needed
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json()
-      })
+      .then(handleResponse)
       .then(data => {
         // Use JSON.stringify to convert the JSON object to a string for the alert.
         //alert(JSON.stringify(data, null, 2)); // null, 2 for pretty-printing

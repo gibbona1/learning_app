@@ -1,17 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import NavBar from './NavBar';
+import { handleResponse } from './helpers';
 
 function UserPage() {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
     fetch('api/users', {accept: "application/json"}) // Adjust URL as needed
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json()
-      })
+      .then(handleResponse)
       .then(data => {
         // Use JSON.stringify to convert the JSON object to a string for the alert.
         //alert(JSON.stringify(data, null, 2)); // null, 2 for pretty-printing

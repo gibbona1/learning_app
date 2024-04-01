@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import NavBar from './NavBar';
+import { handleResponse } from './helpers';
 const { S3Client, GetObjectCommand } = require("@aws-sdk/client-s3");
 const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
 
@@ -14,12 +15,7 @@ export default function LessonSession() {
   const [currentIndex, setCurrentIndex] = useState(0);
   useEffect(() => {
     const fetchLessons = fetch(`/api/lessons`)
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
+    .then(handleResponse)
     .then(data => {
         const dsub = data.filter(lesson => lesson.userId === currentUserId);
         return dsub; // Ensure this is an array
@@ -29,12 +25,7 @@ export default function LessonSession() {
     });
 
     const fetchItems = fetch(`/api/items`)
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
+    .then(handleResponse)
     .then(data => {
         const dsub = data.filter(item => item.userId === currentUserId);
         return dsub; // Ensure this is an array
@@ -44,12 +35,7 @@ export default function LessonSession() {
   });
 
   const fetchBirdCalls = fetch(`/api/birdcalls`)
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
+    .then(handleResponse)
     .catch (error => {
         console.error('Error fetching birdcalls:', error);
   });
@@ -91,12 +77,7 @@ export default function LessonSession() {
             'Content-Type': 'application/json',
         },
     })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
+    .then(handleResponse)
     .then(data => {
         alert('Lesson completed successfully:', data);
         // Perform any additional actions on successful deletion, e.g., update UI

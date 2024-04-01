@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import NavBar from './NavBar';
+import { handleResponse } from './helpers';
 
 function ReviewsPage() {
   const userId = '65fcc504b999225e008c71c5';
@@ -19,12 +20,7 @@ function ReviewsPage() {
   async function fetchReviewCounts(userId, hours, setFn) {
     try {
       fetch(`/api/items/${userId}/${hours}/count`)
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
+      .then(handleResponse)
       .then(data => {
         setFn(data.adjustedCount);
       });
@@ -43,12 +39,7 @@ function ReviewsPage() {
 
   useEffect(() => {
     fetch(`/api/items/${userId}/0`)
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      return response.json();
-    })
+    .then(handleResponse)
     .then(data => {
       setReviewsNow(data.itemsDueWithoutLessons); // Ensure this is an array
     })

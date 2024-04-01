@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import NavBar from './NavBar';
+import { handleResponse } from './helpers';
 const { S3Client, GetObjectCommand } = require("@aws-sdk/client-s3");
 const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
 
@@ -36,12 +37,7 @@ export default function ReviewSession() {
   const [currentIndex, setCurrentIndex] = useState(0);
   useEffect(() => {
     const fetchReviews = fetch(`/api/items/${currentUserId}/0`)
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      return response.json();
-    })
+    .then(handleResponse)
     .then(data => {
       return data.itemsDueWithoutLessons; // Ensure this is an array
     })
@@ -50,12 +46,7 @@ export default function ReviewSession() {
     });
 
     const fetchBirdCalls = fetch(`/api/birdcalls`)
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      return response.json();
-    })
+    .then(handleResponse)
     .catch (error => {
     console.error('Error fetching birdcalls:', error);
   });
@@ -120,12 +111,7 @@ export default function ReviewSession() {
         },
         params: {'action': 'increment'}
       })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
+      .then(handleResponse)
       .then(data => {
         console.log('Successfully incremented item:', data);
         setSubmitState('');
@@ -142,12 +128,7 @@ export default function ReviewSession() {
         },
         params: {'action': 'decrement'}
       })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
+      .then(handleResponse)
       .then(data => {
         console.log('Successfully decremented item:', data);
         setSubmitState('');
