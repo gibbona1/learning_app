@@ -83,6 +83,13 @@ export const levelOptions = {
   }
 };
 
+export const activityOptions = {
+  scales: {
+    x: { stacked: true },
+    y: { stacked: true }
+  }
+};
+
 export function calc_dhm(durationInDays){
   const days = Math.floor(durationInDays);
   const hours = Math.floor((durationInDays - days) * 24);
@@ -100,6 +107,7 @@ export default function HomePage() {
   const [averageDuration, setAverageDuration] = useState([]);
   const [projectNextLevel, setProjectNextLevel] = useState("Calculating projection...");
   const [activityData, setActivityData] = useState([]);
+  const [activityChartData, setActivityChartData] = useState([]);
 
   useEffect(() => {
     fetch(`/api/itemsgetbyhour/${currentUserId}`)
@@ -150,15 +158,10 @@ export default function HomePage() {
   }, [currentUserId]);
 
   useEffect(() => {
-    fetch('api/items/')
+    fetch(`api/useractivity24Hour/${currentUserId}`)
     .then(handleResponse)
-    .then(data => {
-      const dsub = data
-      .filter(item => item.userId === currentUserId)
-      .filter(item => item.activity.length > 0);
-      const activity = dsub.map((item) => ({id: item._id, ...item.activity}));
-      setActivityData(activity);
-    })
+    .then(setActivityData)
+    .catch(e => handleError(e, 'activity 24 hour'));
   }, [currentUserId]);
 
   useEffect(() => {
@@ -209,31 +212,33 @@ export default function HomePage() {
   }, [levelData, averageDuration]);
 
   useEffect(() => {
-    const now = new Date();
+    const labels = Object.keys(activityData);
+    const dataValues = Object.values(activityData);
 
-    // Calculate the time 24 hours ago
-    const yesterday = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+    const datasets = [];
 
-    // Initialize an object to store counts for each type
-    let typeCounts = {};
+    const colors = {"lesson-complete": 'rgba(255, 99, 132, 0.5)',
+                    "level-up": 'rgba(54, 162, 235, 0.5)',
+                    "incorrect": 'rgba(255, 206, 86, 0.5)',
+                    "complete": 'rgba(75, 192, 192, 0.5)',
+                    "reset": 'rgba(153, 102, 255, 0.5)'};
 
-    // Iterate through each item
-    activityData.forEach(item => {
-        // Iterate through each activity
-        Object.values(item)
-        .filter(obj => typeof obj === 'object')
-        .filter(obj => new Date(obj.date) >= yesterday)
-        .forEach(activityObj => {
-          // Check if the date is within the last 24 hours
-          
-          const type = activityObj.type;
-          if (typeCounts[type]) {
-              typeCounts[type]++;
-          } else {
-              typeCounts[type] = 1;
-          }
+    dataValues.forEach((data, index) => {
+        const color = colors[labels[index]];
+        datasets.push({
+            label: labels[index],
+            data: [data],
+            backgroundColor: color,
+            borderColor: color,
+            borderWidth: 1
         });
     });
+
+    const data = {
+      labels: ['Activity Counts'], // Only one label for the y-axis
+      datasets: datasets
+    };
+    setActivityChartData(data);
   }, [activityData]);
 
   return (
@@ -247,6 +252,10 @@ export default function HomePage() {
     {averageDuration.length === 0 ? (<p>Loading...</p>) : (`Average duration: ${calc_dhm(averageDuration[0])}`)}
     <br />
     {projectNextLevel}
+    <hr />
+    {activityData.length === 0 ? (<p>Loading...</p>) : (
+      <Bar data={activityChartData} options={activityOptions} />
+    )}
   </div>
   );
 }

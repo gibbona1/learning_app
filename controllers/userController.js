@@ -172,3 +172,49 @@ exports.projectLevelUp = async (req, res) => {
     res.status(500).json({ message: 'Error projecting levelup for user', error: error.message });
   }
 }
+
+exports.activity24Hour = async (req, res) => {
+  const { id: userId } = req.params; // Extract the user ID from the request parameters
+
+  try {
+    // Step 1: Get all items for the user
+    const items = await Item.find({ userId: userId,
+                                    activity: { $exists: true, $ne: [] }});
+
+    const activityData = items.flatMap(item => {
+      return item.activity.map(activity => {
+          return { id: item._id, ...activity };
+      });
+    });
+    const now = new Date();
+
+    // Calculate the time 24 hours ago
+    const yesterday = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+
+    // Initialize an object to store counts for each type
+    let typeCounts = {};
+
+    // Iterate through each item
+    activityData.forEach(item => {
+        // Iterate through each activity
+        Object.values(item)
+        .filter(obj => typeof obj === 'object')
+        .filter(obj => new Date(obj.date) >= yesterday)
+        .forEach(activityObj => {
+          // Check if the date is within the last 24 hours
+          
+          const type = activityObj.type;
+          if (typeCounts[type]) {
+              typeCounts[type]++;
+          } else {
+              typeCounts[type] = 1;
+          }
+        });
+    });
+
+    res.status(200).json(typeCounts);
+
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching activity data for user', error: error.message });
+  }
+}
