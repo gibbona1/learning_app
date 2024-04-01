@@ -62,6 +62,8 @@ TODOs:
         - [x] make sure user can't go over max level, same with item. need to have way to make date blank
         - [ ] Modularize common scripts
         - [ ] Modern styling
+        - [ ] carry User ID through session
+        - [ ] login/logout functionality
     - [ ] Activity/history field of Item
         - [x] name: [started/lesson-complete, level-up/correct level-down/incorrect, complete, reset], date.
         - [ ] calculate stats
