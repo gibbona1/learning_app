@@ -67,7 +67,7 @@ TODOs:
     - [ ] Activity/history field of Item
         - [x] name: [started/lesson-complete, level-up/correct level-down/incorrect, complete, reset], date.
         - [ ] calculate stats
-        - [ ] plot levelups/downs, lessons completed
+        - [x] plot levelups/downs, lessons completed
     - [ ] Helper document with example API calls
 
 - [ ] Stats:

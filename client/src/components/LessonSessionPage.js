@@ -35,9 +35,6 @@ export default function LessonSession() {
     .then(handleResponse)
     .catch(e => handleError(e, 'bird calls'));
 
-
-  //alert("fetchReviews: " + JSON.stringify(fetchReviews) + " fetchItems: " + JSON.stringify(fetchItems) + " fetchBirdCalls: " + JSON.stringify(fetchBirdCalls));
-
   Promise.all([fetchLessons, fetchItems, fetchBirdCalls]).then(values => {
     const [lessons, fetchItems, birdCalls] = values;
     mergeData(lessons, fetchItems, birdCalls);
@@ -66,7 +63,6 @@ export default function LessonSession() {
         alert('Lesson ID is not available.');
         return;
     }
-    //alert(JSON.stringify(currentLesson));
     fetch(`api/lessons/${currentLesson._id}/lessonCompleted`, {
         method: 'DELETE',
         headers: {
@@ -84,7 +80,6 @@ export default function LessonSession() {
     });
   }
 
-  //alert(JSON.stringify(mergedData[currentIndex]));
   const currentLesson = mergedData[currentIndex];
 
   useEffect(() => {
