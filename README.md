@@ -10,6 +10,7 @@ TODOs:
         - [ ] Open database of bird images (possible hint)
         - [ ] mnemonic, scientific name, other metadata and info fields
         - [ ] birdCall page (locked/unlocked level etc, link to lesson, similar, search by metadata)
+        - [ ] popout modal for each birdcall
     - [x] users 
         - [x] get all
         - [x] search by id
@@ -68,11 +69,13 @@ TODOs:
         - [x] name: [started/lesson-complete, level-up/correct level-down/incorrect, complete, reset], date.
         - [ ] calculate stats
         - [x] plot levelups/downs, lessons completed
-    - [ ] Helper document with example API calls
+    - [x] Helper document with example API calls
+    - [ ] faker for creating users, lessons, etc
 
 - [ ] Stats:
     - [x] upcoming reviews by hour next 24 hours
     - [ ] show activity (last 24 hours, average per hour in lifetime)
+    - [ ] overall num attempts, num correct/incorrect, % correct
     - [x] Level progression timing
     - [x] projections for finishing level
 
