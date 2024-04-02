@@ -151,8 +151,8 @@ export default function HomePage() {
    fetch(`api/users/${currentUserId}/projectlevelup`)
     .then(handleResponse)
     .then(data => {
-      if(data.projection){
-        setProjectNextLevel(`Next levelup in: ${calc_dhm(data.projection)}`);
+      if(typeof data.projection !== 'undefined'){
+        setProjectNextLevel(`Time on level: ${data.duration}.\nNext levelup in: ${calc_dhm(data.projection)}`);
       } else if(data.message){
         setProjectNextLevel(data.message);
       } else {
@@ -257,7 +257,10 @@ export default function HomePage() {
     <hr />
     {averageDuration.length === 0 ? (<p>Loading...</p>) : (`Average duration: ${calc_dhm(averageDuration[0])}`)}
     <br />
+    <div style={{'white-space': 'pre-wrap'}}>
     {projectNextLevel}
+    </div>
+    
     <hr />
     {activityData.length === 0 ? (<p>Loading...</p>) : (
       <Bar data={activityChartData} options={activityOptions} />
