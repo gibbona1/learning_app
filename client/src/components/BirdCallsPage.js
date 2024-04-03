@@ -10,6 +10,7 @@ function BirdCallsPage() {
   const [mergedData, setMergedData] = useState([]);
   const [user, setUser] = useState([]);
   const [itemStats, setItemStats] = useState([]);
+  const [criticalItems, setCriticalItems] = useState([]);
 
   useEffect(() => {
     fetch(`api/users/${userId}`)
@@ -69,6 +70,24 @@ function BirdCallsPage() {
     setMergedData(merged);
   }
 
+  useEffect(() => {
+    //find items in merged data with itemStats.counts levelup/levelup+leveldown < 0.7
+    const critData = mergedData.filter(item => {
+      const counts = item.itemStatData.counts;
+      return counts && counts['lesson-complete'] > 0 && counts['level-up'] && counts['level-down'] && counts['level-up'] / (counts['level-up'] + counts['level-down']) < 0.7;
+    });
+
+    const criticalItems = critData.map(item => {
+      const res = {
+        id: item._id,
+        name: item.birdCallData.name,
+        accuracy: item.itemStatData.counts['level-up'] / (item.itemStatData.counts['level-up'] + item.itemStatData.counts['level-down'])
+      }
+      return res;
+    });
+    setCriticalItems(criticalItems);
+  }, [mergedData]);
+
   return (
     <div>
       <NavBar />
@@ -95,6 +114,23 @@ function BirdCallsPage() {
               <td>
               {item.level = 'Unlocked' && item.itemStatData && item.itemStatData.counts ? (item.itemStatData.counts['lesson-complete'] > 0 ? JSON.stringify(item.itemStatData.counts) : '' ) : ''}
               </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <h3>Critical Items</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>% Correct</th>
+          </tr>
+        </thead>
+        <tbody>
+          {criticalItems.map((item) => (
+            <tr key={item._id}> {/* Ensure your data has a unique 'id' property */}
+              <td>{item.name}</td>
+              <td>{item.accuracy}</td>
             </tr>
           ))}
         </tbody>
