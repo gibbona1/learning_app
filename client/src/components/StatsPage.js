@@ -96,6 +96,28 @@ export const activityOptions = {
   }
 };
 
+export const activityHourOptions = {
+  responsive: true,
+  plugins: {
+    legend: {
+      display: false,
+    },
+    title: {
+      display: true,
+      text: 'Activity Per Hour in lifetime',
+    },
+  },
+  scales: {
+    y: {
+      beginAtZero: true,
+      y: { stacked: true },
+      ticks: {
+        precision: 0, // Ensure y-axis values are integers
+      },
+    }
+  }
+};
+
 export function calc_dhm(durationInDays) {
   const days = Math.floor(durationInDays);
   const hours = Math.floor((durationInDays - days) * 24);
@@ -115,6 +137,8 @@ export default function HomePage() {
   const [activityData, setActivityData] = useState([]);
   const [activityChartData, setActivityChartData] = useState([]);
   const [userStats, setUserStats] = useState([]);
+  const [activityHourData, setActivityHourData] = useState([]);
+  const [activityHourChartData, setActivityHourChartData] = useState([]);
 
   useEffect(() => {
     fetch(`/api/itemsgetbyhour/${currentUserId}`)
@@ -176,6 +200,13 @@ export default function HomePage() {
       .then(handleResponse)
       .then(setUserStats)
       .catch(e => handleError(e, 'user stats'));
+  }, [currentUserId]);
+
+  useEffect(() => {
+    fetch(`api/useractivityPerHour/${currentUserId}`)
+      .then(handleResponse)
+      .then(setActivityHourData)
+      .catch(e => handleError(e, 'activity per hour'));
   }, [currentUserId]);
 
   useEffect(() => {
@@ -268,6 +299,38 @@ export default function HomePage() {
     return percentageDisplay;
   }
 
+  useEffect(() => {
+    const labels = activityHourData.map((value, index) => index);//Object.index(activityHourData);
+    const dataValues = Object.values(activityHourData);
+
+    const datasets = [];
+
+    const colors = {
+      "lesson-complete": 'rgba(255, 99, 132, 0.5)',
+      "level-up": 'rgba(54, 162, 235, 0.5)',
+      "incorrect": 'rgba(255, 206, 86, 0.5)',
+      "complete": 'rgba(75, 192, 192, 0.5)',
+      "reset": 'rgba(153, 102, 255, 0.5)'
+    };
+
+    dataValues.forEach((data, index) => {
+      const color = colors[labels[index]];
+      datasets.push({
+        label: labels[index],
+        data: [data],
+        backgroundColor: color,
+        borderColor: color,
+        borderWidth: 1
+      });
+    });
+
+    const data = {
+      labels: labels, // Only one label for the y-axis
+      datasets: datasets
+    };
+    setActivityHourChartData(data);
+  }, [activityHourData]);
+
   return (
     <div>
       <NavBar />
@@ -295,6 +358,10 @@ export default function HomePage() {
           ))}
         </div>
         )}
+        <hr />
+        {activityHourData.length === 0 ? (<p>Loading...</p>) : (
+        <Bar data={activityHourChartData} options={activityHourOptions} />
+      )}
     </div>
   );
 }
