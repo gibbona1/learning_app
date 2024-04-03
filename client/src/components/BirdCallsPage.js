@@ -14,13 +14,13 @@ function BirdCallsPage() {
 
   useEffect(() => {
     fetch(`api/users/${userId}`)
-    .then(handleResponse)
-    .then(setUser)
-    .catch(e => handleError(e, 'user'));
+      .then(handleResponse)
+      .then(setUser)
+      .catch(e => handleError(e, 'user'));
   }, [userId]);
 
   useEffect(() => {
-    fetch('api/birdcalls', {accept: "application/json"}) // Adjust URL as needed
+    fetch('api/birdcalls', { accept: "application/json" }) // Adjust URL as needed
       .then(handleResponse)
       .then(setBirdCalls)
       .catch(e => handleError(e, 'bird calls'));
@@ -39,8 +39,8 @@ function BirdCallsPage() {
 
   useEffect(() => {
     fetch(`api/itemstats/${userId}`) // Adjust URL as needed
-    .then(handleResponse)
-    .then(setItemStats)
+      .then(handleResponse)
+      .then(setItemStats)
   }, [userId]);
 
   useEffect(() => {
@@ -48,8 +48,8 @@ function BirdCallsPage() {
       const [items, birdCalls, itemStats] = values;
       mergeData(items, birdCalls, user, itemStats);
     });
-    }, [items, birdCalls, user, itemStats]);
-  
+  }, [items, birdCalls, user, itemStats]);
+
   function mergeData(items, birdCalls, user, itemStats) {
     const merged = items.map(item => {
       const birdCallData = birdCalls.find(birdCall => birdCall._id === item.birdCallId);
@@ -57,15 +57,15 @@ function BirdCallsPage() {
       // if item level is zero, set next review date to blank
       if (item.level === 0) {
         item.nextReviewDate = '';
-        if(item.level > user.level) {
+        if (item.level > user.level) {
           item.level = 'Locked';
         } else {
           item.level = 'Unlocked';
         }
-      } else if(new Date(item.nextReviewDate) < new Date()) {
+      } else if (new Date(item.nextReviewDate) < new Date()) {
         item.nextReviewDate = 'Now';
       }
-      return { ...item, birdCallData, itemStatData}; // Combine review with corresponding bird call data
+      return { ...item, birdCallData, itemStatData }; // Combine review with corresponding bird call data
     });
     setMergedData(merged);
   }
@@ -112,7 +112,7 @@ function BirdCallsPage() {
               <td>{item.level}</td>
               <td>{item.nextReviewDate}</td>
               <td>
-              {item.level = 'Unlocked' && item.itemStatData && item.itemStatData.counts ? (item.itemStatData.counts['lesson-complete'] > 0 ? JSON.stringify(item.itemStatData.counts) : '' ) : ''}
+                {item.level = 'Unlocked' && item.itemStatData && item.itemStatData.counts ? (item.itemStatData.counts['lesson-complete'] > 0 ? JSON.stringify(item.itemStatData.counts) : '') : ''}
               </td>
             </tr>
           ))}

@@ -67,7 +67,7 @@ exports.deleteItem = async (req, res) => {
 // level up item if right
 exports.levelUpItem = async (req, res) => {
   const { id: itemId } = req.params; // Extract the user ID from the request parameters
-  const { action: action} = req.body || 'increment'; // Default to 'increment' if not specified
+  const { action: action } = req.body || 'increment'; // Default to 'increment' if not specified
 
   try {
     // Step 1: Update the user to the next level
@@ -95,7 +95,7 @@ exports.levelUpItem = async (req, res) => {
     } else if (action === 'reset') {
       //do reset
       item.level = 0;
-      const lesson = new Lesson({userId: item.userId, itemId: itemId});
+      const lesson = new Lesson({ userId: item.userId, itemId: itemId });
       await lesson.save();
     } else {
       return res.status(400).json({ message: 'Invalid action' });
@@ -224,7 +224,7 @@ exports.upcomingReviewsByHour = async (req, res) => {
         userId: userId
       });
 
-      if(hour === 0) {
+      if (hour === 0) {
         dueItemCount = await Item.countDocuments({
           userId: userId,
           nextReviewDate: { $lt: endTime }
@@ -251,7 +251,7 @@ exports.itemStats = async (req, res) => {
 
   try {
     // Step 1: Get all items for the user
-    const items = await Item.find({userId: userId});
+    const items = await Item.find({ userId: userId });
     if (!items) {
       return res.status(404).json({ message: 'Item not found' });
     }
@@ -267,14 +267,14 @@ exports.itemStats = async (req, res) => {
           complete: 0
         }
       };
-    
+
       // Iterate through each activity of the current item
       item.activity.forEach(activity => {
         if (counters.counts.hasOwnProperty(activity.type)) {
           counters.counts[activity.type]++;
         }
       });
-    
+
       return counters;
     });
 

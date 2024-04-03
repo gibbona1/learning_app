@@ -6,7 +6,7 @@ function UserLevelsPage() {
   const [userLevels, setUserLevels] = useState([]);
 
   useEffect(() => {
-    fetch('api/userlevels', {accept: "application/json"}) // Adjust URL as needed
+    fetch('api/userlevels', { accept: "application/json" }) // Adjust URL as needed
       .then(handleResponse)
       .then(setUserLevels)
       .catch(e => handleError(e, 'user levels'));

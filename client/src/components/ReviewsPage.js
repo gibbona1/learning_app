@@ -5,10 +5,10 @@ import { handleResponse, handleError } from './helpers';
 
 function ReviewsPage() {
   const userId = '65fcc504b999225e008c71c5';
-  
+
   let navigate = useNavigate();
   function startReviewSession() {
-    navigate('/reviewSession' , { state: {userId: userId} }); // Navigate to ReviewSession page
+    navigate('/reviewSession', { state: { userId: userId } }); // Navigate to ReviewSession page
   }
   // State to store counts
   const [reviewsNowCount, setReviewsNowCount] = useState(0);
@@ -20,10 +20,10 @@ function ReviewsPage() {
   async function fetchReviewCounts(userId, hours, setFn) {
     try {
       fetch(`/api/items/${userId}/${hours}/count`)
-      .then(handleResponse)
-      .then(data => {
-        setFn(data.adjustedCount);
-      });
+        .then(handleResponse)
+        .then(data => {
+          setFn(data.adjustedCount);
+        });
     } catch (error) {
       console.error('Error fetching review counts:', error);
       alert('Error fetching review counts: ' + error.message); // Displaying error message in alert
@@ -35,15 +35,15 @@ function ReviewsPage() {
     fetchReviewCounts(userId, 0, setReviewsNowCount);
     fetchReviewCounts(userId, 1, setReviews1HourCount);
     fetchReviewCounts(userId, 24, setReviews24HoursCount);
-    }, [userId]); // Re-run when userId changes
+  }, [userId]); // Re-run when userId changes
 
   useEffect(() => {
     fetch(`/api/items/${userId}/0`)
-    .then(handleResponse)
-    .then(data => {
-      setReviewsNow(data.itemsDueWithoutLessons); // Ensure this is an array
-    })
-    .catch(e => handleError(e, 'reviews'));
+      .then(handleResponse)
+      .then(data => {
+        setReviewsNow(data.itemsDueWithoutLessons); // Ensure this is an array
+      })
+      .catch(e => handleError(e, 'reviews'));
 
   }, [userId]); // Re-run when userId changes
 
@@ -73,8 +73,8 @@ function ReviewsPage() {
               <td>{r.userId}</td>
               <td>{r.birdCallId}</td>
               <td>{r.level}</td>
-              <td>{r.lastReviewed}</td> 
-              <td>{r.nextReviewDate}</td> 
+              <td>{r.lastReviewed}</td>
+              <td>{r.nextReviewDate}</td>
             </tr>
           ))}
         </tbody>

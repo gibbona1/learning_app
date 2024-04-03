@@ -11,7 +11,7 @@ exports.getAllBirdCalls = async (req, res) => {
     if (level) {
       query.level = level;
     }
-    
+
     if (birdClass) {
       query.class = birdClass;
     }

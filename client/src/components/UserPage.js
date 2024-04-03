@@ -6,7 +6,7 @@ function UserPage() {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    fetch('api/users', {accept: "application/json"}) // Adjust URL as needed
+    fetch('api/users', { accept: "application/json" }) // Adjust URL as needed
       .then(handleResponse)
       .then(setUsers)
       .catch(e => handleError(e, 'users'));

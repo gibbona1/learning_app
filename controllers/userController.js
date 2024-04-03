@@ -12,7 +12,7 @@ exports.createUser = async (req, res) => {
     const { username, email, password, role } = req.body;
     const passwordHash = await bcrypt.hash(password, 10);
     const user = new User({ username, email, passwordHash, role });
-    user.levelData.push({level: 0, startDate: user.registrationDate});
+    user.levelData.push({ level: 0, startDate: user.registrationDate });
     await user.save();
     res.status(201).json({ message: 'User created successfully', user });
   } catch (error) {
@@ -81,10 +81,10 @@ exports.levelUpUser = async (req, res) => {
 
     now = new Date();
     // Check if the levelData array is long enough and the specific entry exists
-    
+
     if (user.levelData[user.level]) {
       //if endDate exists, then the level is already completed
-      if(typeof(user.levelData[user.level].endDate) !== 'undefined'){
+      if (typeof (user.levelData[user.level].endDate) !== 'undefined') {
         if (user.level >= maxLevel) {
           // Item is already at or above the maximum level, can't increment
           return res.status(400).json({ message: "Can't level up user, already completed max level" });
@@ -99,7 +99,7 @@ exports.levelUpUser = async (req, res) => {
     } else {
       // The levelData array does not have an entry for the current level
       return res.status(500).json('Level data array doesn\'t exist');
-    }    
+    }
 
     user.level += 1; // Increment the level
 
@@ -115,7 +115,7 @@ exports.levelUpUser = async (req, res) => {
     const birdCalls = await BirdCall.find({ level: user.level });
 
     // Step 3 & 4: Create items and lessons for each birdCall
-    const itemsPromises = birdCalls.map(birdCall => 
+    const itemsPromises = birdCalls.map(birdCall =>
       new Item({ userId, birdCallId: birdCall._id }).save()
     );
     const items = await Promise.all(itemsPromises);
@@ -142,11 +142,11 @@ exports.projectLevelUp = async (req, res) => {
     }
 
     now = new Date();
-    
+
     // check if last user levelData is completed
-    if(typeof(user.levelData[user.level].endDate) !== 'undefined'){
-      return res.status(201).json({ message: "Last level data is completed"});
-    } 
+    if (typeof (user.levelData[user.level].endDate) !== 'undefined') {
+      return res.status(201).json({ message: "Last level data is completed" });
+    }
 
     //get all leveldata except last
     let levelData = user.levelData.slice(0, -1);
@@ -159,7 +159,7 @@ exports.projectLevelUp = async (req, res) => {
 
     //get average of all levelData durations except the last
     let avg = durationData.reduce((sum, current) => sum + current.duration, 0) / durationData.length;
-    
+
     //now get time from last item's startdate and now
     let duration = (now - user.levelData[user.level].startDate) / (1000 * 60 * 60 * 24); // Convert to days
 
@@ -178,12 +178,14 @@ exports.activity24Hour = async (req, res) => {
 
   try {
     // Step 1: Get all items for the user
-    const items = await Item.find({ userId: userId,
-                                    activity: { $exists: true, $ne: [] }});
+    const items = await Item.find({
+      userId: userId,
+      activity: { $exists: true, $ne: [] }
+    });
 
     const activityData = items.flatMap(item => {
       return item.activity.map(activity => {
-          return { id: item._id, ...activity };
+        return { id: item._id, ...activity };
       });
     });
     const now = new Date();
@@ -196,18 +198,18 @@ exports.activity24Hour = async (req, res) => {
 
     // Iterate through each item
     activityData.forEach(item => {
-        // Iterate through each activity
-        Object.values(item)
+      // Iterate through each activity
+      Object.values(item)
         .filter(obj => typeof obj === 'object')
         .filter(obj => new Date(obj.date) >= yesterday)
         .forEach(activityObj => {
           // Check if the date is within the last 24 hours
-          
+
           const type = activityObj.type;
           if (typeCounts[type]) {
-              typeCounts[type]++;
+            typeCounts[type]++;
           } else {
-              typeCounts[type] = 1;
+            typeCounts[type] = 1;
           }
         });
     });
@@ -224,8 +226,10 @@ exports.userStats = async (req, res) => {
 
   try {
     // Step 1: Get all items for the user
-    const items = await Item.find({ userId: userId,
-      activity: { $exists: true, $ne: [] }});
+    const items = await Item.find({
+      userId: userId,
+      activity: { $exists: true, $ne: [] }
+    });
 
     const activityData = items.flatMap(item => {
       return item.activity.map(activity => {
@@ -242,23 +246,23 @@ exports.userStats = async (req, res) => {
     activityData.forEach(item => {
       // Iterate through each activity
       Object.values(item)
-      .filter(obj => typeof obj === 'object')
-      .forEach(activity => {
-        switch (activity.type) {
-          case 'lesson-complete':
-          case 'reset':
-          case 'level-up':
-          case 'complete':
-          case 'level-down':
-            counters[activity.type]++;
-            break;
-          default:
-            break;
-        }
-      })
+        .filter(obj => typeof obj === 'object')
+        .forEach(activity => {
+          switch (activity.type) {
+            case 'lesson-complete':
+            case 'reset':
+            case 'level-up':
+            case 'complete':
+            case 'level-down':
+              counters[activity.type]++;
+              break;
+            default:
+              break;
+          }
+        })
     });
 
-    res.status(200).json(counters);    
+    res.status(200).json(counters);
   } catch (error) {
     res.status(500).json({ message: 'Error fetching user stats', error: error.message });
   }
