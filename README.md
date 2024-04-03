@@ -71,16 +71,16 @@ TODOs:
         - [ ] Modern styling
         - [ ] carry User ID through session
         - [ ] login/logout functionality
-    - [ ] Activity/history field of Item
+    - [x] Activity/history field of Item
         - [x] name: [started/lesson-complete, level-up/correct level-down/incorrect, complete, reset], date.
-        - [ ] calculate stats
+        - [x] calculate stats
         - [x] plot levelups/downs, lessons completed
     - [x] Helper document with example API calls
     - [ ] faker for creating users, lessons, etc
 
-- [ ] Stats:
+- [x] Stats:
     - [x] upcoming reviews by hour next 24 hours
-    - [ ] show activity (last 24 hours, average per hour in lifetime)
+    - [x] show activity (last 24 hours, average per hour in lifetime)
     - [x] overall num attempts, num correct/incorrect, % correct
     - [x] critical items (pick those with accuracy below a certain threshold)
     - [x] Level progression timing
