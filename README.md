@@ -53,10 +53,16 @@ TODOs:
         - [x] prev review, disable if first etc
         - [ ] multiple choice (hint)
         - [x] create new review whether correct or incorrect with associated times etc.
+        - [ ] only do at end of session (pick small block size e.g. 10)
+        - [ ] spectrogram and audio could be two different testing grounds, like reading + meaning in WK
     - [ ] ungradedSession (select some items to review, no change to items)
     - [ ] Review scheduler
-    - [ ] Lesson creator (teacher, admin) probably just permissions based
-    - [ ] Assign students to teacher (classroom model perhaps)
+    - [ ] Teacher/classroom functionality
+        - [ ] Lesson/course creator (teacher, admin) probably just permissions based
+        - [ ] Assign students to teacher (classroom model perhaps)
+        - [ ] Teacher view (correct/incorrect items)
+        - [ ] group stats
+        - [ ] class tests
     - [ ] general components
         - [x] Navigation tabs/buttons
         - [x] Connect to AWS to load sounds
@@ -76,6 +82,7 @@ TODOs:
     - [x] upcoming reviews by hour next 24 hours
     - [ ] show activity (last 24 hours, average per hour in lifetime)
     - [ ] overall num attempts, num correct/incorrect, % correct
+    - [ ] critical items (pick those with accuracy below a certain threshold)
     - [x] Level progression timing
     - [x] projections for finishing level
 
