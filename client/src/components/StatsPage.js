@@ -114,6 +114,7 @@ export default function HomePage() {
   const [projectNextLevel, setProjectNextLevel] = useState("Calculating projection...");
   const [activityData, setActivityData] = useState([]);
   const [activityChartData, setActivityChartData] = useState([]);
+  const [userStats, setUserStats] = useState([]);
 
   useEffect(() => {
     fetch(`/api/itemsgetbyhour/${currentUserId}`)
@@ -168,6 +169,13 @@ export default function HomePage() {
     .then(handleResponse)
     .then(setActivityData)
     .catch(e => handleError(e, 'activity 24 hour'));
+  }, [currentUserId]);
+
+  useEffect(() => {
+    fetch(`api/userstats/${currentUserId}`)
+    .then(handleResponse)
+    .then(setUserStats)
+    .catch(e => handleError(e, 'user stats'));
   }, [currentUserId]);
 
   useEffect(() => {
@@ -260,10 +268,19 @@ export default function HomePage() {
     <div style={{'white-space': 'pre-wrap'}}>
     {projectNextLevel}
     </div>
-    
     <hr />
     {activityData.length === 0 ? (<p>Loading...</p>) : (
       <Bar data={activityChartData} options={activityOptions} />
+    )}
+    <hr />
+    {userStats.length === 0 ? (<p>Loading...</p>) : 
+    (<div>
+      {Object.entries(userStats).map(([key, value]) => (
+        <div key={key}>
+          {key}: {value}
+        </div>
+      ))}
+    </div>
     )}
   </div>
   );

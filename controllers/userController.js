@@ -218,3 +218,57 @@ exports.activity24Hour = async (req, res) => {
     res.status(500).json({ message: 'Error fetching activity data for user', error: error.message });
   }
 }
+
+exports.userStats = async (req, res) => {
+  const { id: userId } = req.params; // Extract the user ID from the request parameters
+
+  try {
+    // Step 1: Get all items for the user
+    const items = await Item.find({ userId: userId,
+      activity: { $exists: true, $ne: [] }});
+
+    const activityData = items.flatMap(item => {
+      return item.activity.map(activity => {
+        return { id: item._id, ...activity };
+      });
+    });
+    const counters = {
+      lessonCompletes: 0,
+      resets: 0,
+      increments: 0, // levelup or complete
+      decrements: 0, // leveldown
+      completes: 0
+    };
+    activityData.forEach(item => {
+      // Iterate through each activity
+      Object.values(item)
+      .filter(obj => typeof obj === 'object')
+      .forEach(activity => {
+        switch (activity.type) {
+          case 'lesson-complete':
+            counters.lessonCompletes++;
+            break;
+          case 'reset':
+            counters.resets++;
+            break;
+          case 'level-up':
+            counters.increments++;
+            break;
+          case 'complete':
+            counters.completes++;
+            break;
+          case 'level-down':
+            counters.decrements++;
+            break;
+          default:
+            // Handle unexpected activity types if necessary
+            break;
+        }
+      })
+    });
+
+    res.status(200).json(counters);    
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching user stats', error: error.message });
+  }
+}
