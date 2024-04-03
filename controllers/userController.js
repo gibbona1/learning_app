@@ -267,3 +267,42 @@ exports.userStats = async (req, res) => {
     res.status(500).json({ message: 'Error fetching user stats', error: error.message });
   }
 }
+
+exports.activityPerHour = async (req, res) => {
+  const { userId } = req.params;
+
+  const items = await Item.find({
+    userId: userId,
+    activity: { $exists: true, $ne: [] }
+  });
+
+  try { 
+    let countsByHour = [];
+
+    for (let hour = 0; hour <= 24; hour++) {
+      const counters = {
+        'lesson-complete': 0,
+        reset: 0,
+        'level-up': 0, // levelup or complete
+        'level-down': 0, // leveldown
+        complete: 0
+      };
+
+      countsByHour.push(counters);
+    }
+
+    items.map(item => {
+      // Iterate through each activity of the current item
+      item.activity.forEach(activity => {
+        //get hour of item.date
+        let hour = new Date(activity.date).getHours();
+        countsByHour[hour][activity.type]++;
+      });
+    });
+
+    res.json(countsByHour);
+  } catch (error) {
+    console.error('Error counting review items by hour:', error);
+    res.status(500).json({ message: 'Error processing request', error: error.message });
+  }
+}
