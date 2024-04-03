@@ -102,9 +102,7 @@ exports.levelUpItem = async (req, res) => {
     }
 
     let activity;
-    if (action === 'increment' && item.level === maxLevel) {
-      activity = 'complete';
-    } else if (action === 'increment') {
+    if (action === 'increment') {
       activity = 'level-up';
     } else if (action === 'decrement') {
       activity = 'level-down';
@@ -122,6 +120,13 @@ exports.levelUpItem = async (req, res) => {
       type: activity,
       date: now // Current date/time
     });
+
+    if (action === 'increment' && item.level === maxLevel) {
+      item.activity.push({
+        type: 'complete',
+        date: now // Current date/time
+      });
+    }
 
     await item.save();
 
