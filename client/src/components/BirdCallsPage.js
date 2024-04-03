@@ -130,7 +130,7 @@ function BirdCallsPage() {
           {criticalItems.map((item) => (
             <tr key={item._id}> {/* Ensure your data has a unique 'id' property */}
               <td>{item.name}</td>
-              <td>{item.accuracy}</td>
+              <td>{(item.accuracy * 100).toFixed(2)}</td>
             </tr>
           ))}
         </tbody>
