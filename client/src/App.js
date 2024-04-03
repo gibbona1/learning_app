@@ -45,11 +45,12 @@ export default function App() {
       setIsAuthenticated(false);
     }
   };
+
   return (
     <Router>
       <Routes>
         <Route path="/login" element={isAuthenticated ? <Navigate to="/" replace /> : <Login onLogin={login} />}/>
-        <Route path="/" element={isAuthenticated ? <HomePage /> : <Navigate to="/login" replace />} />
+        <Route path="/" element={isAuthenticated ? <HomePage isAuth= {true} setAuth = {setIsAuthenticated}/> : <Navigate to="/login" replace />} />
         {isAuthenticated ? (
           <>
           <Route path="/login" element={<Login />} />
