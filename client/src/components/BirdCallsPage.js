@@ -9,6 +9,7 @@ function BirdCallsPage() {
   const [items, setItems] = useState([]);
   const [mergedData, setMergedData] = useState([]);
   const [user, setUser] = useState([]);
+  const [itemStats, setItemStats] = useState([]);
 
   useEffect(() => {
     fetch(`api/users/${userId}`)
@@ -36,15 +37,22 @@ function BirdCallsPage() {
   }, [userId]);
 
   useEffect(() => {
-    Promise.all([items, birdCalls]).then(values => {
-      const [items, birdCalls] = values;
-      mergeData(items, birdCalls, user);
+    fetch(`api/itemstats/${userId}`) // Adjust URL as needed
+    .then(handleResponse)
+    .then(setItemStats)
+  }, [userId]);
+
+  useEffect(() => {
+    Promise.all([items, birdCalls, itemStats]).then(values => {
+      const [items, birdCalls, itemStats] = values;
+      mergeData(items, birdCalls, user, itemStats);
     });
-    }, [items, birdCalls, user]);
+    }, [items, birdCalls, user, itemStats]);
   
-  function mergeData(items, birdCalls, user) {
+  function mergeData(items, birdCalls, user, itemStats) {
     const merged = items.map(item => {
       const birdCallData = birdCalls.find(birdCall => birdCall._id === item.birdCallId);
+      const itemStatData = itemStats.find(itemStat => itemStat.id === item._id);
       // if item level is zero, set next review date to blank
       if (item.level === 0) {
         item.nextReviewDate = '';
@@ -56,7 +64,7 @@ function BirdCallsPage() {
       } else if(new Date(item.nextReviewDate) < new Date()) {
         item.nextReviewDate = 'Now';
       }
-      return { ...item, birdCallData }; // Combine review with corresponding bird call data
+      return { ...item, birdCallData, itemStatData}; // Combine review with corresponding bird call data
     });
     setMergedData(merged);
   }
@@ -73,6 +81,7 @@ function BirdCallsPage() {
             <th>Unlock Level</th>
             <th>Item Level</th>
             <th>Next review</th>
+            <th>Stats</th>
           </tr>
         </thead>
         <tbody>
@@ -83,6 +92,9 @@ function BirdCallsPage() {
               <td>{item.birdCallData.level}</td>
               <td>{item.level}</td>
               <td>{item.nextReviewDate}</td>
+              <td>
+              {item.level = 'Unlocked' && item.itemStatData && item.itemStatData.counts ? JSON.stringify(item.itemStatData.counts) : ''}
+              </td>
             </tr>
           ))}
         </tbody>

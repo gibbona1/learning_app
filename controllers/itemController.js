@@ -245,3 +245,41 @@ exports.upcomingReviewsByHour = async (req, res) => {
     res.status(500).json({ message: 'Error processing request', error: error.message });
   }
 };
+
+exports.itemStats = async (req, res) => {
+  const { userId: userId } = req.params; // Extract the user ID from the request parameters
+
+  try {
+    // Step 1: Get all items for the user
+    const items = await Item.find({userId: userId});
+    if (!items) {
+      return res.status(404).json({ message: 'Item not found' });
+    }
+    let itemsCounters = items.map(item => {
+      // Structure to hold individual counters for this item
+      let counters = {
+        id: item._id,
+        counts: {
+          'lesson-complete': 0,
+          reset: 0,
+          'level-up': 0, // Assuming 'level-up' is combined 'levelup' or 'complete'
+          'level-down': 0, // leveldown
+          complete: 0
+        }
+      };
+    
+      // Iterate through each activity of the current item
+      item.activity.forEach(activity => {
+        if (counters.counts.hasOwnProperty(activity.type)) {
+          counters.counts[activity.type]++;
+        }
+      });
+    
+      return counters;
+    });
+
+    res.status(200).json(itemsCounters);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching user stats', error: error.message });
+  }
+}

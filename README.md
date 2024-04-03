@@ -81,7 +81,7 @@ TODOs:
 - [ ] Stats:
     - [x] upcoming reviews by hour next 24 hours
     - [ ] show activity (last 24 hours, average per hour in lifetime)
-    - [ ] overall num attempts, num correct/incorrect, % correct
+    - [x] overall num attempts, num correct/incorrect, % correct
     - [ ] critical items (pick those with accuracy below a certain threshold)
     - [x] Level progression timing
     - [x] projections for finishing level
