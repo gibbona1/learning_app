@@ -16,10 +16,34 @@ import './App.css';
 export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  const login = (username, password) => {
-    // Perform authentication here.
-    // If successful, set isAuthenticated to true.
-    setIsAuthenticated(true);
+  const login = async (username, password) => {
+    try {
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
+      });
+  
+      if (response.ok) {
+        const data = await response.json();
+        // Handle successful authentication
+        console.log('Login successful:', data);
+        // E.g., storing auth tokens returned from the server in local storage or context
+        setIsAuthenticated(true);
+        // Optionally redirect the user or perform other actions upon successful login
+      } else {
+        // Handle failed authentication
+        setIsAuthenticated(false);
+        alert('Login failed: Invalid credentials.');
+      }
+    } catch (error) {
+      // Handle network or other errors
+      console.error('Login error:', error);
+      alert('Login error.');
+      setIsAuthenticated(false);
+    }
   };
   return (
     <Router>

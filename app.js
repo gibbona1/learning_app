@@ -6,6 +6,7 @@ const birdCallRoutes = require('./routes/birdCallRoutes');
 const userLevelRoutes = require('./routes/userLevelRoutes');
 const itemLevelRoutes = require('./routes/itemLevelRoutes');
 const lessonRoutes = require('./routes/lessonRoutes');
+const authRoutes = require('./routes/authRoutes');
 
 // Import other routes as needed
 
@@ -27,6 +28,7 @@ app.use('/api', birdCallRoutes);
 app.use('/api', userLevelRoutes);
 app.use('/api', itemLevelRoutes);
 app.use('/api', lessonRoutes);
+app.use('/api', authRoutes);
 // Use other routes as needed
 
 const PORT = process.env.PORT || 3001;
