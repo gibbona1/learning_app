@@ -56,7 +56,6 @@ TODOs:
         - [ ] only do at end of session (pick small block size e.g. 10)
         - [ ] spectrogram and audio could be two different testing grounds, like reading + meaning in WK
     - [ ] ungradedSession (select some items to review, no change to items)
-    - [ ] Review scheduler
     - [ ] Teacher/classroom functionality
         - [ ] Lesson/course creator (teacher, admin) probably just permissions based
         - [ ] Assign students to teacher (classroom model perhaps)
@@ -70,13 +69,13 @@ TODOs:
         - [ ] Modularize common scripts
         - [ ] Modern styling
         - [ ] carry User ID through session
-        - [ ] login/logout functionality
+        - [x] login/logout functionality
     - [x] Activity/history field of Item
         - [x] name: [started/lesson-complete, level-up/correct level-down/incorrect, complete, reset], date.
         - [x] calculate stats
         - [x] plot levelups/downs, lessons completed
     - [x] Helper document with example API calls
-    - [ ] faker for creating users, lessons, etc
+    - [ ] faker for creating users, lessons, progress etc
 
 - [x] Stats:
     - [x] upcoming reviews by hour next 24 hours
