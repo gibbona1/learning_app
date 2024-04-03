@@ -256,10 +256,10 @@ export default function HomePage() {
   }, [activityData]);
 
   function userStatsPercent(userStats, key, value){
-    const totalIncrementsAndDecrements = (userStats.increments || 0) + (userStats.decrements || 0);
+    const totalIncrementsAndDecrements = (userStats['level-up'] || 0) + (userStats['level-down'] || 0);
 
     let percentageDisplay = "";
-    if ((key === "increments" || key === "decrements") && totalIncrementsAndDecrements > 0) {
+    if ((key === "level-up" || key === "level-down") && totalIncrementsAndDecrements > 0) {
       const percentage = (value / totalIncrementsAndDecrements * 100).toFixed(2); // Round to two decimal places
       percentageDisplay = ` (${percentage}%)`;
     }

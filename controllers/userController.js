@@ -233,11 +233,11 @@ exports.userStats = async (req, res) => {
       });
     });
     const counters = {
-      lessonCompletes: 0,
-      resets: 0,
-      increments: 0, // levelup or complete
-      decrements: 0, // leveldown
-      completes: 0
+      'lesson-complete': 0,
+      reset: 0,
+      'level-up': 0, // levelup or complete
+      'level-down': 0, // leveldown
+      complete: 0
     };
     activityData.forEach(item => {
       // Iterate through each activity
@@ -246,22 +246,13 @@ exports.userStats = async (req, res) => {
       .forEach(activity => {
         switch (activity.type) {
           case 'lesson-complete':
-            counters.lessonCompletes++;
-            break;
           case 'reset':
-            counters.resets++;
-            break;
           case 'level-up':
-            counters.increments++;
-            break;
           case 'complete':
-            counters.completes++;
-            break;
           case 'level-down':
-            counters.decrements++;
+            counters[activity.type]++;
             break;
           default:
-            // Handle unexpected activity types if necessary
             break;
         }
       })
