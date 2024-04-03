@@ -123,7 +123,7 @@ export default function ReviewSession() {
         headers: {
           'Content-Type': 'application/json',
         },
-        params: {'action': 'decrement'}
+        body: JSON.stringify({action: 'decrement'})
       })
       .then(handleResponse)
       .then(data => {
@@ -143,14 +143,15 @@ export default function ReviewSession() {
         <>
           <NavBar />
           <h3>{currentReview.birdCallData.name}  ({currentIndex+1}/{mergedData.length})</h3>
+          <p>ID: {currentReview._id}</p>
           <p>Class: {currentReview.birdCallData.class}</p>
           <p>Level: {currentReview.birdCallData.level}</p>
           <img src={specUrl} alt="Spectrogram"/><br/>
-          <button onClick={goToPreviousReview} disabled={currentIndex === 0 || submitState === ''}>Previous Review</button>
+          <button onClick={goToPreviousReview} disabled={currentIndex === 0 || validationState === ''}>Previous Review</button>
           <audio controls src={audioUrl}>
             Your browser does not support the audio element.
           </audio>
-          <button onClick={goToNextReview} disabled={currentIndex === mergedData.length - 1 || submitState === ''}>Next Review</button>
+          <button onClick={goToNextReview} disabled={currentIndex === mergedData.length - 1 || validationState === ''}>Next Review</button>
           <br/>
           <input
             type="text"

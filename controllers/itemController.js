@@ -67,7 +67,7 @@ exports.deleteItem = async (req, res) => {
 // level up item if right
 exports.levelUpItem = async (req, res) => {
   const { id: itemId } = req.params; // Extract the user ID from the request parameters
-  const action = req.query.action || 'increment'; // Default to 'increment' if not specified
+  const { action: action} = req.body || 'increment'; // Default to 'increment' if not specified
 
   try {
     // Step 1: Update the user to the next level
