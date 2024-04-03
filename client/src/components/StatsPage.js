@@ -255,6 +255,17 @@ export default function HomePage() {
     setActivityChartData(data);
   }, [activityData]);
 
+  function userStatsPercent(userStats, key, value){
+    const totalIncrementsAndDecrements = (userStats.increments || 0) + (userStats.decrements || 0);
+
+    let percentageDisplay = "";
+    if ((key === "increments" || key === "decrements") && totalIncrementsAndDecrements > 0) {
+      const percentage = (value / totalIncrementsAndDecrements * 100).toFixed(2); // Round to two decimal places
+      percentageDisplay = ` (${percentage}%)`;
+    }
+    return percentageDisplay;
+  }
+
   return (
   <div>
     <NavBar />
@@ -277,7 +288,7 @@ export default function HomePage() {
     (<div>
       {Object.entries(userStats).map(([key, value]) => (
         <div key={key}>
-          {key}: {value}
+          {key}: {value}{userStatsPercent(userStats, key, value)}
         </div>
       ))}
     </div>
