@@ -6,6 +6,7 @@ const Item = require('../models/item');
 const Lesson = require('../models/lesson');
 const UserLevel = require('../models/userLevel');
 const bcrypt = require('bcrypt');
+const { getAllDocuments, getDocumentById, updateDocumentById, deleteDocumentById } = require('../scripts/controllerHelpers');
 
 exports.createUser = async (req, res) => {
   try {
@@ -20,51 +21,10 @@ exports.createUser = async (req, res) => {
   }
 };
 
-exports.getAllUsers = async (req, res) => {
-  try {
-    const users = await User.find(req.query);
-    res.status(200).json(users);
-  } catch (error) {
-    res.status(500).json({ message: 'Error fetching users', error: error.message });
-  }
-};
-
-// Add more methods for update, delete, and get a single user as needed
-exports.getUser = async (req, res) => {
-  try {
-    const user = await User.findById(req.params.id);
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
-    }
-    res.status(200).json(user);
-  } catch (error) {
-    res.status(500).json({ message: 'Error fetching user', error: error.message });
-  }
-};
-
-exports.updateUser = async (req, res) => {
-  try {
-    const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
-    }
-    res.status(200).json({ message: 'User updated successfully', user });
-  } catch (error) {
-    res.status(500).json({ message: 'Error updating user', error: error.message });
-  }
-};
-
-exports.deleteUser = async (req, res) => {
-  try {
-    const user = await User.findByIdAndDelete(req.params.id);
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
-    }
-    res.status(200).json({ message: 'User deleted successfully' });
-  } catch (error) {
-    res.status(500).json({ message: 'Error deleting user', error: error.message });
-  }
-};
+exports.getAllUsers = getAllDocuments(User, 'User');
+exports.getUser = getDocumentById(User, 'User');
+exports.updateUser = updateDocumentById(User, 'User');
+exports.deleteUser = deleteDocumentById(User, 'User');
 
 exports.levelUpUser = async (req, res) => {
   const { id: userId } = req.params; // Extract the user ID from the request parameters

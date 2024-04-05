@@ -2,6 +2,7 @@
 
 const Lesson = require('../models/lesson');
 const Item = require('../models/item');
+const { getAllDocuments, getDocumentById, deleteDocumentById } = require('../scripts/controllerHelpers');
 
 // Create new Item
 exports.createLesson = async (req, res) => {
@@ -14,41 +15,9 @@ exports.createLesson = async (req, res) => {
   }
 };
 
-// Get all Item records
-exports.getAllLessons = async (req, res) => {
-  try {
-    const lesson = await Lesson.find(req.query);
-    res.status(200).json(lesson);
-  } catch (error) {
-    res.status(500).json({ message: 'Error fetching Lesson records', error: error.message });
-  }
-};
-
-// Get a single Item record
-exports.getLesson = async (req, res) => {
-  try {
-    const lesson = await Lesson.findById(req.params.id);
-    if (!lesson) {
-      return res.status(404).json({ message: 'Lesson not found' });
-    }
-    res.status(200).json(item);
-  } catch (error) {
-    res.status(500).json({ message: 'Error fetching Lesson', error: error.message });
-  }
-};
-
-// Delete a Item record
-exports.deleteLesson = async (req, res) => {
-  try {
-    const lesson = await Lesson.findByIdAndDelete(req.params.id);
-    if (!lesson) {
-      return res.status(404).json({ message: 'Lesson not found' });
-    }
-    res.status(200).json({ message: 'Lesson deleted successfully' });
-  } catch (error) {
-    res.status(500).json({ message: 'Error deleting Lesson', error: error.message });
-  }
-};
+exports.getAllLessons = getAllDocuments(Lesson, 'Lessons');
+exports.getLesson = getDocumentById(Lesson, 'Lesson');
+exports.deleteLesson = deleteDocumentById(Lesson, 'Lesson');
 
 exports.lessonCompleted = async (req, res) => {
   const { id: lessonId } = req.params; // Extract the user ID from the request parameters

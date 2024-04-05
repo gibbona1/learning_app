@@ -3,6 +3,7 @@
 const Item = require('../models/item');
 const ItemLevel = require('../models/itemLevel');
 const Lesson = require('../models/lesson');
+const {getAllDocuments, getDocumentById, updateDocumentById, deleteDocumentById} = require('../scripts/controllerHelpers'); 
 
 // Create new Item
 exports.createItem = async (req, res) => {
@@ -15,54 +16,10 @@ exports.createItem = async (req, res) => {
   }
 };
 
-// Get all Item records
-exports.getAllItems = async (req, res) => {
-  try {
-    const item = await Item.find(req.query);
-    res.status(200).json(item);
-  } catch (error) {
-    res.status(500).json({ message: 'Error fetching Item records', error: error.message });
-  }
-};
-
-// Get a single Item record
-exports.getItem = async (req, res) => {
-  try {
-    const item = await Item.findById(req.params.id);
-    if (!item) {
-      return res.status(404).json({ message: 'Item not found' });
-    }
-    res.status(200).json(item);
-  } catch (error) {
-    res.status(500).json({ message: 'Error fetching Item', error: error.message });
-  }
-};
-
-// Update a Item record
-exports.updateItem = async (req, res) => {
-  try {
-    const item = await Item.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
-    if (!item) {
-      return res.status(404).json({ message: 'Item not found' });
-    }
-    res.status(200).json({ message: 'Item updated successfully', item });
-  } catch (error) {
-    res.status(500).json({ message: 'Error updating Item', error: error.message });
-  }
-};
-
-// Delete a Item record
-exports.deleteItem = async (req, res) => {
-  try {
-    const item = await Item.findByIdAndDelete(req.params.id);
-    if (!item) {
-      return res.status(404).json({ message: 'Item not found' });
-    }
-    res.status(200).json({ message: 'Item deleted successfully' });
-  } catch (error) {
-    res.status(500).json({ message: 'Error deleting Item', error: error.message });
-  }
-};
+exports.getAllItems = getAllDocuments(Item, 'Items');
+exports.getItem = getDocumentById(Item, 'Item');
+exports.updateItem = updateDocumentById(Item, 'Item');
+exports.deleteItem = deleteDocumentById(Item, 'Item');
 
 // level up item if right
 exports.levelUpItem = async (req, res) => {
