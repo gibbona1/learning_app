@@ -2,12 +2,21 @@ import React, { useEffect, useState } from 'react';
 import NavBar from './NavBar';
 import { handleResponse, handleError } from './helpers';
 
-function UserPage() {
+function UserPage({ userId, userRole }) {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
     fetch('api/users', { accept: "application/json" }) // Adjust URL as needed
       .then(handleResponse)
+      .then(data => {
+        if (userRole === 'admin') {
+          return data;  
+        } else if (userRole === 'teacher') {
+          return data.filter(user => user.role === 'learner');
+        } else {
+          return data.filter(user => user._id === userId);
+        }
+      })
       .then(setUsers)
       .catch(e => handleError(e, 'users'));
   }, []);

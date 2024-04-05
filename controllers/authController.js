@@ -19,7 +19,7 @@ exports.login = async (req, res) => {
 
     // If password matches, handle the successful login
     // E.g., generate a JWT token or set a session cookie here
-    res.status(200).json({ message: 'Login successful', id: user._id});
+    res.status(200).json({ message: 'Login successful', id: user._id, role: user.role});
     // Remember to replace this with actual session handling/token generation
   } catch (error) {
     console.error('Login error:', error);

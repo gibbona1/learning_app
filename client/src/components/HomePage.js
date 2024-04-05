@@ -1,16 +1,17 @@
 import React from 'react';
 import NavBar from './NavBar';
 
-export default function HomePage({ isAuth, setAuth, userId, setUserId }) {
+export default function HomePage({ isAuth, setAuth, userId, setUserId, userRole, setUserRole}) {
   const logout = () => {
     setAuth(false);
     setUserId(null);
+    setUserRole(null);
   };
   return (
     <div>
       <NavBar />
       {isAuth && <button onClick={logout}>Logout</button>}
-      {isAuth && <p>Logged in as user {userId}</p>}
+      {isAuth && <p>Logged in as user: <b>{userId}</b>. role: <b>{userRole}</b></p>}
       <h1>Home Page</h1>
       <p>Welcome to our application!</p>
     </div>
