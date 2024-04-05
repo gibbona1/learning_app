@@ -15,6 +15,7 @@ import './App.css';
 
 export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [userId, setUserId] = useState(null);
 
   const login = async (username, password) => {
     try {
@@ -29,9 +30,10 @@ export default function App() {
       if (response.ok) {
         const data = await response.json();
         // Handle successful authentication
-        console.log('Login successful:', data);
+        console.log('Login successful:');
         // E.g., storing auth tokens returned from the server in local storage or context
         setIsAuthenticated(true);
+        setUserId(data.id);
         // Optionally redirect the user or perform other actions upon successful login
       } else {
         // Handle failed authentication
@@ -50,7 +52,7 @@ export default function App() {
     <Router>
       <Routes>
         <Route path="/login" element={isAuthenticated ? <Navigate to="/" replace /> : <Login onLogin={login} />}/>
-        <Route path="/" element={isAuthenticated ? <HomePage isAuth= {true} setAuth = {setIsAuthenticated}/> : <Navigate to="/login" replace />} />
+        <Route path="/" element={isAuthenticated ? <HomePage isAuth= {true} setAuth = {setIsAuthenticated} userId = {userId} setUserId = {setUserId}/> : <Navigate to="/login" replace />} />
         {isAuthenticated ? (
           <>
           <Route path="/login" element={<Login />} />

@@ -14,12 +14,12 @@ exports.login = async (req, res) => {
     // Compare submitted password with stored hashed password
     const isMatch = await bcrypt.compare(password, user.passwordHash);
     if (!isMatch) {
-      return res.status(401).json({ message: 'Login failed: Incorrect password.' });
+      return res.status(401).json({ message: 'Login failed: Incorrect password.'});
     }
 
     // If password matches, handle the successful login
     // E.g., generate a JWT token or set a session cookie here
-    res.status(200).json({ message: 'Login successful' });
+    res.status(200).json({ message: 'Login successful', id: user._id});
     // Remember to replace this with actual session handling/token generation
   } catch (error) {
     console.error('Login error:', error);
