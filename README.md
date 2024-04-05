@@ -120,3 +120,5 @@ TODOs:
             - [ ] Use tools like GitHub Actions, GitLab CI/CD, or CircleCI.
             - [ ] Configure the pipeline to run tests on every push or pull request.
             - [ ] Automate deployment on successful builds/tests to staging or production environments.
+
+- [ ] RAG (Retrieval Augmented Generation) application - building LLM skills
