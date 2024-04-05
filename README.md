@@ -6,7 +6,7 @@ TODOs:
         - [x] get all
         - [x] search by id
         - [x] get specific (level, class)
-        - [ ] Get mnemonics, work on formating and how best to display
+        - [ ] Get mnemonics, work on formatting and how best to display
         - [ ] Open database of bird images (possible hint)
         - [ ] mnemonic, scientific name, other metadata and info fields
         - [ ] birdCall page (locked/unlocked level etc, link to lesson, similar, search by metadata)
@@ -55,11 +55,11 @@ TODOs:
         - [ ] multiple choice (hint)
         - [x] create new review whether correct or incorrect with associated times etc.
         - [ ] only do at end of session (pick small block size e.g. 10)
-        - [ ] spectrogram and audio could be two different testing grounds, like reading + meaning in WK
+        - [ ] spectrogram, audio, scientific name could be could be different testing grounds, like reading + meaning in WK
     - [ ] ungradedSession (select some items to review, no change to items)
     - [ ] Teacher/classroom functionality
         - [ ] Lesson/course creator (teacher, admin) probably just permissions based
-        - [ ] Assign students to teacher (classroom model perhaps)
+        - [x] Assign students to teacher (classroom model perhaps)
         - [ ] Teacher view (correct/incorrect items)
         - [ ] group stats
         - [ ] class tests

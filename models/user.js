@@ -15,6 +15,7 @@ const userSchema = new mongoose.Schema({
     registrationDate: { type: Date, default: Date.now },
     level: { type: Number, default: 0 }, //user level
     levelData: [LevelDataSchema], //user level data
+    classrooms: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Classroom' }] // For teachers, could be multiple; for learners, typically one
   });
   
 const User = mongoose.model('User', userSchema);
