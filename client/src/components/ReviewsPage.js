@@ -3,12 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import NavBar from './NavBar';
 import { handleResponse, handleError } from './helpers';
 
-function ReviewsPage() {
-  const userId = '65fcc504b999225e008c71c5';
-
+function ReviewsPage({ userId }) {
   let navigate = useNavigate();
   function startReviewSession() {
-    navigate('/reviewSession', { state: { userId: userId } }); // Navigate to ReviewSession page
+    navigate('/reviewSession'); // Navigate to ReviewSession page
   }
   // State to store counts
   const [reviewsNowCount, setReviewsNowCount] = useState(0);

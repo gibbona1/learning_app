@@ -3,9 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import NavBar from './NavBar';
 import { handleResponse } from './helpers';
 
-function ReviewsPage() {
-  const userId = '65fcc504b999225e008c71c5';
-
+function ReviewsPage({ userId }) {
   let navigate = useNavigate();
   function startLessonSession() {
     navigate('/lessonSession', { state: { userId: userId } }); // Navigate to ReviewSession page

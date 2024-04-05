@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
 import NavBar from './NavBar';
 import { handleResponse, handleError } from './helpers';
 const { S3Client, GetObjectCommand } = require("@aws-sdk/client-s3");
 const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
 
-export default function ReviewSession() {
-  const location = useLocation();
-  const currentUserId = location.state.userId;
+export default function ReviewSession({ userId }) {
   const [mergedData, setMergedData] = useState([]);
   const [audioUrl, setAudioUrl] = useState("");
   const [specUrl, setSpecUrl] = useState("");
@@ -35,7 +32,7 @@ export default function ReviewSession() {
 
   const [currentIndex, setCurrentIndex] = useState(0);
   useEffect(() => {
-    const fetchReviews = fetch(`/api/items/${currentUserId}/0`)
+    const fetchReviews = fetch(`/api/items/${userId}/0`)
       .then(handleResponse)
       .then(data => {
         return data.itemsDueWithoutLessons; // Ensure this is an array
@@ -52,7 +49,7 @@ export default function ReviewSession() {
       const [reviews, birdCalls] = values;
       mergeData(reviews, birdCalls);
     });
-  }, [currentUserId]);
+  }, [userId]);
 
   function mergeData(reviews, birdCalls) {
     const merged = reviews.map(review => {

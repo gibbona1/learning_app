@@ -126,8 +126,7 @@ export function calc_dhm(durationInDays) {
   return `${days} days, ${hours} hours, ${minutes} mins`;
 }
 
-export default function HomePage() {
-  const currentUserId = '66080d78dd6882236da18623';
+export default function StatsPage({ userId }) {
   const [countData, setCountData] = useState([]);
   const [countChartData, setCountChartData] = useState([]);
   const [levelData, setLevelData] = useState([]);
@@ -141,15 +140,15 @@ export default function HomePage() {
   const [activityHourChartData, setActivityHourChartData] = useState([]);
 
   useEffect(() => {
-    fetch(`/api/itemsgetbyhour/${currentUserId}`)
+    fetch(`/api/itemsgetbyhour/${userId}`)
       .then(handleResponse)
       .then(setCountData)
       .catch(e => handleError(e, 'reviews'));
 
-  }, [currentUserId]);
+  }, [userId]);
 
   useEffect(() => {
-    fetch(`api/users/${currentUserId}`)
+    fetch(`api/users/${userId}`)
       .then(handleResponse)
       .then(user => {
         const now = new Date(); // Current date/time
@@ -170,10 +169,10 @@ export default function HomePage() {
         setAverageDuration(avg);
       })
       .catch(e => handleError(e, 'user'));
-  }, [currentUserId]);
+  }, [userId]);
 
   useEffect(() => {
-    fetch(`api/users/${currentUserId}/projectlevelup`)
+    fetch(`api/users/${userId}/projectlevelup`)
       .then(handleResponse)
       .then(data => {
         if (typeof data.projection !== 'undefined') {
@@ -186,28 +185,28 @@ export default function HomePage() {
       })
       .catch(e => handleError(e, 'levelup projection'));
 
-  }, [currentUserId]);
+  }, [userId]);
 
   useEffect(() => {
-    fetch(`api/useractivity24Hour/${currentUserId}`)
+    fetch(`api/useractivity24Hour/${userId}`)
       .then(handleResponse)
       .then(setActivityData)
       .catch(e => handleError(e, 'activity 24 hour'));
-  }, [currentUserId]);
+  }, [userId]);
 
   useEffect(() => {
-    fetch(`api/userstats/${currentUserId}`)
+    fetch(`api/userstats/${userId}`)
       .then(handleResponse)
       .then(setUserStats)
       .catch(e => handleError(e, 'user stats'));
-  }, [currentUserId]);
+  }, [userId]);
 
   useEffect(() => {
-    fetch(`api/useractivityPerHour/${currentUserId}`)
+    fetch(`api/useractivityPerHour/${userId}`)
       .then(handleResponse)
       .then(setActivityHourData)
       .catch(e => handleError(e, 'activity per hour'));
-  }, [currentUserId]);
+  }, [userId]);
 
   useEffect(() => {
     const currentHour = new Date().getHours(); // Note: This gets the current hour in local time

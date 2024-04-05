@@ -2,9 +2,7 @@ import React, { useEffect, useState } from 'react';
 import NavBar from './NavBar';
 import { handleResponse, handleError } from './helpers';
 
-function BirdCallsPage() {
-  const userId = '65fcc504b999225e008c71c5';
-
+function BirdCallsPage({ userId }) {
   const [birdCalls, setBirdCalls] = useState([]);
   const [items, setItems] = useState([]);
   const [mergedData, setMergedData] = useState([]);

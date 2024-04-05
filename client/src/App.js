@@ -55,15 +55,14 @@ export default function App() {
         <Route path="/" element={isAuthenticated ? <HomePage isAuth= {true} setAuth = {setIsAuthenticated} userId = {userId} setUserId = {setUserId}/> : <Navigate to="/login" replace />} />
         {isAuthenticated ? (
           <>
-          <Route path="/login" element={<Login />} />
           <Route path="/users" element={<UserPage />} />
-          <Route path="/birdcalls" element={<BirdCallsPage />} />
+          <Route path="/birdcalls" element={<BirdCallsPage userId = {userId}/>} />
           <Route path="/userlevels" element={<UserLevelsPage />} />
-          <Route path="/lessons" element={<LessonsPage />} />
-          <Route path="/lessonSession" element={<LessonSessionPage />} />
-          <Route path="/reviews" element={<ReviewPage />} />
-          <Route path="/reviewSession" element={<ReviewSessionPage />} />
-          <Route path="/stats" element={<StatsPage />} />
+          <Route path="/lessons" element={<LessonsPage userId = {userId}/>} />
+          <Route path="/lessonSession" element={<LessonSessionPage userId = {userId}/>} />
+          <Route path="/reviews" element={<ReviewPage userId = {userId}/>} />
+          <Route path="/reviewSession" element={<ReviewSessionPage userId = {userId}/>} />
+          <Route path="/stats" element={<StatsPage userId = {userId}/>} />
           </>
           ) : (
             <></>

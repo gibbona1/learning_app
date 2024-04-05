@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
 import NavBar from './NavBar';
 import { handleResponse, handleError } from './helpers';
 const { S3Client, GetObjectCommand } = require("@aws-sdk/client-s3");
 const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
 
-export default function LessonSession() {
-  const location = useLocation();
-  const currentUserId = location.state.userId;
+export default function LessonSession({ userId }) {
   const [mergedData, setMergedData] = useState([]);
   const [audioUrl, setAudioUrl] = useState("");
   const [specUrl, setSpecUrl] = useState("");
@@ -17,7 +14,7 @@ export default function LessonSession() {
     const fetchLessons = fetch(`/api/lessons`)
       .then(handleResponse)
       .then(data => {
-        const dsub = data.filter(lesson => lesson.userId === currentUserId);
+        const dsub = data.filter(lesson => lesson.userId === userId);
         return dsub; // Ensure this is an array
       })
       .catch(e => handleError(e, 'lessons'));
@@ -26,7 +23,7 @@ export default function LessonSession() {
     const fetchItems = fetch(`/api/items`)
       .then(handleResponse)
       .then(data => {
-        const dsub = data.filter(item => item.userId === currentUserId);
+        const dsub = data.filter(item => item.userId === userId);
         return dsub; // Ensure this is an array
       })
       .catch(e => handleError(e, 'items'));
@@ -39,7 +36,7 @@ export default function LessonSession() {
       const [lessons, fetchItems, birdCalls] = values;
       mergeData(lessons, fetchItems, birdCalls);
     });
-  }, [currentUserId]);
+  }, [userId]);
 
   function mergeData(lessons, items, birdCalls) {
     const merged = lessons.map(lesson => {
