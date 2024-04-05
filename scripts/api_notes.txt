@@ -65,3 +65,8 @@ curl -X DELETE http://localhost:3000/api/lessons/6608104d71cceb31755c3278/lesson
 
 curl -X PUT http://localhost:3000/api/items/6604978f556e4987a2d44288/levelup/?action=reset
 
+curl -X POST http://localhost:3000/api/users -H "Content-Type: application/json" -d '{"username":"someTeacher","email":"someteacher@email.com","password":"password123","role":"teacher"}'
+
+curl -X POST http://localhost:3000/api/classrooms -H "Content-Type: application/json" -d '{"name":"myClassroom","teacher":"","learners":["65fcc504b999225e008c71c5", "65fcc62eb999225e008c720f"],"description":"description of my classroom"}'
+
+curl -X PUT  http://localhost:3000/api/classrooms/66101fa41f2714aa04b1bf61/66080d78dd6882236da18623
