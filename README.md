@@ -87,6 +87,7 @@ TODOs:
     - [x] projections for finishing level
 
 - [ ] Testing
+    - [ ] https://enzymejs.github.io/enzyme/
     - [ ] Backend (Node.js/Express API)
         - [ ] Unit Tests:
             - [ ] Use Jest for testing individual functions and logic.
