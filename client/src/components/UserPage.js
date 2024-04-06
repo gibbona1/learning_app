@@ -4,6 +4,14 @@ import { handleResponse, handleError } from './helpers';
 
 function UserPage({ userId, userRole }) {
   const [users, setUsers] = useState([]);
+  const [classes, setClasses] = useState([]);
+
+  useEffect(() => {
+    fetch('api/classrooms') 
+      .then(handleResponse)
+      .then(setClasses)
+      .catch(e => handleError(e, 'classes'));
+  }, []);
 
   useEffect(() => {
     fetch('api/users', { accept: "application/json" }) // Adjust URL as needed
@@ -12,14 +20,16 @@ function UserPage({ userId, userRole }) {
         if (userRole === 'admin') {
           return data;  
         } else if (userRole === 'teacher') {
-          return data.filter(user => user.role === 'learner');
+          const dsub = data.filter(user => user.role === 'learner' && classes.some(c => c.teacher === userId && c.learners.includes(user._id)));
+          const dteacher = data.filter(user => user._id === userId);
+          return dteacher.concat(dsub);
         } else {
           return data.filter(user => user._id === userId);
         }
       })
       .then(setUsers)
       .catch(e => handleError(e, 'users'));
-  }, []);
+  }, [classes, userId, userRole]);
 
 
   return (
