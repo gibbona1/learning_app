@@ -57,9 +57,9 @@ TODOs:
         - [ ] only do at end of session (pick small block size e.g. 10)
         - [ ] spectrogram, audio, scientific name could be could be different testing grounds, like reading + meaning in WK
     - [ ] ungradedSession (select some items to review, no change to items)
-    - [ ] Teacher/classroom functionality
+    - [ ] classroom (connects teacher and students)
         - [ ] Lesson/course creator (teacher, admin) probably just permissions based
-        - [x] Assign students to teacher (classroom model perhaps)
+        - [x] Assign students to teacher
         - [ ] Teacher view (correct/incorrect items)
         - [ ] group stats
         - [ ] class tests
