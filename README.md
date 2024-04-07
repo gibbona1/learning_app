@@ -77,6 +77,8 @@ TODOs:
         - [x] plot levelups/downs, lessons completed
     - [x] Helper document with example API calls
     - [ ] faker for creating users, lessons, progress etc
+        - [ ] need to make a random array of activity with levelups, downs, resets and iteravely call API, check actual item level against expected level
+    - [ ] tokenized api calls for security
 
 - [x] Stats:
     - [x] upcoming reviews by hour next 24 hours
@@ -85,6 +87,7 @@ TODOs:
     - [x] critical items (pick those with accuracy below a certain threshold)
     - [x] Level progression timing
     - [x] projections for finishing level
+    - [ ] coverage of irish birds, bto pipeline etc
 
 - [ ] Testing
     - [ ] https://enzymejs.github.io/enzyme/
