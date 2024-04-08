@@ -39,7 +39,7 @@ TODOs:
         - [x] get all
         - [x] get by id
         - [x] get specific (num, name)
-    - [x] lesson 
+    - [ ] lesson 
         - [x] in UI, [display audio, spectrogram, metadata]
         - [x] make for all current level items when levelup
         - [x] move item from level 0 to 1 when done and delete lesson
@@ -47,6 +47,7 @@ TODOs:
         - [x] make lesson page
         - [x] lesson unlock
         - [x] recreate if item reset
+        - [ ] don't create if pair already exists
     - [ ] reviewSession (combines all reviews ready for review)
         - [x] UI [display audio, spectrogram, metadata]
         - [x] text box for answer
@@ -84,10 +85,13 @@ TODOs:
     - [x] upcoming reviews by hour next 24 hours
     - [x] show activity (last 24 hours, average per hour in lifetime)
     - [x] overall num attempts, num correct/incorrect, % correct
+    - [ ] when different review types, accuracy by type
     - [x] critical items (pick those with accuracy below a certain threshold)
     - [x] Level progression timing
     - [x] projections for finishing level
-    - [ ] coverage of irish birds, bto pipeline etc
+    - [ ] start date
+    - [ ] num items at max level
+    - [ ] coverage of irish birds, bto pipeline, xenocanto etc (charts by level)
 
 - [ ] Testing
     - [ ] https://enzymejs.github.io/enzyme/
