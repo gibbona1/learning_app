@@ -334,21 +334,21 @@ export default function StatsPage({ userId }) {
     <div>
       <NavBar />
       <h1>Stats Page</h1>
-      {countData.length === 0 ? (<p>Loading...</p>) : (<Bar options={countOptions} data={countChartData} />)}
+      {countData.length === 0 ? (<p>Loading review counts...</p>) : (<Bar options={countOptions} data={countChartData} />)}
       <hr />
-      {levelData.length === 0 ? (<p>Loading...</p>) : (<Line options={levelOptions} data={LevelChartData} />)}
+      {levelData.length === 0 ? (<p>Loading levelup chart...</p>) : (<Line options={levelOptions} data={LevelChartData} />)}
       <hr />
-      {averageDuration.length === 0 ? (<p>Loading...</p>) : (`Average duration: ${calc_dhm(averageDuration[0])}`)}
+      {averageDuration.length === 0 ? (<p>Loading average duration...</p>) : (`Average duration: ${calc_dhm(averageDuration[0])}`)}
       <br />
       <div style={{ 'white-space': 'pre-wrap' }}>
         {projectNextLevel}
       </div>
       <hr />
-      {activityData.length === 0 ? (<p>Loading...</p>) : (
+      {activityData.length === 0 ? (<p>Loading activity chart...</p>) : (
         <Bar data={activityChartData} options={activityOptions} />
       )}
       <hr />
-      {userStats.length === 0 ? (<p>Loading...</p>) :
+      {userStats.length === 0 ? (<p>Loading user stats...</p>) :
         (<div>
           {Object.entries(userStats).map(([key, value]) => (
             <div key={key}>
@@ -358,7 +358,7 @@ export default function StatsPage({ userId }) {
         </div>
         )}
         <hr />
-        {activityHourData.length === 0 ? (<p>Loading...</p>) : (
+        {activityHourData.length === 0 ? (<p>Loading activity per hour chart...</p>) : (
         <Bar data={activityHourChartData} options={activityHourOptions} />
       )}
     </div>

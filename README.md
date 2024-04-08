@@ -39,7 +39,7 @@ TODOs:
         - [x] get all
         - [x] get by id
         - [x] get specific (num, name)
-    - [ ] lesson 
+    - [x] lesson 
         - [x] in UI, [display audio, spectrogram, metadata]
         - [x] make for all current level items when levelup
         - [x] move item from level 0 to 1 when done and delete lesson
@@ -47,7 +47,7 @@ TODOs:
         - [x] make lesson page
         - [x] lesson unlock
         - [x] recreate if item reset
-        - [ ] don't create if pair already exists
+        - [x] don't create if pair already exists
     - [ ] reviewSession (combines all reviews ready for review)
         - [x] UI [display audio, spectrogram, metadata]
         - [x] text box for answer
