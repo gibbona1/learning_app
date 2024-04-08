@@ -57,10 +57,12 @@ TODOs:
         - [x] create new review whether correct or incorrect with associated times etc.
         - [ ] only do at end of session (pick small block size e.g. 10)
         - [ ] spectrogram, audio, scientific name could be could be different testing grounds, like reading + meaning in WK
+        - [ ] stats for session (temporary or store)
     - [ ] ungradedSession (select some items to review, no change to items)
     - [ ] classroom (connects teacher and students)
         - [ ] Lesson/course creator (teacher, admin) probably just permissions based
         - [x] Assign students to teacher
+        - [ ] Add classroom ID to user in create and addLearnerToClass
         - [ ] Teacher view (correct/incorrect items)
         - [ ] group stats
         - [ ] class tests
@@ -81,15 +83,20 @@ TODOs:
         - [ ] need to make a random array of activity with levelups, downs, resets and iteravely call API, check actual item level against expected level
     - [ ] tokenized api calls for security
 
-- [x] Stats:
+- [ ] Stats:
     - [x] upcoming reviews by hour next 24 hours
     - [x] show activity (last 24 hours, average per hour in lifetime)
+        - [ ] review count past 24 hours
     - [x] overall num attempts, num correct/incorrect, % correct
     - [ ] when different review types, accuracy by type
     - [x] critical items (pick those with accuracy below a certain threshold)
     - [x] Level progression timing
     - [x] projections for finishing level
-    - [ ] start date
+    - [ ] error handling e.g. with empty activity
+    - [ ] start date, time spent on app
+    - [ ] streak/consistency (current, longest)
+    - [ ] retention metric(s)
+    - [ ] last year activity (like GitHub contribution map)
     - [ ] num items at max level
     - [ ] coverage of irish birds, bto pipeline, xenocanto etc (charts by level)
 
