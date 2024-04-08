@@ -7,6 +7,11 @@ const { getAllDocuments, getDocumentById, deleteDocumentById } = require('../scr
 // Create new Item
 exports.createLesson = async (req, res) => {
   try {
+    //find lesson with the same itemId and birdCallId
+    const lessonExists = await Lesson.findOne({ itemId: req.body.itemId, birdCallId: req.body.birdCallId });
+    if (lessonExists) {
+      return res.status(400).json({ message: 'Lesson already exists' });
+    }
     const lesson = new Lesson(req.body);
     await lesson.save();
     res.status(201).json({ message: 'Lesson created successfully', lesson });

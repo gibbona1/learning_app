@@ -53,6 +53,8 @@ curl -X POST http://localhost:3000/api/users -H "Content-Type: application/json"
 
 curl -X PUT http://localhost:3000/api/users/65fcc504b999225e008c71c5/levelup
 
+curl -X POST http://localhost:3000/api/lessons -H "Content-Type: application/json" -d '{"userId":"65fcc504b999225e008c71c5","itemId":"6604978f556e4987a2d4428e"}'
+
 curl -X DELETE http://localhost:3000/api/lessons/6604978f556e4987a2d442b5/lessonCompleted
 
 curl -X PUT http://localhost:3000/api/items/6604978f556e4987a2d44287/levelup
