@@ -12,6 +12,7 @@ TODOs:
         - [ ] birdCall page (locked/unlocked level etc, link to lesson, similar, search by metadata)
         - [ ] popout modal for each birdcall
         - [ ] synonyms, different localities and variants
+        - [ ] don't double up level ups/downs in same session
     - [x] users 
         - [x] get all
         - [x] search by id

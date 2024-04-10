@@ -110,7 +110,11 @@ function BirdCallsPage({ userId }) {
               <td>{item.level}</td>
               <td>{item.nextReviewDate}</td>
               <td>
-                {item.level = 'Unlocked' && item.itemStatData && item.itemStatData.counts ? (item.itemStatData.counts['lesson-complete'] > 0 ? JSON.stringify(item.itemStatData.counts) : '') : ''}
+              {
+                item.itemStatData?.counts?.['lesson-complete'] > 0
+                  ? JSON.stringify(item.itemStatData.counts)
+                  : ''
+              }
               </td>
             </tr>
           ))}
