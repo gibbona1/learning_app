@@ -144,7 +144,6 @@ export default function StatsPage({ userId }) {
       .then(handleResponse)
       .then(setCountData)
       .catch(e => handleError(e, 'reviews'));
-
   }, [userId]);
 
   useEffect(() => {
@@ -160,7 +159,7 @@ export default function StatsPage({ userId }) {
         }));
 
         let avg;
-        if (typeof (user.levelData[user.level].endDate) !== 'undefined') {
+        if (user.levelData[user.level]?.endDate) {
           avg = Array(n).fill(data.reduce((sum, current) => sum + current.duration, 0) / n);
         } else {
           avg = Array(n).fill(data.slice(0, -1).reduce((sum, current) => sum + current.duration, 0) / (n - 1));
@@ -175,9 +174,9 @@ export default function StatsPage({ userId }) {
     fetch(`api/users/${userId}/projectlevelup`)
       .then(handleResponse)
       .then(data => {
-        if (typeof data.projection !== 'undefined') {
+        if (data?.projection) {
           setProjectNextLevel(`Time on level: ${data.duration}.\nNext levelup in: ${calc_dhm(data.projection)}`);
-        } else if (data.message) {
+        } else if (data?.message) {
           setProjectNextLevel(data.message);
         } else {
           setProjectNextLevel("");

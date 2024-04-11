@@ -103,8 +103,16 @@ exports.projectLevelUp = async (req, res) => {
 
     now = new Date();
 
+    if ((user?.levelData ?? null) === null) {
+      return res.status(404).json({ message: 'User level data not found. possibly old user' });
+    }
+
+    if ((user.levelData[user.level]?.startDate ?? null) === null){
+      return res.status(404).json({ message: 'User level start date not found. possibly old user' });
+    }
+
     // check if last user levelData is completed
-    if (typeof (user.levelData[user.level].endDate) !== 'undefined') {
+    if (user.levelData[user.level]?.endDate) {
       return res.status(201).json({ message: "Last level data is completed" });
     }
 
