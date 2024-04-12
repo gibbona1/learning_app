@@ -12,7 +12,10 @@ import {
   Legend,
 } from 'chart.js';
 import { Bar, Line } from 'react-chartjs-2';
+import CalendarHeatmap from 'react-calendar-heatmap';
 import { handleResponse, handleError } from './helpers';
+
+import 'react-calendar-heatmap/dist/styles.css';
 
 ChartJS.register(
   CategoryScale,
@@ -24,6 +27,14 @@ ChartJS.register(
   Tooltip,
   Legend
 );
+
+const today = new Date();
+
+function shiftDate(date, numDays) {
+  const newDate = new Date(date);
+  newDate.setDate(newDate.getDate() + numDays);
+  return newDate;
+}
 
 export const countOptions = {
   responsive: true,
@@ -149,6 +160,7 @@ export default function StatsPage({ userId }) {
   const [timeOnApp, setTimeOnApp] = useState(0);
   const [streak, setStreak] = useState([]);
   const [startDate, setStartDate] = useState('');
+  const [lastYearActivity, setLastYearActivity] = useState([]);
 
   useEffect(() => {
     fetch(`/api/itemsgetbyhour/${userId}`)
@@ -234,6 +246,15 @@ export default function StatsPage({ userId }) {
       .then(user => {
         setStartDate(new Date(user.registrationDate).toISOString().split('T')[0])
       });
+    
+    fetch(`api/sessions/${userId}/lastYearActivity`)
+      .then(handleResponse)
+      .then(data => {
+        const d = data.sessionCounts.map(item => ({ date: new Date(item._id.year, item._id.month, item._id.day), count: item.count }));
+        return d;
+      })
+      .then(setLastYearActivity)
+      .catch(e => handleError(e, 'last year activity'));
   }, [userId]);
 
   useEffect(() => {
@@ -358,6 +379,8 @@ export default function StatsPage({ userId }) {
     setActivityHourChartData(data);
   }, [activityHourData]);
 
+  //alert(JSON.stringify(lastYearActivity));
+
   return (
     <div>
       <NavBar />
@@ -392,6 +415,37 @@ export default function StatsPage({ userId }) {
       <hr />
       <p>Start Date: {startDate}. Time on App: {secondsToDHM(timeOnApp.timeOnApp/1000)}</p>
       <p>Streak: {streak.streak}. Max Streak: {streak.maxStreak}</p>
+      <hr />
+      {lastYearActivity.length === 0 ? (<p>Loading last year activity...</p>) : (
+      <CalendarHeatmap
+        startDate={shiftDate(today, -365)}
+        endDate={today}
+        values={lastYearActivity}
+        classForValue={value => {
+          if (!value) {
+            return 'color-empty';
+          }
+          return `color-github-${value.count}`;
+        }}
+        tooltipDataAttrs={value => {
+          if (value?.date == null || value?.count == null) {
+            return null;
+          }
+          return {
+            'data-tip': `${value.date.toISOString().slice(0, 10)} has count: ${
+              value.count
+            }`,
+          };
+        }}
+        showWeekdayLabels={true}
+        onClick={value => {
+          if (value?.date == null || value?.count == null) {
+            return null;
+          }
+          alert(`${value.date.toISOString().slice(0, 10)} has count: ${value.count}`)
+        }}
+      />
+      )}
     </div>
   );
 }
