@@ -1,4 +1,5 @@
 const Session = require('../models/session');
+const mongoose = require('mongoose');
 
 function getLongestStreak(sessions) {
     try {
@@ -119,5 +120,40 @@ exports.getStreak = async (req, res) => {
     res.status(200).json({ streak: streak, maxStreak: maxStreak});
   } catch (error) {
     res.status(500).json({ message: 'Error fetching streak', error: error.message });
+  }
+}
+
+exports.lastYearActivity = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const oneYearAgo = new Date();
+    oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
+
+    const aggregationPipeline = [
+        {
+            $match: {
+                userId: new mongoose.Types.ObjectId(userId),
+                startTime: { $gte: oneYearAgo }
+            }
+        },
+        {
+            $group: {
+                _id: {
+                    year: { $year: "$startTime" },
+                    month: { $month: "$startTime" },
+                    day: { $dayOfMonth: "$startTime" }
+                },
+                count: { $sum: 1 }
+            }
+        },
+        {
+            $sort: { '_id.year': 1, '_id.month': 1, '_id.day': 1 }
+        }
+    ];
+
+    const sessionCounts = await Session.aggregate(aggregationPipeline);
+    res.status(200).json({ sessionCounts });
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching last year activity', error: error.message });
   }
 }

@@ -7,5 +7,6 @@ router.patch('/sessions/:sessionId/lastActive', sessionController.updateLastActi
 router.patch('/sessions/:sessionId/finish', sessionController.finishSession);
 router.get('/sessions/:userId/timeOnApp', sessionController.timeOnApp);
 router.get('/sessions/:userId/streak', sessionController.getStreak);
+router.get('/sessions/:userId/lastYearActivity', sessionController.lastYearActivity);
 
 module.exports = router;

@@ -94,8 +94,8 @@ TODOs:
     - [x] Level progression timing
     - [x] projections for finishing level
     - [ ] error handling e.g. with empty activity
-    - [ ] start date, time spent on app
-    - [ ] streak/consistency (current, longest)
+    - [x] start date, time spent on app
+    - [x] streak/consistency (current, longest)
     - [ ] retention metric(s)
     - [ ] last year activity (like GitHub contribution map)
     - [ ] num items at max level
