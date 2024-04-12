@@ -148,6 +148,7 @@ export default function StatsPage({ userId }) {
   const [activityHourChartData, setActivityHourChartData] = useState([]);
   const [timeOnApp, setTimeOnApp] = useState(0);
   const [streak, setStreak] = useState([]);
+  const [startDate, setStartDate] = useState('');
 
   useEffect(() => {
     fetch(`/api/itemsgetbyhour/${userId}`)
@@ -222,10 +223,17 @@ export default function StatsPage({ userId }) {
       .then(handleResponse)
       .then(setTimeOnApp)
       .catch(e => handleError(e, 'time on app'));
-      fetch(`api/sessions/${userId}/streak`)
+
+    fetch(`api/sessions/${userId}/streak`)
       .then(handleResponse)
       .then(setStreak)
       .catch(e => handleError(e, 'streak'));
+    
+    fetch(`api/users/${userId}`)
+      .then(handleResponse)
+      .then(user => {
+        setStartDate(new Date(user.registrationDate).toISOString().split('T')[0])
+      });
   }, [userId]);
 
   useEffect(() => {
@@ -382,7 +390,7 @@ export default function StatsPage({ userId }) {
         <Bar data={activityHourChartData} options={activityHourOptions} />
       )}
       <hr />
-      <p>Time on App: {secondsToDHM(timeOnApp.timeOnApp/1000)}</p>
+      <p>Start Date: {startDate}. Time on App: {secondsToDHM(timeOnApp.timeOnApp/1000)}</p>
       <p>Streak: {streak.streak}. Max Streak: {streak.maxStreak}</p>
     </div>
   );
