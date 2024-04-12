@@ -126,6 +126,14 @@ export function calc_dhm(durationInDays) {
   return `${days} days, ${hours} hours, ${minutes} mins`;
 }
 
+export function secondsToDHM(seconds) {
+  const days = Math.floor(seconds / (3600 * 24));
+  const hours = Math.floor((seconds % (3600 * 24)) / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+
+  return `${days}d ${hours}h ${minutes}m`;
+}
+
 export default function StatsPage({ userId }) {
   const [countData, setCountData] = useState([]);
   const [countChartData, setCountChartData] = useState([]);
@@ -138,6 +146,8 @@ export default function StatsPage({ userId }) {
   const [userStats, setUserStats] = useState([]);
   const [activityHourData, setActivityHourData] = useState([]);
   const [activityHourChartData, setActivityHourChartData] = useState([]);
+  const [timeOnApp, setTimeOnApp] = useState(0);
+  const [streak, setStreak] = useState([]);
 
   useEffect(() => {
     fetch(`/api/itemsgetbyhour/${userId}`)
@@ -205,6 +215,17 @@ export default function StatsPage({ userId }) {
       .then(handleResponse)
       .then(setActivityHourData)
       .catch(e => handleError(e, 'activity per hour'));
+  }, [userId]);
+
+  useEffect(() => {
+    fetch(`api/sessions/${userId}/timeOnApp`)
+      .then(handleResponse)
+      .then(setTimeOnApp)
+      .catch(e => handleError(e, 'time on app'));
+      fetch(`api/sessions/${userId}/streak`)
+      .then(handleResponse)
+      .then(setStreak)
+      .catch(e => handleError(e, 'streak'));
   }, [userId]);
 
   useEffect(() => {
@@ -360,6 +381,9 @@ export default function StatsPage({ userId }) {
         {activityHourData.length === 0 ? (<p>Loading activity per hour chart...</p>) : (
         <Bar data={activityHourChartData} options={activityHourOptions} />
       )}
+      <hr />
+      <p>Time on App: {secondsToDHM(timeOnApp.timeOnApp/1000)}</p>
+      <p>Streak: {streak.streak}. Max Streak: {streak.maxStreak}</p>
     </div>
   );
 }
