@@ -17,6 +17,25 @@ export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userId, setUserId] = useState(null);
   const [userRole, setUserRole] = useState(null);
+  const [sessionId, setSessionId] = useState(null);
+
+  const updateLastActive = () => {
+    if (!sessionId) {
+      return;
+    }
+    fetch(`/api/sessions/${sessionId}/lastActive`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    })
+    .then(response => response.json())
+    .then(data => console.log('Last active updated'))
+    .catch(error => console.error('Error updating last active:', error));
+  };
+  
+  // Update last active every 5 minutes
+  setInterval(updateLastActive, 5*60*1000); // 300000 milliseconds = 5 minutes
 
   const login = async (username, password) => {
     try {
@@ -36,6 +55,7 @@ export default function App() {
         setIsAuthenticated(true);
         setUserId(data.id);
         setUserRole(data.role);
+        setSessionId(data.sessionId);
         // Optionally redirect the user or perform other actions upon successful login
       } else {
         // Handle failed authentication
@@ -56,7 +76,8 @@ export default function App() {
         <Route path="/login" element={isAuthenticated ? <Navigate to="/" replace /> : <Login onLogin={login} />}/>
         <Route path="/" element={isAuthenticated ? <HomePage isAuth= {true} setAuth = {setIsAuthenticated} 
                                                              userId = {userId} setUserId = {setUserId}
-                                                             userRole = {userRole} setUserRole = {setUserRole}/> : <Navigate to="/login" replace />} />
+                                                             userRole = {userRole} setUserRole = {setUserRole}
+                                                             sessionId = {sessionId} setSessionId = {setSessionId}/> : <Navigate to="/login" replace />} />
         {isAuthenticated ? (
           <>
           <Route path="/users" element={<UserPage userId = {userId} userRole = {userRole}/>} />

@@ -1,4 +1,5 @@
 const User = require('../models/user'); // Adjust the path as necessary
+const Session = require('../models/session'); // Adjust the path as necessary
 const bcrypt = require('bcrypt');
 
 exports.login = async (req, res) => {
@@ -17,9 +18,12 @@ exports.login = async (req, res) => {
       return res.status(401).json({ message: 'Login failed: Incorrect password.'});
     }
 
+    const session = new Session({ userId: user._id });
+    await session.save();
+
     // If password matches, handle the successful login
     // E.g., generate a JWT token or set a session cookie here
-    res.status(200).json({ message: 'Login successful', id: user._id, role: user.role});
+    res.status(200).json({ message: 'Login successful', id: user._id, role: user.role, sessionId: session._id});
     // Remember to replace this with actual session handling/token generation
   } catch (error) {
     console.error('Login error:', error);

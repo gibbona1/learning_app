@@ -1,11 +1,18 @@
 import React from 'react';
 import NavBar from './NavBar';
 
-export default function HomePage({ isAuth, setAuth, userId, setUserId, userRole, setUserRole}) {
+export default function HomePage({ isAuth, setAuth, userId, setUserId, userRole, setUserRole, sessionId, setSessionId}) {
   const logout = () => {
     setAuth(false);
     setUserId(null);
     setUserRole(null);
+    fetch(`api/sessions/${sessionId}/finish`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    });
+    setSessionId(null);
   };
   return (
     <div>
