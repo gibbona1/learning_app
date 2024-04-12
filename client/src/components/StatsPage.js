@@ -250,7 +250,7 @@ export default function StatsPage({ userId }) {
     fetch(`api/sessions/${userId}/lastYearActivity`)
       .then(handleResponse)
       .then(data => {
-        const d = data.sessionCounts.map(item => ({ date: new Date(item._id.year, item._id.month, item._id.day), count: item.count }));
+        const d = data.sessionCounts.map(item => ({ date: new Date(item._id.year, item._id.month-1, item._id.day), count: item.count }));
         return d;
       })
       .then(setLastYearActivity)
@@ -379,8 +379,6 @@ export default function StatsPage({ userId }) {
     setActivityHourChartData(data);
   }, [activityHourData]);
 
-  //alert(JSON.stringify(lastYearActivity));
-
   return (
     <div>
       <NavBar />
@@ -425,7 +423,8 @@ export default function StatsPage({ userId }) {
           if (!value) {
             return 'color-empty';
           }
-          return `color-github-${value.count}`;
+          const val = value.count >= 4 ? 4 : value.count;
+          return `color-github-${val}`;
         }}
         tooltipDataAttrs={value => {
           if (value?.date == null || value?.count == null) {
