@@ -12,6 +12,7 @@ import {
   Legend,
 } from 'chart.js';
 import { Bar, Line } from 'react-chartjs-2';
+import ReactToolTip from 'react-tooltip';
 import CalendarHeatmap from 'react-calendar-heatmap';
 import { handleResponse, handleError } from './helpers';
 
@@ -144,6 +145,23 @@ export function secondsToDHM(seconds) {
 
   return `${days}d ${hours}h ${minutes}m`;
 }
+
+export const getTooltipDataAttrs = (value) => {
+  // Temporary hack around null value.date issue
+  if (Object.values(value).some(val => val === null || val === undefined)) {
+    return null;
+  }
+  alert(value.date.toISOString());
+  // Configuration for react-tooltip
+  return {
+    'data-tooltip-id': "my-tooltip",
+    'data-tooltip-content': `${value.date.toISOString().slice(0, 10)} has count: ${value.count}`,
+  };
+};
+
+export const handleClick = (value) => {
+  alert(`You clicked on ${value.date.toISOString().slice(0, 10)} with count: ${value.count}`);
+};
 
 export default function StatsPage({ userId }) {
   const [countData, setCountData] = useState([]);
@@ -389,9 +407,7 @@ export default function StatsPage({ userId }) {
       <hr />
       {averageDuration.length === 0 ? (<p>Loading average duration...</p>) : (`Average duration: ${calc_dhm(averageDuration[0])}`)}
       <br />
-      <div style={{ 'white-space': 'pre-wrap' }}>
-        {projectNextLevel}
-      </div>
+      <div style={{ 'white-space': 'pre-wrap' }}>{projectNextLevel}</div>
       <hr />
       {activityData.length === 0 ? (<p>Loading activity chart...</p>) : (
         <Bar data={activityChartData} options={activityOptions} />
@@ -415,6 +431,7 @@ export default function StatsPage({ userId }) {
       <p>Streak: {streak.streak}. Max Streak: {streak.maxStreak}</p>
       <hr />
       {lastYearActivity.length === 0 ? (<p>Loading last year activity...</p>) : (
+      <div>
       <CalendarHeatmap
         startDate={shiftDate(today, -365)}
         endDate={today}
@@ -426,24 +443,12 @@ export default function StatsPage({ userId }) {
           const val = value.count >= 4 ? 4 : value.count;
           return `color-github-${val}`;
         }}
-        tooltipDataAttrs={value => {
-          if (value?.date == null || value?.count == null) {
-            return null;
-          }
-          return {
-            'data-tip': `${value.date.toISOString().slice(0, 10)} has count: ${
-              value.count
-            }`,
-          };
-        }}
+        tooltipDataAttrs={getTooltipDataAttrs}
         showWeekdayLabels={true}
-        onClick={value => {
-          if (value?.date == null || value?.count == null) {
-            return null;
-          }
-          alert(`${value.date.toISOString().slice(0, 10)} has count: ${value.count}`)
-        }}
+        onClick={handleClick}
       />
+      <ReactToolTip id="my-tooltip"/>
+      </div>
       )}
     </div>
   );
