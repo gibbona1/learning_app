@@ -215,7 +215,7 @@ export default function StatsPage({ userId }) {
         if (data?.projection) {
           setProjectNextLevel(`Time on level: ${data.duration}.\nNext levelup in: ${calc_dhm(data.projection)}`);
         } else if (data?.message) {
-          setProjectNextLevel(data.message);
+          setProjectNextLevel(`Level-up projection: ${data.message}`);
         } else {
           setProjectNextLevel("");
         }
