@@ -398,7 +398,7 @@ export default function StatsPage({ userId }) {
       <hr />
       {`Number of items at max level: ${JSON.stringify(numItemsMaxLevel.numMaxLevel)}`}
       <hr />
-      {activityData.length === 0 ? (<p>Loading activity chart...</p>) : (
+      {Object.keys(activityData).length === 0 ? (<p>Loading activity chart...</p>) : (
         <Bar data={activityChartData} options={activityOptions} />
       )}
       <hr />
@@ -412,7 +412,7 @@ export default function StatsPage({ userId }) {
         </div>
         )}
       <hr />
-      {activityHourData.length === 0 ? (<p>Loading activity per hour chart...</p>) : (
+      {activityHourData.every(dict => Object.values(dict).every(value => value === 0)) ? (<p>Loading activity per hour chart...</p>) : (
         <Bar data={activityHourChartData} options={activityHourOptions} />
       )}
       <hr />
