@@ -185,9 +185,7 @@ export default function StatsPage({ userId }) {
       .then(handleResponse)
       .then(setCountData)
       .catch(e => handleError(e, 'reviews'));
-  }, [userId]);
 
-  useEffect(() => {
     fetch(`api/users/${userId}`)
       .then(handleResponse)
       .then(user => {
@@ -207,11 +205,10 @@ export default function StatsPage({ userId }) {
         }
         setLevelData(data);
         setAverageDuration(avg);
+        setStartDate(new Date(user.registrationDate).toISOString().split('T')[0])
       })
       .catch(e => handleError(e, 'user'));
-  }, [userId]);
 
-  useEffect(() => {
     fetch(`api/users/${userId}/projectlevelup`)
       .then(handleResponse)
       .then(data => {
@@ -225,30 +222,21 @@ export default function StatsPage({ userId }) {
       })
       .catch(e => handleError(e, 'levelup projection'));
 
-  }, [userId]);
-
-  useEffect(() => {
     fetch(`api/useractivity24Hour/${userId}`)
       .then(handleResponse)
       .then(setActivityData)
       .catch(e => handleError(e, 'activity 24 hour'));
-  }, [userId]);
 
-  useEffect(() => {
     fetch(`api/userstats/${userId}`)
       .then(handleResponse)
       .then(setUserStats)
       .catch(e => handleError(e, 'user stats'));
-  }, [userId]);
 
-  useEffect(() => {
     fetch(`api/useractivityPerHour/${userId}`)
       .then(handleResponse)
       .then(setActivityHourData)
       .catch(e => handleError(e, 'activity per hour'));
-  }, [userId]);
 
-  useEffect(() => {
     fetch(`api/sessions/${userId}/timeOnApp`)
       .then(handleResponse)
       .then(setTimeOnApp)
@@ -258,24 +246,16 @@ export default function StatsPage({ userId }) {
       .then(handleResponse)
       .then(setStreak)
       .catch(e => handleError(e, 'streak'));
-    
-    fetch(`api/users/${userId}`)
-      .then(handleResponse)
-      .then(user => {
-        setStartDate(new Date(user.registrationDate).toISOString().split('T')[0])
-      });
-    
+
     fetch(`api/sessions/${userId}/lastYearActivity`)
       .then(handleResponse)
       .then(data => {
-        const d = data.sessionCounts.map(item => ({ date: new Date(item._id.year, item._id.month-1, item._id.day), count: item.count }));
+        const d = data.sessionCounts.map(item => ({ date: new Date(item._id.year, item._id.month - 1, item._id.day), count: item.count }));
         return d;
       })
       .then(setLastYearActivity)
       .catch(e => handleError(e, 'last year activity'));
-  }, [userId]);
 
-  useEffect(() => {
     fetch(`api/itemsmaxlevel/${userId}`)
       .then(handleResponse)
       .then(setNumItemsMaxLevel)
@@ -431,33 +411,33 @@ export default function StatsPage({ userId }) {
           ))}
         </div>
         )}
-        <hr />
-        {activityHourData.length === 0 ? (<p>Loading activity per hour chart...</p>) : (
+      <hr />
+      {activityHourData.length === 0 ? (<p>Loading activity per hour chart...</p>) : (
         <Bar data={activityHourChartData} options={activityHourOptions} />
       )}
       <hr />
-      <p>Start Date: {startDate}. Time on App: {secondsToDHM(timeOnApp.timeOnApp/1000)}</p>
+      <p>Start Date: {startDate}. Time on App: {secondsToDHM(timeOnApp.timeOnApp / 1000)}</p>
       <p>Streak: {streak.streak}. Max Streak: {streak.maxStreak}</p>
       <hr />
       {lastYearActivity.length === 0 ? (<p>Loading last year activity...</p>) : (
-      <div>
-      <CalendarHeatmap
-        startDate={shiftDate(today, -365)}
-        endDate={today}
-        values={lastYearActivity}
-        classForValue={value => {
-          if (!value) {
-            return 'color-empty';
-          }
-          const val = value.count >= 4 ? 4 : value.count;
-          return `color-github-${val}`;
-        }}
-        tooltipDataAttrs={getTooltipDataAttrs}
-        showWeekdayLabels={true}
-        onClick={handleClick}
-      />
-      <ReactToolTip id="my-tooltip"/>
-      </div>
+        <div>
+          <CalendarHeatmap
+            startDate={shiftDate(today, -365)}
+            endDate={today}
+            values={lastYearActivity}
+            classForValue={value => {
+              if (!value) {
+                return 'color-empty';
+              }
+              const val = value.count >= 4 ? 4 : value.count;
+              return `color-github-${val}`;
+            }}
+            tooltipDataAttrs={getTooltipDataAttrs}
+            showWeekdayLabels={true}
+            onClick={handleClick}
+          />
+          <ReactToolTip id="my-tooltip" />
+        </div>
       )}
     </div>
   );
