@@ -240,3 +240,28 @@ exports.itemStats = async (req, res) => {
     res.status(500).json({ message: 'Error fetching user stats', error: error.message });
   }
 }
+
+exports.numMaxLevel = async (req, res) => {
+  const { userId: userId } = req.params; // Extract the user ID from the request parameters
+
+  try {
+    // Step 1: Get all items for the user
+    const items = await Item.find({ userId: userId });
+    if (!items) {
+      return res.status(404).json({ message: 'Item not found' });
+    }
+    const maxItemLevel = await ItemLevel.find().sort({ num: -1 }).limit(1);
+    const maxLevel = maxItemLevel[0].num;
+    //count number of items at max level
+    let numMaxLevel = 0;
+    items.forEach(item => {
+      if (item.level === maxLevel) {
+        numMaxLevel++;
+      }
+    });
+
+    res.status(200).json({ numMaxLevel });
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching num max level', error: error.message });
+  }
+}

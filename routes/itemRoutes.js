@@ -15,6 +15,7 @@ router.get('/items/:userId/:hours', itemController.dueReviews);
 router.get('/items/:userId/:hours/count', itemController.countReviews);
 router.get('/itemsgetbyhour/:userId', itemController.upcomingReviewsByHour)
 router.get('/itemStats/:userId', itemController.itemStats)
+router.get('/itemsmaxlevel/:userId', itemController.numMaxLevel)
 
 
 module.exports = router;

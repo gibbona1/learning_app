@@ -151,7 +151,6 @@ export const getTooltipDataAttrs = (value) => {
   if (Object.values(value).some(val => val === null || val === undefined)) {
     return null;
   }
-  alert(value.date.toISOString());
   // Configuration for react-tooltip
   return {
     'data-tooltip-id': "my-tooltip",
@@ -179,6 +178,7 @@ export default function StatsPage({ userId }) {
   const [streak, setStreak] = useState([]);
   const [startDate, setStartDate] = useState('');
   const [lastYearActivity, setLastYearActivity] = useState([]);
+  const [numItemsMaxLevel, setNumItemsMaxLevel] = useState(0);
 
   useEffect(() => {
     fetch(`/api/itemsgetbyhour/${userId}`)
@@ -273,6 +273,13 @@ export default function StatsPage({ userId }) {
       })
       .then(setLastYearActivity)
       .catch(e => handleError(e, 'last year activity'));
+  }, [userId]);
+
+  useEffect(() => {
+    fetch(`api/itemsmaxlevel/${userId}`)
+      .then(handleResponse)
+      .then(setNumItemsMaxLevel)
+      .catch(e => handleError(e, 'max level'));
   }, [userId]);
 
   useEffect(() => {
@@ -408,6 +415,8 @@ export default function StatsPage({ userId }) {
       {averageDuration.length === 0 ? (<p>Loading average duration...</p>) : (`Average duration: ${calc_dhm(averageDuration[0])}`)}
       <br />
       <div style={{ 'white-space': 'pre-wrap' }}>{projectNextLevel}</div>
+      <hr />
+      {`Number of items at max level: ${JSON.stringify(numItemsMaxLevel.numMaxLevel)}`}
       <hr />
       {activityData.length === 0 ? (<p>Loading activity chart...</p>) : (
         <Bar data={activityChartData} options={activityOptions} />

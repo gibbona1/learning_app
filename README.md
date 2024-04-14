@@ -97,8 +97,8 @@ TODOs:
     - [x] start date, time spent on app
     - [x] streak/consistency (current, longest)
     - [ ] retention metric(s)
-    - [ ] last year activity (like GitHub contribution map)
-    - [ ] num items at max level
+    - [x] last year activity (like GitHub contribution map)
+    - [x] num items at max level
     - [ ] coverage of irish birds, bto pipeline, xenocanto etc (charts by level)
 
 - [ ] Testing
