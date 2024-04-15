@@ -39,11 +39,9 @@ export default function ReviewSession({ userId }) {
       })
       .catch(e => handleError(e, 'reviews'));
 
-
     const fetchBirdCalls = fetch(`/api/birdcalls`)
       .then(handleResponse)
       .catch(e => handleError(e, 'bird calls'));
-
 
     Promise.all([fetchReviews, fetchBirdCalls]).then(values => {
       const [reviews, birdCalls] = values;

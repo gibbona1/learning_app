@@ -15,16 +15,7 @@ function BirdCallsPage({ userId }) {
       .then(handleResponse)
       .then(setUser)
       .catch(e => handleError(e, 'user'));
-  }, [userId]);
-
-  useEffect(() => {
-    fetch('api/birdcalls', { accept: "application/json" }) // Adjust URL as needed
-      .then(handleResponse)
-      .then(setBirdCalls)
-      .catch(e => handleError(e, 'bird calls'));
-  }, []);
-
-  useEffect(() => {
+    
     fetch('api/items') // Adjust URL as needed
       .then(handleResponse)
       .then(data => {
@@ -33,13 +24,19 @@ function BirdCallsPage({ userId }) {
         setItems(dsub);
       })
       .catch(e => handleError(e, 'items'));
-  }, [userId]);
-
-  useEffect(() => {
+    
     fetch(`api/itemstats/${userId}`) // Adjust URL as needed
       .then(handleResponse)
       .then(setItemStats)
+      .catch(e => handleError(e, 'item stats'));
   }, [userId]);
+
+  useEffect(() => {
+    fetch('api/birdcalls', { accept: "application/json" }) // Adjust URL as needed
+      .then(handleResponse)
+      .then(setBirdCalls)
+      .catch(e => handleError(e, 'bird calls'));
+  }, []);
 
   useEffect(() => {
     Promise.all([items, birdCalls, itemStats]).then(values => {
