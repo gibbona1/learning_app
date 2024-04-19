@@ -40,7 +40,6 @@ exports.levelUpUser = async (req, res) => {
     const maxLevel = maxUserLevel[0].levelNumber; // Extracting the num field from the max item level document
 
     now = new Date();
-    // Check if the levelData array is long enough and the specific entry exists
 
     if (user.levelData[user.level]) {
       //if endDate exists, then the level is already completed
