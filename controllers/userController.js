@@ -27,7 +27,7 @@ exports.updateUser = updateDocumentById(User, 'User');
 exports.deleteUser = deleteDocumentById(User, 'User');
 
 exports.levelUpUser = async (req, res) => {
-  const { id: userId } = req.params; // Extract the user ID from the request parameters
+  const { userId } = req.params; // Extract the user ID from the request parameters
 
   try {
     // Step 1: Update the user to the next level
@@ -92,7 +92,7 @@ exports.levelUpUser = async (req, res) => {
 };
 
 exports.projectLevelUp = async (req, res) => {
-  const { id: userId } = req.params; // Extract the user ID from the request parameters
+  const { userId } = req.params; // Extract the user ID from the request parameters
 
   try {
     // Step 1: Update the user to the next level
@@ -142,7 +142,7 @@ exports.projectLevelUp = async (req, res) => {
 }
 
 exports.activity24Hour = async (req, res) => {
-  const { id: userId } = req.params; // Extract the user ID from the request parameters
+  const { userId } = req.params; // Extract the user ID from the request parameters
 
   try {
     // Step 1: Get all items for the user
@@ -190,7 +190,7 @@ exports.activity24Hour = async (req, res) => {
 }
 
 exports.userStats = async (req, res) => {
-  const { id: userId } = req.params; // Extract the user ID from the request parameters
+  const { userId } = req.params; // Extract the user ID from the request parameters
   const { recentActivity } = req.query; // Extract the recentActivity flag from query parameters
 
   const now = new Date();

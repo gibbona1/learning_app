@@ -25,7 +25,7 @@ exports.getLesson = getDocumentById(Lesson, 'Lesson');
 exports.deleteLesson = deleteDocumentById(Lesson, 'Lesson');
 
 exports.lessonCompleted = async (req, res) => {
-  const { id: lessonId } = req.params; // Extract the user ID from the request parameters
+  const { lessonId } = req.params; // Extract the user ID from the request parameters
 
   try {
     // Step 1: Update the user to the next level
