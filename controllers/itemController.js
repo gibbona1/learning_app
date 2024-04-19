@@ -24,7 +24,7 @@ exports.deleteItem = deleteDocumentById(Item, 'Item');
 // level up item if right
 exports.levelUpItem = async (req, res) => {
   const { id: itemId } = req.params; // Extract the user ID from the request parameters
-  const { action: action } = req.body || 'increment'; // Default to 'increment' if not specified
+  const { action: action } = req.query || 'increment'; // Default to 'increment' if not specified
 
   try {
     // Step 1: Update the user to the next level
@@ -75,13 +75,11 @@ exports.levelUpItem = async (req, res) => {
     }
     item.activity.push({
       type: activity,
-      date: now // Current date/time
     });
 
     if (action === 'increment' && item.level === maxLevel) {
       item.activity.push({
         type: 'complete',
-        date: now // Current date/time
       });
     }
 

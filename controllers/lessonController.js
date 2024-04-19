@@ -40,7 +40,6 @@ exports.lessonCompleted = async (req, res) => {
 
     item.activity.push({
       type: 'lesson-complete',
-      date: now // Current date/time
     });
     await item.save();
 
