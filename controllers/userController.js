@@ -191,13 +191,24 @@ exports.activity24Hour = async (req, res) => {
 
 exports.userStats = async (req, res) => {
   const { id: userId } = req.params; // Extract the user ID from the request parameters
+  const { recentActivity } = req.query; // Extract the recentActivity flag from query parameters
+
+  const now = new Date();
+  const oneDayAgo = new Date(now.getTime() - (24 * 60 * 60 * 1000));
 
   try {
-    // Step 1: Get all items for the user
-    const items = await Item.find({
+    let query = { 
       userId: userId,
       activity: { $exists: true, $ne: [] }
-    });
+    };
+
+    // Modify query if recentActivity is true
+    if (recentActivity === 'true') {
+      query['activity.date'] = { $gte: oneDayAgo };
+      query['activity.type'] = { $in: ['level-up', 'level-down'] };
+    }
+    // Step 1: Get all items for the user
+    const items = await Item.find(query);
 
     const activityData = items.flatMap(item => {
       return item.activity.map(activity => {

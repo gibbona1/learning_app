@@ -87,7 +87,7 @@ TODOs:
 - [ ] Stats:
     - [x] upcoming reviews by hour next 24 hours
     - [x] show activity (last 24 hours, average per hour in lifetime)
-        - [ ] review count past 24 hours
+        - [x] review count past 24 hours
     - [x] overall num attempts, num correct/incorrect, % correct
     - [ ] when different review types, accuracy by type
     - [x] critical items (pick those with accuracy below a certain threshold)

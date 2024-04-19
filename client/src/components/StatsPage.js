@@ -172,6 +172,7 @@ export default function StatsPage({ userId }) {
   const [activityData, setActivityData] = useState([]);
   const [activityChartData, setActivityChartData] = useState([]);
   const [userStats, setUserStats] = useState([]);
+  const [userStats24Hours, setUserStats24Hours] = useState([]);
   const [activityHourData, setActivityHourData] = useState([]);
   const [activityHourChartData, setActivityHourChartData] = useState([]);
   const [timeOnApp, setTimeOnApp] = useState(0);
@@ -231,6 +232,11 @@ export default function StatsPage({ userId }) {
       .then(handleResponse)
       .then(setUserStats)
       .catch(e => handleError(e, 'user stats'));
+    
+    fetch(`api/userstats/${userId}/?recentActivity=true`)
+      .then(handleResponse)
+      .then(setUserStats24Hours)
+      .catch(e => handleError(e, 'user stats (last 24 hours)'));
 
     fetch(`api/useractivityPerHour/${userId}`)
       .then(handleResponse)
@@ -418,6 +424,10 @@ export default function StatsPage({ userId }) {
       <hr />
       <p>Start Date: {startDate}. Time on App: {secondsToDHM(timeOnApp.timeOnApp / 1000)}</p>
       <p>Streak: {streak.streak}. Max Streak: {streak.maxStreak}</p>
+      {userStats24Hours.length === 0 ? 
+        (<p>Loading user stats (last 24 hours)...</p>) :
+        (<p>Number of reviews completed in last 24 hours: {(userStats24Hours['level-up'] || 0) + (userStats24Hours['level-down'] || 0)}</p>)
+      }
       <hr />
       {lastYearActivity.length === 0 ? (<p>Loading last year activity...</p>) : (
         <div>
