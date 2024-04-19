@@ -75,6 +75,9 @@ TODOs:
         - [ ] Modern styling
         - [x] carry User ID through session
         - [x] login/logout functionality
+    - [ ] error handling
+        - [ ] users with no lessons, items with empty activity, etc
+        - [ ] don't levelup if lesson exists for that item
     - [x] Activity/history field of Item
         - [x] name: [started/lesson-complete, level-up/correct level-down/incorrect, complete, reset], date.
         - [x] calculate stats
