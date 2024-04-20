@@ -63,11 +63,15 @@ exports.addLearnerToClassroom = async (req, res) => {
         } else {
             return res.status(400).json({ message: 'Invalid action' });
         }
-        await classroom.save();
 
         const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
         user.classrooms.push(classroomId);
         await user.save();
+
+        await classroom.save();
         res.status(200).json({ message: `${action} completed successfully to user for classroom`, classroom });
     } catch (error) {
         res.status(500).json({ message: 'Error adding learner to classroom', error: error.message });

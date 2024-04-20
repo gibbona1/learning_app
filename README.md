@@ -63,7 +63,7 @@ TODOs:
     - [ ] classroom (connects teacher and students)
         - [ ] Lesson/course creator (teacher, admin) probably just permissions based
         - [x] Assign students to teacher
-        - [ ] Add classroom ID to user in create and addLearnerToClass
+        - [x] Add classroom ID to user in create and addLearnerToClass
         - [ ] Teacher view (correct/incorrect items)
         - [ ] group stats
         - [ ] class tests
