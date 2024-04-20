@@ -1,11 +1,23 @@
 // controllers/classroomController.js
 
 const Classroom = require('../models/classroom');
+const User = require('../models/user');
 const {getAllDocuments, getDocumentById, updateDocumentById, deleteDocumentById} = require('../scripts/controllerHelpers'); 
 
 exports.createClassroom = async (req, res) => {
   try {
     const { name, teacher, learners, description } = req.body;
+    //make sure each learner exists in Users
+    const learnersExist = await User.find({ _id: { $in: learners } });
+    if (learnersExist.length !== learners.length) {
+        return res.status(400).json({ message: 'One or more learners do not exist' });
+    }
+    //make sure teacher exists in Users
+    const teacherExist = await User.findById(teacher);
+    if (!teacherExist) {
+        return res.status(400).json({ message: 'Teacher does not exist' });
+    }
+
     const classroom = new Classroom({ name, teacher, learners, description });
     await classroom.save();
     res.status(201).json({ message: 'Classroom created successfully', classroom });
