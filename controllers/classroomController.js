@@ -20,6 +20,16 @@ exports.createClassroom = async (req, res) => {
 
     const classroom = new Classroom({ name, teacher, learners, description });
     await classroom.save();
+
+    //add classroom id to teacher's classrooms array
+    teacherExist.classrooms.push(classroom._id);
+    await teacherExist.save();
+
+    //add classroom id to each learner's classrooms array
+    learnersExist.forEach(async learner => {
+        learner.classrooms.push(classroom._id);
+        await learner.save();
+    });
     res.status(201).json({ message: 'Classroom created successfully', classroom });
   } catch (error) {
     res.status(500).json({ message: 'Error creating classroom', error: error.message });
