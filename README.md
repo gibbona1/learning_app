@@ -77,7 +77,7 @@ TODOs:
         - [x] login/logout functionality
     - [ ] error handling
         - [ ] users with no lessons, items with empty activity, etc
-        - [ ] don't levelup if lesson exists for that item
+        - [x] don't levelup if lesson exists for that item
     - [x] Activity/history field of Item
         - [x] name: [started/lesson-complete, level-up/correct level-down/incorrect, complete, reset], date.
         - [x] calculate stats
@@ -85,7 +85,7 @@ TODOs:
     - [x] Helper document with example API calls
     - [ ] faker for creating users, lessons, progress etc
         - [ ] need to make a random array of activity with levelups, downs, resets and iteravely call API, check actual item level against expected level
-    - [ ] tokenized api calls for security
+    - [ ] tokenized (maybe JWT) api calls for security
 
 - [ ] Stats:
     - [x] upcoming reviews by hour next 24 hours
