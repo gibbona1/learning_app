@@ -3,19 +3,9 @@
 const Item = require('../models/item');
 const ItemLevel = require('../models/itemLevel');
 const Lesson = require('../models/lesson');
-const {getAllDocuments, getDocumentById, updateDocumentById, deleteDocumentById} = require('../scripts/controllerHelpers'); 
+const {createDocument, getAllDocuments, getDocumentById, updateDocumentById, deleteDocumentById} = require('../scripts/controllerHelpers'); 
 
-// Create new Item
-exports.createItem = async (req, res) => {
-  try {
-    const item = new Item(req.body);
-    await item.save();
-    res.status(201).json({ message: 'Item created successfully', item });
-  } catch (error) {
-    res.status(500).json({ message: 'Error creating Item', error: error.message });
-  }
-};
-
+exports.createItem = createDocument(Item, 'Item');
 exports.getAllItems = getAllDocuments(Item, 'Items');
 exports.getItem = getDocumentById(Item, 'Item');
 exports.updateItem = updateDocumentById(Item, 'Item');

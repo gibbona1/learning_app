@@ -1,3 +1,15 @@
+const createDocument = (Model, modelName) => {
+  return async (req, res) => {
+    try {
+      const document = new Model(req.body);
+      await document.save();
+      res.status(201).json({ message: `${modelName} created successfully`, document });
+    } catch (error) {
+      res.status(500).json({ message: `Error creating ${modelName}`, error: error.message });
+    }
+  };
+};
+
 // Higher-order function for fetching all documents
 const getAllDocuments = (Model, modelName) => {
   return async (req, res) => {
@@ -54,4 +66,4 @@ const deleteDocumentById = (Model, modelName) => {
   };
 };
 
-module.exports = {getAllDocuments, getDocumentById, updateDocumentById, deleteDocumentById};
+module.exports = {createDocument, getAllDocuments, getDocumentById, updateDocumentById, deleteDocumentById};
