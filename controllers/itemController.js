@@ -24,13 +24,19 @@ exports.deleteItem = deleteDocumentById(Item, 'Item');
 // level up item if right
 exports.levelUpItem = async (req, res) => {
   const { id: itemId } = req.params; // Extract the user ID from the request parameters
-  const { action: action } = req.query || 'increment'; // Default to 'increment' if not specified
+  const { action = 'increment' } = req.query; // Default to 'increment' if not specified
 
   try {
     // Step 1: Update the user to the next level
     const item = await Item.findById(itemId);
     if (!item) {
       return res.status(404).json({ message: 'Item not found' });
+    }
+
+    //if lesson exists, do not level up
+    const lesson = await Lesson.findOne({ userId: item.userId, itemId: itemId });
+    if (lesson) {
+      return res.status(400).json({ message: 'Lesson exists, cannot level up' });
     }
     const now = new Date();
 
