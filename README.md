@@ -140,4 +140,9 @@ TODOs:
             - [ ] Configure the pipeline to run tests on every push or pull request.
             - [ ] Automate deployment on successful builds/tests to staging or production environments.
 
-- [ ] RAG (Retrieval Augmented Generation) application - building LLM skills
+- [ ] AI Components:
+    - [ ] RAG (Retrieval Augmented Generation) application - building LLM skills
+    - [ ] noise addition/reduction
+    - [ ] class prediction as hint/second opinion
+    - [ ] mnemonic image generation
+    - [ ] clustering to identify audibly/visually similar
