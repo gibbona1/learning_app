@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import NavBar from './NavBar';
 import { handleResponse, handleError } from './helpers';
 const { S3Client, GetObjectCommand } = require("@aws-sdk/client-s3");
 const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
 
 export default function ReviewSession({ userId }) {
+  const location = useLocation();
+  const graded = location.state.graded;
+
   const [mergedData, setMergedData] = useState([]);
   const [audioUrl, setAudioUrl] = useState("");
   const [specUrl, setSpecUrl] = useState("");
@@ -98,6 +102,9 @@ export default function ReviewSession({ userId }) {
     if (submitState === '') {
       return;
     }
+    if (!graded) {
+      return;
+    }
     if (validationState === 'correct') {
       fetch(`/api/items/${currentReview._id}/levelup`, {
         method: 'PUT',
@@ -133,7 +140,7 @@ export default function ReviewSession({ userId }) {
           console.log('Error updating item:', error);
         });
     }
-  }, [currentReview, validationState, submitState]);
+  }, [currentReview, validationState, submitState, graded]);
 
   return (
     <div>

@@ -5,8 +5,8 @@ import { handleResponse, handleError } from './helpers';
 
 function ReviewsPage({ userId }) {
   let navigate = useNavigate();
-  function startReviewSession() {
-    navigate('/reviewSession'); // Navigate to ReviewSession page
+  function startReviewSession(graded=true) {
+    navigate('/reviewSession', { state: { graded: graded } }); // Navigate to ReviewSession page
   }
   // State to store counts
   const [reviewsNowCount, setReviewsNowCount] = useState(0);
@@ -53,7 +53,8 @@ function ReviewsPage({ userId }) {
       <p>Due now: {reviewsNowCount} (minus lessons)</p>
       <p>Due in the next hour: {reviews1HourCount}</p>
       <p>Due in the next 24 hours: {reviews24HoursCount}</p>
-      <button onClick={startReviewSession}>Start Reviews</button>
+      <button onClick={function() {startReviewSession(true)}}>Start Review Session</button>
+      <button onClick={function() {startReviewSession(false)}}>Start Ungraded Session</button>
       <h2>Reviews due now</h2>
       <table>
         <thead>
