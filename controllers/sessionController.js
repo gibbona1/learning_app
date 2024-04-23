@@ -1,5 +1,6 @@
 const Session = require('../models/session');
 const mongoose = require('mongoose');
+const { createDocument } = require('../scripts/controllerHelpers');
 
 function getLongestStreak(sessions) {
     try {
