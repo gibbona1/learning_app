@@ -59,14 +59,15 @@ TODOs:
         - [ ] only do at end of session (pick small block size e.g. 10)
         - [ ] spectrogram, audio, scientific name could be could be different testing grounds, like reading + meaning in WK
         - [ ] stats for session (temporary or store)
-    - [ ] ungradedSession (select some items to review, no change to items)
+    - [ ] ungradedSession (select some items to review, no change to item level/activity)
+        - [ ] pass items to reviewSession page
     - [ ] classroom (connects teacher and students)
         - [ ] Lesson/course creator (teacher, admin) probably just permissions based
         - [x] Assign students to teacher
         - [x] Add classroom ID to user in create and addLearnerToClass
         - [ ] Teacher view (correct/incorrect items)
         - [ ] group stats
-        - [ ] class tests
+        - [ ] class tests (create, push/assign, store results)
     - [ ] general components
         - [x] Navigation tabs/buttons
         - [x] Connect to AWS to load sounds
@@ -103,6 +104,7 @@ TODOs:
     - [x] last year activity (like GitHub contribution map)
     - [x] num items at max level
     - [ ] coverage of irish birds, bto pipeline, xenocanto etc (charts by level)
+    - [ ] current level, level progress
 
 - [ ] Testing
     - [ ] https://enzymejs.github.io/enzyme/
