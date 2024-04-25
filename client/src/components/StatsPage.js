@@ -14,7 +14,7 @@ import {
 import { Bar, Line } from 'react-chartjs-2';
 import ReactToolTip from 'react-tooltip';
 import CalendarHeatmap from 'react-calendar-heatmap';
-import { handleResponse, handleError } from './helpers';
+import { handleResponse, handleError, handleFetch } from './helpers';
 
 import 'react-calendar-heatmap/dist/styles.css';
 
@@ -182,10 +182,7 @@ export default function StatsPage({ userId }) {
   const [numItemsMaxLevel, setNumItemsMaxLevel] = useState(0);
 
   useEffect(() => {
-    fetch(`/api/itemsgetbyhour/${userId}`)
-      .then(handleResponse)
-      .then(setCountData)
-      .catch(e => handleError(e, 'reviews'));
+    handleFetch(`/api/itemsgetbyhour/${userId}`, setCountData, 'reviews');
 
     fetch(`api/users/${userId}`)
       .then(handleResponse)
@@ -223,35 +220,17 @@ export default function StatsPage({ userId }) {
       })
       .catch(e => handleError(e, 'levelup projection'));
 
-    fetch(`api/useractivity24Hour/${userId}`)
-      .then(handleResponse)
-      .then(setActivityData)
-      .catch(e => handleError(e, 'activity 24 hour'));
-
-    fetch(`api/userstats/${userId}`)
-      .then(handleResponse)
-      .then(setUserStats)
-      .catch(e => handleError(e, 'user stats'));
+    handleFetch(`api/useractivity24Hour/${userId}`, setActivityData, 'activity 24 hour');
     
-    fetch(`api/userstats/${userId}/?recentActivity=true`)
-      .then(handleResponse)
-      .then(setUserStats24Hours)
-      .catch(e => handleError(e, 'user stats (last 24 hours)'));
+    handleFetch(`api/userstats/${userId}`, setUserStats, 'user stats');
+    
+    handleFetch(`api/userstats/${userId}/?recentActivity=true`, setUserStats24Hours, 'user stats (last 24 hours)');
+    
+    handleFetch(`api/useractivityPerHour/${userId}`, setActivityHourData, 'activity per hour');
 
-    fetch(`api/useractivityPerHour/${userId}`)
-      .then(handleResponse)
-      .then(setActivityHourData)
-      .catch(e => handleError(e, 'activity per hour'));
-
-    fetch(`api/sessions/${userId}/timeOnApp`)
-      .then(handleResponse)
-      .then(setTimeOnApp)
-      .catch(e => handleError(e, 'time on app'));
-
-    fetch(`api/sessions/${userId}/streak`)
-      .then(handleResponse)
-      .then(setStreak)
-      .catch(e => handleError(e, 'streak'));
+    handleFetch(`api/sessions/${userId}/timeOnApp`, setTimeOnApp, 'time on app');
+    
+    handleFetch(`api/sessions/${userId}/streak`, setStreak, 'streak');
 
     fetch(`api/sessions/${userId}/lastYearActivity`)
       .then(handleResponse)
@@ -262,10 +241,7 @@ export default function StatsPage({ userId }) {
       .then(setLastYearActivity)
       .catch(e => handleError(e, 'last year activity'));
 
-    fetch(`api/itemsmaxlevel/${userId}`)
-      .then(handleResponse)
-      .then(setNumItemsMaxLevel)
-      .catch(e => handleError(e, 'max level'));
+    handleFetch(`api/itemsmaxlevel/${userId}`, setNumItemsMaxLevel, 'max level');
   }, [userId]);
 
   useEffect(() => {

@@ -11,21 +11,13 @@ export default function LessonSession({ userId }) {
 
   const [currentIndex, setCurrentIndex] = useState(0);
   useEffect(() => {
-    const fetchLessons = fetch(`/api/lessons`)
+    const fetchLessons = fetch(`/api/lessons/?userId=${userId}`)
       .then(handleResponse)
-      .then(data => {
-        const dsub = data.filter(lesson => lesson.userId === userId);
-        return dsub; // Ensure this is an array
-      })
       .catch(e => handleError(e, 'lessons'));
 
 
-    const fetchItems = fetch(`/api/items`)
+    const fetchItems = fetch(`/api/items/?userId=${userId}`)
       .then(handleResponse)
-      .then(data => {
-        const dsub = data.filter(item => item.userId === userId);
-        return dsub; // Ensure this is an array
-      })
       .catch(e => handleError(e, 'items'));
 
     const fetchBirdCalls = fetch(`/api/birdcalls`)

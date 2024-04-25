@@ -1,16 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import NavBar from './NavBar';
-import { handleResponse, handleError } from './helpers';
+import { handleResponse, handleError, handleFetch } from './helpers';
 
 function UserPage({ userId, userRole }) {
   const [users, setUsers] = useState([]);
   const [classes, setClasses] = useState([]);
 
   useEffect(() => {
-    fetch('api/classrooms') 
-      .then(handleResponse)
-      .then(setClasses)
-      .catch(e => handleError(e, 'classes'));
+    handleFetch('api/classrooms', setClasses, 'classes');
   }, []);
 
   useEffect(() => {

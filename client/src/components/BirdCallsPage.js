@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import NavBar from './NavBar';
-import { handleResponse, handleError } from './helpers';
+import { handleFetch } from './helpers';
 
 function BirdCallsPage({ userId }) {
   const [birdCalls, setBirdCalls] = useState([]);
@@ -11,27 +11,13 @@ function BirdCallsPage({ userId }) {
   const [criticalItems, setCriticalItems] = useState([]);
 
   useEffect(() => {
-    fetch(`api/users/${userId}`)
-      .then(handleResponse)
-      .then(setUser)
-      .catch(e => handleError(e, 'user'));
-    
-    fetch(`api/items/?userId=${userId}`)
-      .then(handleResponse)
-      .then(setItems)
-      .catch(e => handleError(e, 'items'));
-    
-    fetch(`api/itemstats/${userId}`)
-      .then(handleResponse)
-      .then(setItemStats)
-      .catch(e => handleError(e, 'item stats'));
+    handleFetch(`api/users/${userId}`, setUser, 'user');
+    handleFetch(`api/items/?userId=${userId}`, setItems, 'items');
+    handleFetch(`api/itemstats/${userId}`, setItemStats, 'item stats');
   }, [userId]);
 
   useEffect(() => {
-    fetch('api/birdcalls')
-      .then(handleResponse)
-      .then(setBirdCalls)
-      .catch(e => handleError(e, 'bird calls'));
+    handleFetch('api/birdcalls', setBirdCalls, 'bird calls');
   }, []);
 
   useEffect(() => {

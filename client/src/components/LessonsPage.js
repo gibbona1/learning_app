@@ -13,11 +13,10 @@ function ReviewsPage({ userId }) {
 
   async function fetchCounts(userId) {
     try {
-      fetch(`/api/lessons`)
+      fetch(`/api/lessons/?userId=${userId}`)
         .then(handleResponse)
         .then(data => {
-          const dsub = data.filter(item => item.userId === userId);
-          setLessonsCount(dsub.length);
+          setLessonsCount(data.length);
         });
     } catch (error) {
       console.error('Error fetching lesson counts:', error);
