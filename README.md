@@ -105,6 +105,7 @@ TODOs:
     - [x] num items at max level
     - [ ] coverage of irish birds, bto pipeline, xenocanto etc (charts by level)
     - [ ] current level, level progress
+        - [ ] how many items on current level are >= item level 3
 
 - [ ] Testing
     - [ ] https://enzymejs.github.io/enzyme/

@@ -14,13 +14,13 @@ function UserPage({ userId, userRole }) {
   }, []);
 
   useEffect(() => {
-    fetch('api/users', { accept: "application/json" }) // Adjust URL as needed
+    fetch('api/users')
       .then(handleResponse)
       .then(data => {
         if (userRole === 'admin') {
           return data;  
         } else if (userRole === 'teacher') {
-          const dsub = data.filter(user => user.role === 'learner' && classes.some(c => c.teacher === userId && c.learners.includes(user._id)));
+          const dsub = data.filter(u => u.role === 'learner' && classes.some(c => c.teacher === userId && c.learners.includes(u._id)));
           const dteacher = data.filter(user => user._id === userId);
           return dteacher.concat(dsub);
         } else {
@@ -47,7 +47,7 @@ function UserPage({ userId, userRole }) {
         </thead>
         <tbody>
           {users.map((call) => (
-            <tr key={call._id}> {/* Ensure your data has a unique 'id' property */}
+            <tr key={call._id}>
               <td>{call.username}</td>
               <td>{call.role}</td>
               <td>{call.registrationDate}</td>

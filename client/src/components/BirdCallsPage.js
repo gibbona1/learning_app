@@ -16,23 +16,19 @@ function BirdCallsPage({ userId }) {
       .then(setUser)
       .catch(e => handleError(e, 'user'));
     
-    fetch('api/items') // Adjust URL as needed
+    fetch(`api/items/?userId=${userId}`)
       .then(handleResponse)
-      .then(data => {
-        const dsub = data.filter(item => item.userId === userId);
-        // Then set your state as normal (assuming you add setItems back in)
-        setItems(dsub);
-      })
+      .then(setItems)
       .catch(e => handleError(e, 'items'));
     
-    fetch(`api/itemstats/${userId}`) // Adjust URL as needed
+    fetch(`api/itemstats/${userId}`)
       .then(handleResponse)
       .then(setItemStats)
       .catch(e => handleError(e, 'item stats'));
   }, [userId]);
 
   useEffect(() => {
-    fetch('api/birdcalls', { accept: "application/json" }) // Adjust URL as needed
+    fetch('api/birdcalls')
       .then(handleResponse)
       .then(setBirdCalls)
       .catch(e => handleError(e, 'bird calls'));
@@ -52,7 +48,7 @@ function BirdCallsPage({ userId }) {
       // if item level is zero, set next review date to blank
       if (item.level === 0) {
         item.nextReviewDate = '';
-        if (item.level > user.level) {
+        if (birdCallData?.level > user.level) {
           item.level = 'Locked';
         } else {
           item.level = 'Unlocked';
@@ -82,6 +78,8 @@ function BirdCallsPage({ userId }) {
     });
     setCriticalItems(criticalItems);
   }, [mergedData]);
+
+  alert(JSON.stringify(criticalItems));
 
   return (
     <div>
