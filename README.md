@@ -104,7 +104,7 @@ TODOs:
     - [x] last year activity (like GitHub contribution map)
     - [x] num items at max level
     - [ ] coverage of irish birds, bto pipeline, xenocanto etc (charts by level)
-    - [ ] current level, level progress
+    - [ ] current level, level progress (plot and proportion)
         - [ ] how many items on current level are >= item level 3
 
 - [ ] Testing
@@ -149,3 +149,4 @@ TODOs:
     - [ ] class prediction as hint/second opinion
     - [ ] mnemonic image generation
     - [ ] clustering to identify audibly/visually similar
+    - [ ] bird syllable recognition
