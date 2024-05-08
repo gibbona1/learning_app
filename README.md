@@ -76,6 +76,8 @@ TODOs:
         - [ ] Modern styling
         - [x] carry User ID through session
         - [x] login/logout functionality
+        - [ ] (loading) notifications
+        - [ ] logo
     - [ ] error handling
         - [ ] users with no lessons, items with empty activity, etc
         - [x] don't levelup if lesson exists for that item
