@@ -304,7 +304,6 @@ export default function StatsPage({ userId }) {
   }, [statData, fetchData]);
 
   useEffect(() => {
-    alert("here activityData");
     const activityData = fetchData.activity;
     const labels = Object.keys(activityData);
     const dataValues = Object.values(activityData);
@@ -334,7 +333,6 @@ export default function StatsPage({ userId }) {
       labels: ['Activity Counts'], // Only one label for the y-axis
       datasets: datasets
     };
-    alert("here2 activityData");
     setChartData(p => ({...p, activity: data}));
   }, [fetchData]);
 
@@ -379,7 +377,7 @@ export default function StatsPage({ userId }) {
       labels: labels, // Only one label for the y-axis
       datasets: datasets
     };
-    setChartData(p => ({...p, activity: data}))
+    setChartData(p => ({...p, activityHour: data}))
   }, [fetchData]);
 
   return (
@@ -404,7 +402,7 @@ export default function StatsPage({ userId }) {
         (<div>
           {Object.entries(fetchData.stats).map(([key, value]) => (
             <div key={key}>
-              {key}: {value}
+              {key}: {value}{userStatsPercent(fetchData.stats, key, value)}
             </div>
           ))}
         </div>
