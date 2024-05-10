@@ -163,37 +163,34 @@ export const handleClick = (value) => {
 };
 
 export default function StatsPage({ userId }) {
-  const [countData, setCountData] = useState([]);
-  const [countChartData, setCountChartData] = useState([]);
-  const [levelData, setLevelData] = useState([]);
-  const [LevelChartData, setLevelChartData] = useState([]);
-  const [averageDuration, setAverageDuration] = useState([]);
-  const [projectNextLevel, setProjectNextLevel] = useState("Calculating projection...");
-  const [activityData, setActivityData] = useState([]);
-  const [activityChartData, setActivityChartData] = useState([]);
-  const [userStats, setUserStats] = useState([]);
-  const [userStats24Hours, setUserStats24Hours] = useState([]);
-  const [activityHourData, setActivityHourData] = useState([]);
-  const [activityHourChartData, setActivityHourChartData] = useState([]);
-  const [timeOnApp, setTimeOnApp] = useState(0);
-  const [streak, setStreak] = useState([]);
-  const [startDate, setStartDate] = useState('');
-  const [lastYearActivity, setLastYearActivity] = useState([]);
-  const [numItemsMaxLevel, setNumItemsMaxLevel] = useState(0);
+  const [fetchData, setFetchData] = useState({
+    count: [], level: [], stats: [], stats24: [], activity: [], activityHour: []
+  });
+  const [chartData, setChartData] = useState({
+    count: [], level: [], activity: [], activityHour: []
+  });
+  const [statData, setStatData] = useState(
+    {averageDuration: [], timeOnApp: 0, projectNextLevel: '', streak: [], startDate: '', lastYearActivity: [], numItemsMaxLevel: 0}
+  );
 
   useEffect(() => {
-    handleFetch(`/api/itemsgetbyhour/${userId}`, setCountData, 'reviews');
+    handleFetch(`/api/itemsgetbyhour/${userId}`, 
+    (data) => setFetchData(p => ({...p, count: data})),
+    'reviews');
 
     fetch(`api/users/${userId}`)
       .then(handleResponse)
       .then(user => {
         const now = new Date(); // Current date/time
-        const n = user.levelData.length;
-        const data = user.levelData.map(level => ({
-          level: level.level,
-          // Use endDate if it exists; otherwise, use current date/time
-          duration: (new Date(level.endDate || now) - new Date(level.startDate)) / (1000 * 60 * 60 * 24) // Convert to days
-        }));
+        const n = user?.levelData.length;
+        var data = [{ level: 0, duration: 0 }];
+        if (n > 0) {
+          data = user?.levelData.map(level => ({
+            level: level.level,
+            // Use endDate if it exists; otherwise, use current date/time
+            duration: (new Date(level.endDate || now) - new Date(level.startDate)) / (1000 * 60 * 60 * 24) // Convert to days
+          }));
+        }
 
         let avg;
         if (user.levelData[user.level]?.endDate) {
@@ -201,9 +198,8 @@ export default function StatsPage({ userId }) {
         } else {
           avg = Array(n).fill(data.slice(0, -1).reduce((sum, current) => sum + current.duration, 0) / (n - 1));
         }
-        setLevelData(data);
-        setAverageDuration(avg);
-        setStartDate(new Date(user.registrationDate).toISOString().split('T')[0])
+        setFetchData(p => ({...p, level: data}));
+        setStatData(p => ({...p, averageDuration: avg, startDate: new Date(user.registrationDate).toISOString().split('T')[0]}));
       })
       .catch(e => handleError(e, 'user'));
 
@@ -211,26 +207,38 @@ export default function StatsPage({ userId }) {
       .then(handleResponse)
       .then(data => {
         if (data?.projection) {
-          setProjectNextLevel(`Time on level: ${data.duration}.\nNext levelup in: ${calc_dhm(data.projection)}`);
+          setStatData(p => ({...p, projectNextLevel: `Time on level: ${data.duration}.\nNext levelup in: ${calc_dhm(data.projection)}`}));
         } else if (data?.message) {
-          setProjectNextLevel(`Level-up projection: ${data.message}`);
+          setStatData(p => ({...p, projectNextLevel: `Level-up projection: ${data.message}`}));
         } else {
-          setProjectNextLevel("");
+          setStatData(p => ({...p, projectNextLevel: ""}));
         }
       })
       .catch(e => handleError(e, 'levelup projection'));
+    
+    handleFetch(`api/useractivity24Hour/${userId}`, 
+    (data) => setFetchData(p => ({...p, activity: data})),
+    'activity 24 hour');
+    
+    handleFetch(`api/userstats/${userId}`, 
+    (data) => setFetchData(p => ({...p, stats: data})),
+     'user stats');
+    
+    handleFetch(`api/userstats/${userId}/?recentActivity=true`, 
+    (data) => setFetchData(p => ({...p, stats24: data})),
+    'user stats (last 24 hours)');
+    
+    handleFetch(`api/useractivityPerHour/${userId}`, 
+    (data) => setFetchData(p => ({...p, activityHour: data})),
+    'activity per hour');
 
-    handleFetch(`api/useractivity24Hour/${userId}`, setActivityData, 'activity 24 hour');
+    handleFetch(`api/sessions/${userId}/timeOnApp`, 
+    (data) => setStatData(p => ({...p, timeOnApp: data.timeOnApp})),
+    'time on app');
     
-    handleFetch(`api/userstats/${userId}`, setUserStats, 'user stats');
-    
-    handleFetch(`api/userstats/${userId}/?recentActivity=true`, setUserStats24Hours, 'user stats (last 24 hours)');
-    
-    handleFetch(`api/useractivityPerHour/${userId}`, setActivityHourData, 'activity per hour');
-
-    handleFetch(`api/sessions/${userId}/timeOnApp`, setTimeOnApp, 'time on app');
-    
-    handleFetch(`api/sessions/${userId}/streak`, setStreak, 'streak');
+    handleFetch(`api/sessions/${userId}/streak`, 
+    (data) => setStatData(p => ({...p, streak: data})),
+    'streak');
 
     fetch(`api/sessions/${userId}/lastYearActivity`)
       .then(handleResponse)
@@ -238,14 +246,17 @@ export default function StatsPage({ userId }) {
         const d = data.sessionCounts.map(item => ({ date: new Date(item._id.year, item._id.month - 1, item._id.day), count: item.count }));
         return d;
       })
-      .then(setLastYearActivity)
+      .then(data => setStatData(p => ({...p, lastYearActivity: data})))
       .catch(e => handleError(e, 'last year activity'));
 
-    handleFetch(`api/itemsmaxlevel/${userId}`, setNumItemsMaxLevel, 'max level');
+    handleFetch(`api/itemsmaxlevel/${userId}`,
+    (data) => setStatData(p => ({...p, numItemsMaxLevel: data})), 
+    'max level');
   }, [userId]);
 
   useEffect(() => {
     const currentHour = new Date().getHours(); // Note: This gets the current hour in local time
+    const countData = fetchData.count;
     const labels = countData ? countData.map((item) => `${(item.hour + currentHour) % 24}:00`) : [];
     const data = countData ? countData.map((item) => item.count) : [];
     const d = {
@@ -260,10 +271,11 @@ export default function StatsPage({ userId }) {
         },
       ],
     }
-    setCountChartData(d);
-  }, [countData]);
+    setChartData(p => ({...p, count: d}))
+  }, [fetchData]);
 
   useEffect(() => {
+    const levelData = fetchData.level;
     const data = levelData ? levelData.map((item) => (item.duration)) : [];
     const labels = levelData ? levelData.map((item) => (`Level ${item.level}`)) : [];
 
@@ -281,17 +293,19 @@ export default function StatsPage({ userId }) {
         {
           type: 'line',
           label: 'Average Duration',
-          data: averageDuration,
+          data: statData.averageDuration,
           backgroundColor: 'rgba(54, 162, 235, 0.5)',
           borderColor: 'rgba(54, 162, 235, 1)',
           borderWidth: 1,
         },
       ],
     }
-    setLevelChartData(d);
-  }, [levelData, averageDuration]);
+    setChartData(p => ({...p, level: d}))
+  }, [statData, fetchData]);
 
   useEffect(() => {
+    alert("here activityData");
+    const activityData = fetchData.activity;
     const labels = Object.keys(activityData);
     const dataValues = Object.values(activityData);
 
@@ -320,8 +334,9 @@ export default function StatsPage({ userId }) {
       labels: ['Activity Counts'], // Only one label for the y-axis
       datasets: datasets
     };
-    setActivityChartData(data);
-  }, [activityData]);
+    alert("here2 activityData");
+    setChartData(p => ({...p, activity: data}));
+  }, [fetchData]);
 
   function userStatsPercent(userStats, key, value) {
     const totalIncrementsAndDecrements = (userStats['level-up'] || 0) + (userStats['level-down'] || 0);
@@ -335,6 +350,7 @@ export default function StatsPage({ userId }) {
   }
 
   useEffect(() => {
+    const activityHourData = fetchData.activityHour;
     const labels = activityHourData.map((value, index) => index);//Object.index(activityHourData);
     const dataValues = Object.values(activityHourData);
 
@@ -363,54 +379,54 @@ export default function StatsPage({ userId }) {
       labels: labels, // Only one label for the y-axis
       datasets: datasets
     };
-    setActivityHourChartData(data);
-  }, [activityHourData]);
+    setChartData(p => ({...p, activity: data}))
+  }, [fetchData]);
 
   return (
     <div>
       <NavBar />
       <h1>Stats Page</h1>
-      {countData.length === 0 ? (<p>Loading review counts...</p>) : (<Bar options={countOptions} data={countChartData} />)}
+      {fetchData.count.length === 0 ? (<p>Loading review counts...</p>) : (<Bar options={countOptions} data={chartData.count} />)}
       <hr />
-      {levelData.length === 0 ? (<p>Loading levelup chart...</p>) : (<Line options={levelOptions} data={LevelChartData} />)}
+      {fetchData.level.length === 0 ? (<p>Loading levelup chart...</p>) : (<Line options={levelOptions} data={chartData.level} />)}
       <hr />
-      {averageDuration.length === 0 ? (<p>Loading average duration...</p>) : (`Average duration: ${calc_dhm(averageDuration[0])}`)}
+      {statData.averageDuration.length === 0 ? (<p>Loading average duration...</p>) : (`Average duration: ${calc_dhm(statData.averageDuration[0])}`)}
       <br />
-      <div style={{ 'white-space': 'pre-wrap' }}>{projectNextLevel}</div>
+      <div style={{ 'white-space': 'pre-wrap' }}>{statData.projectNextLevel}</div>
       <hr />
-      {`Number of items at max level: ${JSON.stringify(numItemsMaxLevel.numMaxLevel)}`}
+      {`Number of items at max level: ${JSON.stringify(statData.numItemsMaxLevel.numMaxLevel)}`}
       <hr />
-      {Object.keys(activityData).length === 0 ? (<p>Loading activity chart...</p>) : (
-        <Bar data={activityChartData} options={activityOptions} />
+      {Object.keys(fetchData.activity).length === 0 ? (<p>Loading activity chart...</p>) : (
+        <Bar data={chartData.activity} options={activityOptions} />
       )}
       <hr />
-      {userStats.length === 0 ? (<p>Loading user stats...</p>) :
+      {fetchData.stats.length === 0 ? (<p>Loading user stats...</p>) :
         (<div>
-          {Object.entries(userStats).map(([key, value]) => (
+          {Object.entries(fetchData.stats).map(([key, value]) => (
             <div key={key}>
-              {key}: {value}{userStatsPercent(userStats, key, value)}
+              {key}: {value}
             </div>
           ))}
         </div>
         )}
       <hr />
-      {activityHourData.every(dict => Object.values(dict).every(value => value === 0)) ? (<p>Loading activity per hour chart...</p>) : (
-        <Bar data={activityHourChartData} options={activityHourOptions} />
+      {fetchData.activityHour.every(dict => Object.values(dict).every(value => value === 0)) ? (<p>Loading activity per hour chart...</p>) : (
+        <Bar data={chartData.activityHour} options={activityHourOptions} />
       )}
       <hr />
-      <p>Start Date: {startDate}. Time on App: {secondsToDHM(timeOnApp.timeOnApp / 1000)}</p>
-      <p>Streak: {streak.streak}. Max Streak: {streak.maxStreak}</p>
-      {userStats24Hours.length === 0 ? 
+      <p>Start Date: {statData.startDate}. Time on App: {secondsToDHM(statData.timeOnApp / 1000)}</p>
+      <p>Streak: {statData.streak.streak}. Max Streak: {statData.streak.maxStreak}</p>
+      {fetchData.stats24.length === 0 ? 
         (<p>Loading user stats (last 24 hours)...</p>) :
-        (<p>Number of reviews completed in last 24 hours: {(userStats24Hours['level-up'] || 0) + (userStats24Hours['level-down'] || 0)}</p>)
+        (<p>Number of reviews completed in last 24 hours: {(fetchData.stats24['level-up'] || 0) + (fetchData.stats24['level-down'] || 0)}</p>)
       }
       <hr />
-      {lastYearActivity.length === 0 ? (<p>Loading last year activity...</p>) : (
+      {statData.lastYearActivity.length === 0 ? (<p>Loading last year activity...</p>) : (
         <div>
           <CalendarHeatmap
             startDate={shiftDate(today, -365)}
             endDate={today}
-            values={lastYearActivity}
+            values={statData.lastYearActivity}
             classForValue={value => {
               if (!value) {
                 return 'color-empty';
