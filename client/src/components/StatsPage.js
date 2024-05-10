@@ -14,7 +14,7 @@ import {
 import { Bar, Line } from 'react-chartjs-2';
 import ReactToolTip from 'react-tooltip';
 import CalendarHeatmap from 'react-calendar-heatmap';
-import { handleResponse, handleError, handleFetch } from './helpers';
+import { handleResponse, handleError, handleFetch, calc_dhm, secondsToDHM, shiftDate, getTooltipDataAttrs, handleClick, github_colour } from './helpers';
 
 import 'react-calendar-heatmap/dist/styles.css';
 
@@ -30,12 +30,6 @@ ChartJS.register(
 );
 
 const today = new Date();
-
-function shiftDate(date, numDays) {
-  const newDate = new Date(date);
-  newDate.setDate(newDate.getDate() + numDays);
-  return newDate;
-}
 
 export const countOptions = {
   responsive: true,
@@ -130,38 +124,6 @@ export const activityHourOptions = {
   }
 };
 
-export function calc_dhm(durationInDays) {
-  const days = Math.floor(durationInDays);
-  const hours = Math.floor((durationInDays - days) * 24);
-  const minutes = Math.round(((durationInDays - days) * 24 - hours) * 60);
-
-  return `${days} days, ${hours} hours, ${minutes} mins`;
-}
-
-export function secondsToDHM(seconds) {
-  const days = Math.floor(seconds / (3600 * 24));
-  const hours = Math.floor((seconds % (3600 * 24)) / 3600);
-  const minutes = Math.floor((seconds % 3600) / 60);
-
-  return `${days}d ${hours}h ${minutes}m`;
-}
-
-export const getTooltipDataAttrs = (value) => {
-  // Temporary hack around null value.date issue
-  if (Object.values(value).some(val => val === null || val === undefined)) {
-    return null;
-  }
-  // Configuration for react-tooltip
-  return {
-    'data-tooltip-id': "my-tooltip",
-    'data-tooltip-content': `${value.date.toISOString().slice(0, 10)} has count: ${value.count}`,
-  };
-};
-
-export const handleClick = (value) => {
-  alert(`You clicked on ${value.date.toISOString().slice(0, 10)} with count: ${value.count}`);
-};
-
 export default function StatsPage({ userId }) {
   const [fetchData, setFetchData] = useState({
     count: [], level: [], stats: [], stats24: [], activity: [], activityHour: []
@@ -216,29 +178,17 @@ export default function StatsPage({ userId }) {
       })
       .catch(e => handleError(e, 'levelup projection'));
     
-    handleFetch(`api/useractivity24Hour/${userId}`, 
-    (data) => setFetchData(p => ({...p, activity: data})),
-    'activity 24 hour');
+    handleFetch(`api/useractivity24Hour/${userId}`, (d) => setFetchData(p => ({...p, activity: d})), 'activity 24 hour');
     
-    handleFetch(`api/userstats/${userId}`, 
-    (data) => setFetchData(p => ({...p, stats: data})),
-     'user stats');
+    handleFetch(`api/userstats/${userId}`, (d) => setFetchData(p => ({...p, stats: d})), 'user stats');
     
-    handleFetch(`api/userstats/${userId}/?recentActivity=true`, 
-    (data) => setFetchData(p => ({...p, stats24: data})),
-    'user stats (last 24 hours)');
+    handleFetch(`api/userstats/${userId}/?recentActivity=true`, (d) => setFetchData(p => ({...p, stats24: d})), 'user stats (last 24 hours)');
     
-    handleFetch(`api/useractivityPerHour/${userId}`, 
-    (data) => setFetchData(p => ({...p, activityHour: data})),
-    'activity per hour');
+    handleFetch(`api/useractivityPerHour/${userId}`, (d) => setFetchData(p => ({...p, activityHour: d})), 'activity per hour');
 
-    handleFetch(`api/sessions/${userId}/timeOnApp`, 
-    (data) => setStatData(p => ({...p, timeOnApp: data.timeOnApp})),
-    'time on app');
+    handleFetch(`api/sessions/${userId}/timeOnApp`, (d) => setStatData(p => ({...p, timeOnApp: d.timeOnApp})), 'time on app');
     
-    handleFetch(`api/sessions/${userId}/streak`, 
-    (data) => setStatData(p => ({...p, streak: data})),
-    'streak');
+    handleFetch(`api/sessions/${userId}/streak`, (d) => setStatData(p => ({...p, streak: d})), 'streak');
 
     fetch(`api/sessions/${userId}/lastYearActivity`)
       .then(handleResponse)
@@ -425,13 +375,7 @@ export default function StatsPage({ userId }) {
             startDate={shiftDate(today, -365)}
             endDate={today}
             values={statData.lastYearActivity}
-            classForValue={value => {
-              if (!value) {
-                return 'color-empty';
-              }
-              const val = value.count >= 4 ? 4 : value.count;
-              return `color-github-${val}`;
-            }}
+            classForValue={value => github_colour(value)}
             tooltipDataAttrs={getTooltipDataAttrs}
             showWeekdayLabels={true}
             onClick={handleClick}
