@@ -21,7 +21,7 @@ exports.login = async (req, res) => {
     const session = new Session({ userId: user._id });
     await session.save();
 
-    res.status(200).json({ message: 'Login successful', id: user._id, role: user.role, sessionId: session._id});
+    res.status(200).json({ message: 'Login successful', id: user._id, role: user.role, level: user.level, sessionId: session._id});
   } catch (error) {
     console.error('Login error:', error);
     res.status(500).json({ message: 'Server error during the login process.' });

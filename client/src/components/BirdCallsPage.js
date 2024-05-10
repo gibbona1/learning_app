@@ -65,8 +65,6 @@ function BirdCallsPage({ userId }) {
     setCriticalItems(criticalItems);
   }, [mergedData]);
 
-  alert(JSON.stringify(criticalItems));
-
   return (
     <div>
       <NavBar />

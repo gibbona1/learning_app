@@ -17,6 +17,7 @@ export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userId, setUserId] = useState(null);
   const [userRole, setUserRole] = useState(null);
+  const [userLevel, setUserLevel] = useState(null);
   const [sessionId, setSessionId] = useState(null);
 
   const updateLastActive = () => {
@@ -55,6 +56,7 @@ export default function App() {
         setIsAuthenticated(true);
         setUserId(data.id);
         setUserRole(data.role);
+        setUserLevel(data.level);
         setSessionId(data.sessionId);
         // Optionally redirect the user or perform other actions upon successful login
       } else {
@@ -77,6 +79,7 @@ export default function App() {
         <Route path="/" element={isAuthenticated ? <HomePage isAuth= {true} setAuth = {setIsAuthenticated} 
                                                              userId = {userId} setUserId = {setUserId}
                                                              userRole = {userRole} setUserRole = {setUserRole}
+                                                             userLevel = {userLevel} setUserLevel = {setUserLevel}
                                                              sessionId = {sessionId} setSessionId = {setSessionId}/> : <Navigate to="/login" replace />} />
         {isAuthenticated ? (
           <>
