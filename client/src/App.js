@@ -15,16 +15,13 @@ import './App.css';
 
 export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [userId, setUserId] = useState(null);
-  const [userRole, setUserRole] = useState(null);
-  const [userLevel, setUserLevel] = useState(null);
-  const [sessionId, setSessionId] = useState(null);
+  const [userData, setUserData] = useState({id: null, role: null, level: null, sessionId: null});
 
   const updateLastActive = () => {
-    if (!sessionId) {
+    if (!userData.sessionId) {
       return;
     }
-    fetch(`/api/sessions/${sessionId}/lastActive`, {
+    fetch(`/api/sessions/${userData.sessionId}/lastActive`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -54,10 +51,7 @@ export default function App() {
         console.log('Login successful:');
         // E.g., storing auth tokens returned from the server in local storage or context
         setIsAuthenticated(true);
-        setUserId(data.id);
-        setUserRole(data.role);
-        setUserLevel(data.level);
-        setSessionId(data.sessionId);
+        setUserData({...userData, ...data});
         // Optionally redirect the user or perform other actions upon successful login
       } else {
         // Handle failed authentication
@@ -77,20 +71,17 @@ export default function App() {
       <Routes>
         <Route path="/login" element={isAuthenticated ? <Navigate to="/" replace /> : <Login onLogin={login} />}/>
         <Route path="/" element={isAuthenticated ? <HomePage isAuth= {true} setAuth = {setIsAuthenticated} 
-                                                             userId = {userId} setUserId = {setUserId}
-                                                             userRole = {userRole} setUserRole = {setUserRole}
-                                                             userLevel = {userLevel} setUserLevel = {setUserLevel}
-                                                             sessionId = {sessionId} setSessionId = {setSessionId}/> : <Navigate to="/login" replace />} />
+                                                             userData = {userData} setUserData = {setUserData}/> : <Navigate to="/login" replace />} />
         {isAuthenticated ? (
           <>
-          <Route path="/users" element={<UserPage userId = {userId} userRole = {userRole}/>} />
-          <Route path="/birdcalls" element={<BirdCallsPage userId = {userId}/>} />
+          <Route path="/users" element={<UserPage userData = {userData}/>} />
+          <Route path="/birdcalls" element={<BirdCallsPage userId = {userData.id}/>} />
           <Route path="/userlevels" element={<UserLevelsPage />} />
-          <Route path="/lessons" element={<LessonsPage userId = {userId}/>} />
-          <Route path="/lessonSession" element={<LessonSessionPage userId = {userId}/>} />
-          <Route path="/reviews" element={<ReviewPage userId = {userId}/>} />
-          <Route path="/reviewSession" element={<ReviewSessionPage userId = {userId}/>} />
-          <Route path="/stats" element={<StatsPage userId = {userId}/>} />
+          <Route path="/lessons" element={<LessonsPage userId = {userData.id}/>} />
+          <Route path="/lessonSession" element={<LessonSessionPage userId = {userData.id}/>} />
+          <Route path="/reviews" element={<ReviewPage userId = {userData.id}/>} />
+          <Route path="/reviewSession" element={<ReviewSessionPage userId = {userData.id}/>} />
+          <Route path="/stats" element={<StatsPage userId = {userData.id}/>} />
           </>
           ) : (
             <></>

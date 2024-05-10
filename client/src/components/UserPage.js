@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import NavBar from './NavBar';
 import { handleResponse, handleError, handleFetch } from './helpers';
 
-function UserPage({ userId, userRole }) {
+function UserPage({ userData }) {
   const [users, setUsers] = useState([]);
   const [classes, setClasses] = useState([]);
 
@@ -14,19 +14,19 @@ function UserPage({ userId, userRole }) {
     fetch('api/users')
       .then(handleResponse)
       .then(data => {
-        if (userRole === 'admin') {
+        if (userData.role === 'admin') {
           return data;  
-        } else if (userRole === 'teacher') {
-          const dsub = data.filter(u => u.role === 'learner' && classes.some(c => c.teacher === userId && c.learners.includes(u._id)));
-          const dteacher = data.filter(user => user._id === userId);
+        } else if (userData.role === 'teacher') {
+          const dsub = data.filter(u => u.role === 'learner' && classes.some(c => c.teacher === userData.id && c.learners.includes(u._id)));
+          const dteacher = data.filter(user => user._id === userData.id);
           return dteacher.concat(dsub);
         } else {
-          return data.filter(user => user._id === userId);
+          return data.filter(user => user._id === userData.id);
         }
       })
       .then(setUsers)
       .catch(e => handleError(e, 'users'));
-  }, [classes, userId, userRole]);
+  }, [classes, userData]);
 
 
   return (
