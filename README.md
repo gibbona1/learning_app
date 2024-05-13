@@ -89,6 +89,7 @@ TODOs:
     - [ ] faker for creating users, lessons, progress etc
         - [ ] need to make a random array of activity with levelups, downs, resets and iteravely call API, check actual item level against expected level
     - [ ] tokenized (maybe JWT) api calls for security
+    - [ ] table styling e.g. colour item by level
 
 - [ ] Stats:
     - [x] upcoming reviews by hour next 24 hours
@@ -105,7 +106,7 @@ TODOs:
     - [ ] retention metric(s)
     - [x] last year activity (like GitHub contribution map)
     - [x] num items at max level
-    - [ ] coverage of irish birds, bto pipeline, xenocanto etc (charts by level)
+    - [ ] coverage of irish birds, bto pipeline, xenocanto etc (charts by level, items ordering)
     - [ ] current level, level progress (plot and proportion)
         - [ ] how many items on current level are >= item level 3
 
