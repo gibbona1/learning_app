@@ -40,12 +40,13 @@ export const getTooltipDataAttrs = (value) => {
     // Configuration for react-tooltip
     return {
       'data-tooltip-id': "my-tooltip",
-      'data-tooltip-content': `${value.date.toISOString().slice(0, 10)} has count: ${value.count}`,
+      'data-tooltip-content': `${new Date(value.date).toISOString().slice(0, 10)} has count: ${value.count}`,
     };
 };
   
 export const handleClick = (value) => {
-    alert(`You clicked on ${value.date.toISOString().slice(0, 10)} with count: ${value.count}`);
+    if (!value) return;
+    alert(`You clicked on ${new Date(value.date).toISOString().slice(0, 10)} with count: ${value.count}`);
 };
 
 export function shiftDate(date, numDays) {
