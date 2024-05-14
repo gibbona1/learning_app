@@ -143,7 +143,8 @@ exports.lastYearActivity = async (req, res) => {
     ];
 
     const sessionCounts = await Session.aggregate(aggregationPipeline);
-    res.status(200).json({ sessionCounts });
+    const data = sessionCounts.map(item => ({ date: new Date(item._id.year, item._id.month - 1, item._id.day), count: item.count }));
+    res.status(200).json({ data });
   } catch (error) {
     res.status(500).json({ message: 'Error fetching last year activity', error: error.message });
   }

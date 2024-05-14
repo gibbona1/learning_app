@@ -284,3 +284,33 @@ exports.activityPerHour = async (req, res) => {
     res.status(500).json({ message: 'Error processing request', error: error.message });
   }
 }
+
+exports.getLevelData = async (req, res) => {
+  const { userId } = req.params;
+
+  try {
+    const user = await  User.findById(userId);
+
+    const now = new Date(); // Current date/time
+    const n = user?.levelData.length;
+    var data = [{ level: 0, duration: 0 }];
+    if (n > 0) {
+      data = user?.levelData.map(level => ({
+        level: level.level,
+        // Use endDate if it exists; otherwise, use current date/time
+        duration: (new Date(level.endDate || now) - new Date(level.startDate)) / (1000 * 60 * 60 * 24) // Convert to days
+      }));
+    }
+
+    let avg;
+    if (user.levelData[user.level]?.endDate) {
+      avg = Array(n).fill(data.reduce((sum, current) => sum + current.duration, 0) / n);
+    } else {
+      avg = Array(n).fill(data.slice(0, -1).reduce((sum, current) => sum + current.duration, 0) / (n - 1));
+    }
+    const startDate = new Date(user.registrationDate).toISOString().split('T')[0]
+    res.status(200).json({ level: data, avg: avg, startDate: startDate });
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching user level data', error: error.message });
+  }
+}

@@ -136,34 +136,15 @@ export default function StatsPage({ userId }) {
   );
 
   useEffect(() => {
-    handleFetch(`/api/itemsgetbyhour/${userId}`, 
-    (data) => setFetchData(p => ({...p, count: data})),
-    'reviews');
+    handleFetch(`/api/itemsgetbyhour/${userId}`, (d) => setFetchData(p => ({...p, count: d})), 'reviews');
 
-    fetch(`api/users/${userId}`)
+    fetch(`api/users/userleveldata/${userId}`)
       .then(handleResponse)
       .then(user => {
-        const now = new Date(); // Current date/time
-        const n = user?.levelData.length;
-        var data = [{ level: 0, duration: 0 }];
-        if (n > 0) {
-          data = user?.levelData.map(level => ({
-            level: level.level,
-            // Use endDate if it exists; otherwise, use current date/time
-            duration: (new Date(level.endDate || now) - new Date(level.startDate)) / (1000 * 60 * 60 * 24) // Convert to days
-          }));
-        }
-
-        let avg;
-        if (user.levelData[user.level]?.endDate) {
-          avg = Array(n).fill(data.reduce((sum, current) => sum + current.duration, 0) / n);
-        } else {
-          avg = Array(n).fill(data.slice(0, -1).reduce((sum, current) => sum + current.duration, 0) / (n - 1));
-        }
-        setFetchData(p => ({...p, level: data}));
-        setStatData(p => ({...p, averageDuration: avg, startDate: new Date(user.registrationDate).toISOString().split('T')[0]}));
+        setFetchData(p => ({...p, level: user.level}));
+        setStatData(p => ({...p, averageDuration: user.avg, startDate: user.startDate}));
       })
-      .catch(e => handleError(e, 'user'));
+      .catch(e => handleError(e, 'user level data'));
 
     fetch(`api/users/${userId}/projectlevelup`)
       .then(handleResponse)
@@ -192,11 +173,7 @@ export default function StatsPage({ userId }) {
 
     fetch(`api/sessions/${userId}/lastYearActivity`)
       .then(handleResponse)
-      .then(data => {
-        const d = data.sessionCounts.map(item => ({ date: new Date(item._id.year, item._id.month - 1, item._id.day), count: item.count }));
-        return d;
-      })
-      .then(data => setStatData(p => ({...p, lastYearActivity: data})))
+      .then(data => setStatData(p => ({...p, lastYearActivity: data.data})))
       .catch(e => handleError(e, 'last year activity'));
 
     handleFetch(`api/itemsmaxlevel/${userId}`,

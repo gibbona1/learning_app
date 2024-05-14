@@ -14,5 +14,6 @@ router.get('/users/:userId/projectLevelUp', userController.projectLevelUp);
 router.get('/useractivity24Hour/:userId', userController.activity24Hour);
 router.get('/useractivityPerHour/:userId', userController.activityPerHour);
 router.get('/userstats/:userId', userController.userStats);
+router.get('/userleveldata/:userId', userController.getLevelData);
 
 module.exports = router;
