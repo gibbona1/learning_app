@@ -171,14 +171,9 @@ export default function StatsPage({ userId }) {
     
     handleFetch(`api/sessions/${userId}/streak`, (d) => setStatData(p => ({...p, streak: d})), 'streak');
 
-    fetch(`api/sessions/${userId}/lastYearActivity`)
-      .then(handleResponse)
-      .then(data => setStatData(p => ({...p, lastYearActivity: data.data})))
-      .catch(e => handleError(e, 'last year activity'));
+    handleFetch(`api/sessions/${userId}/lastYearActivity`, (d) => setStatData(p => ({...p, lastYearActivity: d.data})), 'last year activity');
 
-    handleFetch(`api/itemsmaxlevel/${userId}`,
-    (data) => setStatData(p => ({...p, numItemsMaxLevel: data})), 
-    'max level');
+    handleFetch(`api/itemsmaxlevel/${userId}`, (d) => setStatData(p => ({...p, numItemsMaxLevel: d})), 'max level');
   }, [userId]);
 
   useEffect(() => {
@@ -350,7 +345,7 @@ export default function StatsPage({ userId }) {
         <div>
           <CalendarHeatmap
             startDate={shiftDate(today, -365)}
-            endDate={today}
+            endDate={shiftDate(today, 1)}
             values={statData.lastYearActivity}
             classForValue={value => github_colour(value)}
             tooltipDataAttrs={getTooltipDataAttrs}
